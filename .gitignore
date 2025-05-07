@@ -1,0 +1,16 @@
+# Python/Django
+**/venv/
+**/__pycache__/
+**/*.py[cod]
+db.sqlite3
+/logs/
+*.log
+
+# Node / Vite / React
+tdofrontend/node_modules/
+tdofrontend/dist/
+tdofrontend/.env
+
+# VSCode, macOS, etc.
+.vscode/
+.DS_Store

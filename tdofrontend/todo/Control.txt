@@ -1,0 +1,3 @@
+Crud de ingresos
+nuevo ingresos
+lista de ingresos

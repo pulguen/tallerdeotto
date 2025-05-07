@@ -1,0 +1,68 @@
+1. Almacenamiento seguro de tokens
+Evita localStorage para el access token
+– Es vulnerable a XSS.
+– En su lugar, considera guardar el access token en memoria (React Context / Redux) y el refresh token en una cookie HttpOnly.
+
+Cookies HttpOnly + SameSite
+– Almacena el refresh en una cookie con HttpOnly, Secure y SameSite=Lax o Strict.
+– Así el navegador envía el refresh automáticamente y el cliente JavaScript no puede leerlo.
+
+2. Rotación y revocación de tokens
+Refresh token rotation
+– Genera un nuevo refresh cada vez que el usas para pedir un access.
+– Inserta la opción ROTATE_REFRESH_TOKENS = True y un lifetime razonable (REFRESH_TOKEN_LIFETIME) en SimpleJWT.
+
+Blacklisting
+– Activa rest_framework_simplejwt.token_blacklist para poder invalidar (revocar) tokens refresh—por ejemplo, en el logout o si detectas un dispositivo comprometido.
+
+3. CORS y CSRF
+CORS restrictivo
+– Configura CORS_ALLOWED_ORIGINS para listar solo tu dominio de frontend (p.ej. https://tudominio.com).
+– No uses el comodín * en producción.
+
+CSRF en cookies
+– Si pagas JWT en cookies, configura y envía el token CSRF de Django (X-CSRFToken).
+– Usa django-cors-headers y CsrfViewMiddleware para asegurar que solo peticiones legítimas triunfen.
+
+4. Políticas de contraseña y 2FA
+Validadores de contraseña
+– En AUTH_PASSWORD_VALIDATORS ajusta requisitos de longitud, complejidad y comprobación contra diccionarios.
+
+Verificación por email
+– Envía un enlace de activación tras registro (django-allauth puede ayudar).
+
+Autenticación multifactor (2FA)
+– Integra un segundo factor (SMS, app de autenticación) para accesos de administrador o usuarios con privilegios.
+
+5. Control de sesiones y logout
+Auto-logout por inactividad
+– Lleva un timestamp de última actividad en el JWT o en una cookie adicional.
+– Fuerza logout si el usuario lleva X minutos inactivo.
+
+Logout “servidor-side”
+– Al hacer logout, revoca el refresh (blacklist) para que no puedas volver a generar access.
+
+6. Permisos y roles
+Permisos finos en DRF
+– Usa IsAdminUser para rutas administrativas, IsAuthenticated para operaciones de usuario, y AllowAny solo donde haga falta.
+
+Roles / grupos
+– Define grupos de Django (Group) y asigna permisos a nivel de modelo o endpoint según rol (administrador, empleado, cliente).
+
+7. Comunicación segura (HTTPS)
+TLS obligado
+– En producción, fuerza siempre HTTPS (p.ej. con SECURE_SSL_REDIRECT = True).
+– Configura SECURE_HSTS_SECONDS, SESSION_COOKIE_SECURE y CSRF_COOKIE_SECURE.
+
+Cifrado de datos sensibles
+– Nunca envíes secretos o tokens por query params; siempre en headers o cuerpo.
+
+8. Monitoreo y protección extra
+Rate limiting / throttling
+– En REST_FRAMEWORK añade DEFAULT_THROTTLE_CLASSES (por IP y por usuario) para evitar ataques de fuerza bruta.
+
+Registro de accesos y alertas
+– Loggea intentos fallidos y bloquea IPs tras varios fallos consecutivos.
+
+Auditoría
+– Lleva un historial de inicios de sesión, cambios de contraseña y uso de 2FA para auditoría.

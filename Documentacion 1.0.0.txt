@@ -1,0 +1,274 @@
+Documentación del Proyecto “Taller de Otto”
+Este documento resume el estado actual del proyecto, su arquitectura, tecnologías empleadas y configuraciones clave tanto del backend (Django REST) como del frontend (React + Vite), así como las medidas de seguridad (“hardening”) ya implementadas.
+
+1. Resumen de la arquitectura
+bash
+Copiar
+Editar
+tallerdeotto/
+├── tdofrontend/                # Cliente React + Vite
+│   ├── src/
+│   │   ├── context/
+│   │   │   ├── AuthContext.jsx
+│   │   │   ├── useAuth.js
+│   │   │   └── customAxios.js
+│   │   ├── hooks/
+│   │   │   └── useAutoLogout.jsx
+│   │   ├── features/
+│   │   │   ├── Home/
+│   │   │   ├── Users/
+│   │   │   │   └── Login.jsx
+│   │   │   └── Control/
+│   │   │       ├── ControlHome/Admin.jsx
+│   │   │       └── Ingresos/Ingresos.jsx
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   ├── vite.config.js
+│   └── package.json
+└── tdobackend/                 # Servidor Django REST
+    ├── apps/
+    │   ├── ingresos/           # CRUD de ingresos
+    │   └── users/              # Autenticación y usuarios
+    │       ├── apps.py         # UsersConfig con signals
+    │       ├── models.py       # CustomUser
+    │       ├── serializers.py  # UserSerializer
+    │       ├── urls.py         # Rutas /api/users/
+    │       └── views.py        # Token, registro, perfil, logout
+    ├── core/
+    │   ├── settings.py         # Configuración general y hardening
+    │   ├── urls.py             # Rutas globales (admin/, api/, two_factor…)
+    │   └── wsgi.py
+    ├── db.sqlite3
+    ├── manage.py
+    └── venv/                   # Entorno virtual Python
+2. Tecnologías y dependencias
+Frontend
+
+React 18 + Vite
+
+React Router DOM
+
+Axios (con configuración centralizada en customAxios.js)
+
+Context API para auth (AuthContext.jsx)
+
+ESLint / Tailwind CSS (opcional)
+
+Backend
+
+Python 3.12 + Django 5.2
+
+Django REST Framework
+
+Simple JWT (con token rotation & blacklist)
+
+django-password-validators (políticas de contraseña)
+
+django-axes (bloqueo de login abusivo)
+
+django-simple-history (auditoría de modelos)
+
+django-cors-headers
+
+(Opcional futuro) django-two-factor-auth / django-otp
+
+3. Backend: Configuración y hardening
+3.1. Apps registradas
+En core/settings.py:
+
+python
+Copiar
+Editar
+INSTALLED_APPS = [
+  'corsheaders',
+  'rest_framework',
+  'rest_framework_simplejwt.token_blacklist',
+  'django_password_validators',
+  'axes',
+  'simple_history',
+  'apps.ingresos',
+  'apps.users.apps.UsersConfig',  # AppConfig personalizado
+  'django.contrib.admin',
+  'django.contrib.auth',
+  # … otros django.contrib …
+]
+3.2. Middleware
+python
+Copiar
+Editar
+MIDDLEWARE = [
+  'corsheaders.middleware.CorsMiddleware',
+  'django.middleware.security.SecurityMiddleware',
+  'django.contrib.sessions.middleware.SessionMiddleware',
+  'django.middleware.common.CommonMiddleware',
+  'django.middleware.csrf.CsrfViewMiddleware',
+  'django.contrib.auth.middleware.AuthenticationMiddleware',
+  'axes.middleware.AxesMiddleware',
+  'django.contrib.messages.middleware.MessageMiddleware',
+  'django.middleware.clickjacking.XFrameOptionsMiddleware',
+  'simple_history.middleware.HistoryRequestMiddleware',
+]
+3.3. Políticas de contraseña
+python
+Copiar
+Editar
+AUTH_PASSWORD_VALIDATORS = [
+  {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', 'OPTIONS': {'user_attributes': ('username','email')}},
+  {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',           'OPTIONS': {'min_length': 10}},
+  {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+  {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+  {'NAME': 'django_password_validators.password_character_requirements.password_validation.PasswordCharacterValidator',
+   'OPTIONS': {
+     'min_length_upper': 1,
+     'min_length_lower': 1,
+     'min_length_digit': 1,
+     'min_length_special': 1,
+     'special_characters': "@$!%*?&",
+   }
+  },
+]
+3.4. Seguridad de transporte y cookies
+python
+Copiar
+Editar
+SECURE_SSL_REDIRECT            = True
+SECURE_HSTS_SECONDS            = 2592000      # 30 días
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD            = True
+SESSION_COOKIE_SECURE          = True
+CSRF_COOKIE_SECURE             = True
+SESSION_COOKIE_SAMESITE        = 'Lax'
+CSRF_COOKIE_SAMESITE           = 'Lax'
+SECURE_PROXY_SSL_HEADER        = ('HTTP_X_FORWARDED_PROTO','https')
+SECURE_REFERRER_POLICY         = 'no-referrer-when-downgrade'
+3.5. CORS y CSRF
+python
+Copiar
+Editar
+CORS_ALLOWED_ORIGINS = ['http://localhost:5173', 'https://tallerdeotto.com']
+CORS_ALLOW_METHODS    = ['GET','POST','PUT','PATCH','DELETE','OPTIONS']
+CORS_ALLOW_HEADERS    = ['content-type','authorization','x-csrftoken']
+
+CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
+3.6. Autenticación JWT
+python
+Copiar
+Editar
+REST_FRAMEWORK = {
+  'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',),
+  'DEFAULT_PERMISSION_CLASSES':     ('rest_framework.permissions.IsAuthenticatedOrReadOnly',),
+  'DEFAULT_THROTTLE_CLASSES':       ('rest_framework.throttling.AnonRateThrottle','rest_framework.throttling.UserRateThrottle',),
+  'DEFAULT_THROTTLE_RATES':         {'anon':'10/min','user':'100/min'},
+}
+
+SIMPLE_JWT = {
+  'ACCESS_TOKEN_LIFETIME':        timedelta(minutes=5),
+  'REFRESH_TOKEN_LIFETIME':       timedelta(days=7),
+  'ROTATE_REFRESH_TOKENS':        True,
+  'BLACKLIST_AFTER_ROTATION':     True,
+  'AUTH_COOKIE':                  'refresh_token',
+}
+3.7. Bloqueo de login abusivo (django-axes)
+python
+Copiar
+Editar
+AXES_FAILURE_LIMIT  = 5      # bloquea tras 5 fallos
+AXES_COOLOFF_TIME   = 1      # horas de espera
+3.8. Auditoría de modelos (django-simple-history)
+En tus modelos (p. ej. apps/ingresos/models.py):
+
+python
+Copiar
+Editar
+from simple_history.models import HistoricalRecords
+
+class Ingreso(models.Model):
+    descripcion = models.CharField(max_length=100)
+    # …
+    history = HistoricalRecords()
+Y en settings.py, ya incluimos simple_history.middleware.HistoryRequestMiddleware.
+
+4. Frontend: Estructura y autenticación
+4.1. Proxy de Vite
+js
+Copiar
+Editar
+// vite.config.js
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
+});
+4.2. customAxios.js
+js
+Copiar
+Editar
+import axios from 'axios';
+const instance = axios.create({
+  baseURL: '/api/',
+  withCredentials: true,
+});
+instance.interceptors.request.use(cfg => {
+  if (!cfg.skipAuth && window.accessToken) {
+    cfg.headers.Authorization = `Bearer ${window.accessToken}`;
+  }
+  return cfg;
+});
+export default instance;
+4.3. AuthContext & useAuth
+jsx
+Copiar
+Editar
+// context/AuthContext.jsx
+export const AuthContext = createContext();
+export function AuthProvider({ children }) {
+  // refresh on mount, login(), logout()
+  // expone { user, loading, login, logout }
+}
+
+// context/useAuth.js
+export function useAuth() {
+  return useContext(AuthContext);
+}
+4.4. Rutas protegidas en React
+jsx
+Copiar
+Editar
+function PrivateRoute({ children }) {
+  const { user, loading } = useAuth();
+  if (loading) return <div>Cargando...</div>;
+  return user ? children : <Navigate to="/login" replace />;
+}
+
+<Routes>
+  <Route path="/login" element={<Login/>}/>
+  <Route path="/"      element={<Home/>}/>
+  <Route path="/admin" element={<PrivateRoute><Admin/></PrivateRoute>}/>
+  <Route path="/ingresos" element={<PrivateRoute><Ingresos/></PrivateRoute>}/>
+</Routes>
+4.5. Componente Ingresos
+Fetch inicial con GET /api/ingresos/
+
+CRUD de ingresos con POST, PUT, DELETE
+
+Manejo de estados: loading, error, editingId
+
+5. Estado actual y siguientes pasos
+✅ Backend hardening hasta auditoría y HSTS
+
+✅ API de usuarios con JWT + refresh en cookie HttpOnly
+
+✅ Bloqueo de login abusivo y throttling
+
+✅ Frontend con React, Vite, Context/Auth, rutas y componentes básicos
+
+🕒 Pendiente: implementar 2FA TOTP, verificación por email, despliegue HTTPS real y monitoreo (Sentry, ELK…)
+
+Con esta base ya tienes un MVP seguro y escalable. Cuando quieras, seguimos con 2FA TOTP o la UI de validación de contraseña en tiempo real para cerrar el ciclo. ¡Adelante!
