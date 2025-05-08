@@ -1,0 +1,274 @@
+Descripción general
+Este proyecto “Taller de Otto” consta de dos partes:
+
+Backend: API REST con Django 5.2 + Django REST Framework + SimpleJWT para autenticación, desplegada sobre SQLite (desarrollo) y configurada con buenas prácticas de seguridad (CORS, CSRF, SSL, rate limiting, bloqueo de intentos, auditoría).
+
+Frontend: SPA con React + Vite, usando React Router v6, un contexto de autenticación, manejo de JWT/refresh tokens en cookies HttpOnly y validación de contraseñas en el cliente.
+
+Estructura de carpetas
+bash
+Copiar
+Editar
+tallerdeotto/
+├─ tdobackend/                  # Backend Django
+│  ├─ apps/
+│  │  ├─ users/                 # App de usuarios (CustomUser, auth)
+│  │  └─ ingresos/              # App de ingresos (CRUD)
+│  ├─ core/                     # Proyecto Django (settings, urls, wsgi)
+│  ├─ manage.py
+│  ├─ db.sqlite3
+│  └─ logs/                     # arch. de logs (creado en runtime)
+└─ tdofrontend/                 # Frontend React + Vite
+   ├─ src/
+   │  ├─ context/
+   │  │  ├─ AuthContext.js      # sólo crea el Context
+   │  │  ├─ AuthProvider.jsx    # lógica de login/logout, refresh
+   │  │  ├─ customAxios.js      # instancia Axios con JWT + CSRF
+   │  │  └─ useAuth.js          # hook para consumir AuthContext
+   │  ├─ hooks/
+   │  │  ├─ usePasswordValidation.js  # validación de reglas de pwd en tiempo real
+   │  │  └─ useAutoLogout.js    # auto-logout tras inactividad
+   │  ├─ features/
+   │  │  └─ Users/
+   │  │     ├─ Login.jsx
+   │  │     └─ Register.jsx
+   │  ├─ features/
+   │  │  └─ Control/
+   │  │     ├─ ControlHome/Admin.jsx
+   │  │     └─ Ingresos/Ingresos.jsx
+   │  ├─ common/Layout/ProtectedLayout.jsx  # layout con botón logout
+   │  ├─ App.jsx
+   │  └─ main.jsx
+   ├─ package.json
+   └─ vite.config.js
+Backend (Django)
+1. Dependencias principales
+Django 5.2, djangorestframework, djangorestframework-simplejwt, django-cors-headers, django-axes, django-simple-history, django-password-validators.
+
+2. settings.py clave
+INSTALLED_APPS:
+
+corsheaders, rest_framework, rest_framework_simplejwt.token_blacklist,
+
+axes, simple_history, django_password_validators,
+
+apps.users.apps.UsersConfig, apps.ingresos.apps.IngresosConfig,
+
+aplicaciones Django por defecto.
+
+MIDDLEWARE:
+
+CorsMiddleware, seguridad, sesión, CSRF, AxesMiddleware, auditoría.
+
+AUTH_USER_MODEL: "users.CustomUser" con AbstractUser.
+
+SIMPLE_JWT:
+
+python
+Copiar
+Editar
+SIMPLE_JWT = {
+  'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+  'AUTH_COOKIE': 'refresh_token',
+  'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+  'ROTATE_REFRESH_TOKENS': True,
+  'BLACKLIST_AFTER_ROTATION': True,
+}
+CORS:
+
+python
+Copiar
+Editar
+CORS_ALLOWED_ORIGINS = [
+  'http://localhost:5173', 'https://tallerdeotto.com'
+]
+CSRF en cookies: CSRF_COOKIE_SECURE = not DEBUG, CSRF_COOKIE_SAMESITE = 'Lax'.
+
+Seguridad HTTPS (sólo en prod):
+
+python
+Copiar
+Editar
+SECURE_SSL_REDIRECT = not DEBUG
+SESSION_COOKIE_SECURE = not DEBUG
+SECURE_HSTS_SECONDS = 2592000  # 30 días
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO','https')
+Axes (bloqueo de intentos):
+
+python
+Copiar
+Editar
+AUTHENTICATION_BACKENDS = [
+  'axes.backends.AxesStandaloneBackend',
+  'django.contrib.auth.backends.ModelBackend',
+]
+AXES_FAILURE_LIMIT = 5
+AXES_COOLOFF_TIME = timedelta(hours=1)
+Rate limiting DRF:
+
+python
+Copiar
+Editar
+REST_FRAMEWORK = {
+  'DEFAULT_THROTTLE_CLASSES': [
+    'rest_framework.throttling.AnonRateThrottle',
+    'rest_framework.throttling.UserRateThrottle',
+  ],
+  'DEFAULT_THROTTLE_RATES': {
+    'anon': '10/min',
+    'user': '100/min',
+  },
+}
+Validadores de contraseña:
+
+Similitud con username/email
+
+Longitud mínima 10
+
+No comunes
+
+No numéricas puras
+
+Requisitos de caracteres (mayúscula, minúscula, dígito, especial)
+
+3. Apps y URLs
+apps/users:
+
+models.py: CustomUser extiende AbstractUser.
+
+views.py:
+
+CookieTokenObtainPairView, CookieTokenRefreshView, LogoutView,
+
+RegisterView, ProfileView.
+
+urls.py:
+
+python
+Copiar
+Editar
+path('token/', CookieTokenObtainPairView.as_view()),
+path('token/refresh/', CookieTokenRefreshView.as_view()),
+path('logout/', LogoutView.as_view()),
+path('register/', RegisterView.as_view()),
+path('me/', ProfileView.as_view()),
+apps/ingresos:
+
+models.py: Ingreso con campos descripcion, fecha, monto.
+
+views.py: Viewsets/GenericAPIView para CRUD.
+
+urls.py: path('', include(router.urls)).
+
+core/urls.py:
+
+python
+Copiar
+Editar
+path('admin/', admin.site.urls),
+path('api/users/', include('apps.users.urls')),
+path('api/ingresos/', include('apps.ingresos.urls')),
+Frontend (React + Vite)
+1. Dependencias
+react, react-dom, react-router-dom@6, axios, vite, tailwindcss (o tu CSS preferido).
+
+2. Contexto de autenticación
+AuthContext.js: sólo createContext().
+
+AuthProvider.jsx:
+
+Al montar hace /users/token/refresh/ con cookie HttpOnly.
+
+Mantiene user, accessToken, loading.
+
+Expone login(username,password) y logout().
+
+Guarda window.accessToken para los interceptors.
+
+customAxios.js:
+
+axios.create({ baseURL:'/api/', withCredentials:true }).
+
+Interceptor petición: añade Authorization: Bearer accessToken y X-CSRFToken.
+
+Interceptor respuesta: maneja 401 → refresh automático.
+
+useAuth.js: hook para usar el contexto.
+
+3. Validación de contraseña en el cliente
+usePasswordValidation.js:
+
+Calcula lengthValid, hasUpper, hasLower, hasNumber, hasSpecial, notNumericOnly e isValid.
+
+4. Auto-logout
+useAutoLogout.js: hook que, si no detecta actividad (click/teclado), invoca logout() tras el timeout.
+
+5. Rutas y componentes
+main.jsx:
+
+jsx
+Copiar
+Editar
+<BrowserRouter>
+  <AuthProvider>
+    <App />
+  </AuthProvider>
+</BrowserRouter>
+App.jsx: define <Routes> para /login, /register, /, /admin, /ingresos.
+
+PrivateRoute rodea las rutas que requieren user.
+
+Componentes clave:
+
+Login.jsx: formulario que llama a login().
+
+Register.jsx: formulario con validación en tiempo real.
+
+ProtectedLayout.jsx: layout para administración con botón de logout.
+
+Admin.jsx: dashboard admin.
+
+Ingresos.jsx: CRUD de ingresos con axios.get|post|put|delete.
+
+Instalación y puesta en marcha local
+Clonar
+
+bash
+Copiar
+Editar
+git clone https://github.com/tu-usuario/tallerdeotto.git
+cd tallerdeotto
+Backend
+
+bash
+Copiar
+Editar
+cd tdobackend
+python -m venv venv
+source venv/bin/activate       # o Scripts\Activate.ps1 en Windows
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver
+Frontend
+
+bash
+Copiar
+Editar
+cd ../tdofrontend
+npm install
+npm run dev
+Abrir en el navegador
+
+Frontend: http://localhost:5173
+
+Backend Admin: http://localhost:8000/admin
+
+Próximos pasos (plan de hardening)
+2FA/TOTP: integrar django-two-factor-auth + en React flujo QR/OTP.
+
+Verificación de email: django-allauth o flujo manual con tokens.
+
+Despliegue HTTPS real: Let’s Encrypt + nginx, o PaaS (Heroku/Vercel).
+
+Monitoreo y alertas: Sentry, Prometheus, logs centralizados.
