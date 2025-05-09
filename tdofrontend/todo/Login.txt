@@ -32,7 +32,7 @@ Verificación por email
 – Envía un enlace de activación tras registro (django-allauth puede ayudar).
 
 Autenticación multifactor (2FA)
-– Integra un segundo factor (SMS, app de autenticación) para accesos de administrador o usuarios con privilegios.
+– Integra un segundo fact or (SMS, app de autenticación) para accesos de administrador o usuarios con privilegios.
 
 5. Control de sesiones y logout
 Auto-logout por inactividad

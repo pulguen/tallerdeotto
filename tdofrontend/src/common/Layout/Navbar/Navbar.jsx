@@ -2,6 +2,7 @@
 import React from 'react';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import './Navbar.css'
+import logo from '../../../assets/logoheader.png';
 
 const CustomNavbar = () => {
   return (
@@ -19,7 +20,7 @@ const CustomNavbar = () => {
         {/* Logo centrado */}
         <Navbar.Brand href="/" className="mx-auto logo">
           <img
-            src="/logoheader.png"
+             src={logo}
             alt="Taller de Otto Logo"
             height="30"
           />

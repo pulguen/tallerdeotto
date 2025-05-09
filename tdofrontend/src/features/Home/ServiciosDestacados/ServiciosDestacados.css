@@ -1,0 +1,15 @@
+.contenedor-servicios-destacados{
+    display: flex;
+    flex-direction: column;
+
+}
+.titulo-servicios-destacados{
+    margin-top: 10px;
+    margin-left: 15px;
+    font-size: 15pt;
+}
+
+.mySwiper{
+    background-color: rgb(146, 144, 144);
+    height: 400px;
+}
