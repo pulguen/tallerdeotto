@@ -1,4 +1,3 @@
-// src/features/Control/Ingresos/Ingresos.jsx
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from '../../../context/customAxios';
 import { useAuth } from '../../../context/useAuth';
@@ -6,38 +5,35 @@ import { useAuth } from '../../../context/useAuth';
 export default function Ingresos() {
   const { user } = useAuth();
 
-  // Suponemos que `user.groups` es un array de strings:
-  // ["Admin"], ["Staff"], ["Cliente"], etc.
-  const isAdmin     = user?.groups?.includes('Admin');
-  const isStaff     = user?.groups?.includes('Staff');
-  const canEdit     = isAdmin || isStaff;   // puede crear/editar/borrar
+  const isAdmin = user?.groups?.includes('Admin');
+  const isStaff = user?.groups?.includes('Staff');
+  const canEdit = isAdmin || isStaff;
 
-  const [ingresos, setIngresos]             = useState([]);
+  const [ingresos, setIngresos] = useState([]);
   const [newDescripcion, setNewDescripcion] = useState('');
-  const [newFecha, setNewFecha]             = useState('');
-  const [newMonto, setNewMonto]             = useState('');
-
-  const [editingId, setEditingId]           = useState(null);
+  const [newFecha, setNewFecha] = useState('');
+  const [newMonto, setNewMonto] = useState('');
+  const [editingId, setEditingId] = useState(null);
   const [editDescripcion, setEditDescripcion] = useState('');
-  const [editFecha, setEditFecha]           = useState('');
-  const [editMonto, setEditMonto]           = useState('');
-
-  const [loading, setLoading]               = useState(false);
-  const [error, setError]                   = useState('');
+  const [editFecha, setEditFecha] = useState('');
+  const [editMonto, setEditMonto] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const normalizeData = data => {
     if (Array.isArray(data)) return data;
     if (data.results && Array.isArray(data.results)) return data.results;
-    if (data.data    && Array.isArray(data.data))    return data.data;
+    if (data.data && Array.isArray(data.data)) return data.data;
+    if (data.ingresos && Array.isArray(data.ingresos)) return data.ingresos;
     return [];
   };
 
-  // Memoizamos para no recrear la función en cada render
   const fetchIngresos = useCallback(async () => {
     setLoading(true);
     setError('');
     try {
       const { data } = await axios.get('ingresos/');
+      console.log('Respuesta de la API:', data);
       setIngresos(normalizeData(data));
     } catch (err) {
       console.error(err);
@@ -48,11 +44,14 @@ export default function Ingresos() {
   }, []);
 
   useEffect(() => {
+    console.log("Componente Ingresos montado");
+    console.log("Usuario actual:", user);
+    console.log("Grupos:", user?.groups);
     fetchIngresos();
-  }, [fetchIngresos]);
+  }, [fetchIngresos, user]);
 
   const handleAdd = async () => {
-    if (!canEdit) return; // doble seguridad
+    if (!canEdit) return;
     setError('');
     const montoNum = parseFloat(newMonto);
     if (!newDescripcion.trim() || !newFecha || isNaN(montoNum)) {
@@ -64,8 +63,8 @@ export default function Ingresos() {
     try {
       const { data: created } = await axios.post('ingresos/', {
         descripcion: newDescripcion,
-        fecha:       newFecha,
-        monto:       montoNum,
+        fecha: newFecha,
+        monto: montoNum,
       });
       setIngresos(prev => [...prev, created]);
       setNewDescripcion('');
@@ -116,8 +115,8 @@ export default function Ingresos() {
     try {
       const { data: updated } = await axios.put(`ingresos/${id}/`, {
         descripcion: editDescripcion,
-        fecha:       editFecha,
-        monto:       montoNum,
+        fecha: editFecha,
+        monto: montoNum,
       });
       setIngresos(prev => prev.map(i => i.id === id ? updated : i));
       setEditingId(null);
@@ -135,10 +134,9 @@ export default function Ingresos() {
         <h1 className="text-2xl font-bold">Gestión de Ingresos</h1>
       </div>
 
-      {error   && <div className="mb-4 text-red-600">{error}</div>}
+      {error && <div className="mb-4 text-red-600">{error}</div>}
       {loading && <div className="mb-4">Cargando...</div>}
 
-      {/* Si tiene permiso de editar, mostramos el formulario de creación */}
       {canEdit && (
         <div className="flex flex-col sm:flex-row gap-2 mb-6">
           <input
@@ -174,12 +172,10 @@ export default function Ingresos() {
         </div>
       )}
 
-      {/* Mensaje si no hay ingresos */}
-      {!loading && ingresos.length === 0 && (
+      {!loading && ingresos.length === 0 && !error && (
         <div className="text-gray-600">No hay ingresos registrados.</div>
       )}
 
-      {/* Lista de ingresos */}
       <ul className="space-y-4">
         {ingresos.map(ing => (
           <li
@@ -187,7 +183,6 @@ export default function Ingresos() {
             className="border p-4 rounded shadow-sm flex justify-between items-center"
           >
             {editingId === ing.id ? (
-              // Modo edición inline
               <div className="flex flex-col sm:flex-row gap-2 flex-1">
                 <input
                   className="border p-1 flex-1"
@@ -226,7 +221,6 @@ export default function Ingresos() {
                 </button>
               </div>
             ) : (
-              // Vista normal
               <>
                 <div className="flex-1">
                   <div className="font-medium">{ing.descripcion}</div>
@@ -235,8 +229,7 @@ export default function Ingresos() {
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  {/* Solo si puede editar mostramos Editar/Borrar */}
-                  {canEdit ? (
+                  {canEdit && (
                     <>
                       <button
                         className="text-blue-600 hover:underline"
@@ -253,7 +246,7 @@ export default function Ingresos() {
                         Eliminar
                       </button>
                     </>
-                  ) : null}
+                  )}
                 </div>
               </>
             )}

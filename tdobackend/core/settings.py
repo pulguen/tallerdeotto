@@ -146,10 +146,8 @@ REST_FRAMEWORK = {
     },
 }
 
-
 # Custom User
 AUTH_USER_MODEL = 'users.CustomUser'
-
 
 # Simple JWT
 SIMPLE_JWT = {
@@ -159,7 +157,6 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
 }
-
 
 # CSRF
 CSRF_TRUSTED_ORIGINS = [
@@ -180,16 +177,13 @@ SECURE_HSTS_PRELOAD = True
 SESSION_COOKIE_SECURE = not DEBUG
 SESSION_COOKIE_SAMESITE = 'Lax'
 
-
 # Proxy header (p.ej. Heroku / nginx)
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'
 
-
 # django-axes (bloqueo de logins abusivos)
 AXES_FAILURE_LIMIT = 5
 AXES_COOLOFF_TIME = 1  # en horas
-
 
 # Crear carpeta logs/ si no existe y configurar logging
 LOG_DIR = BASE_DIR / 'logs'
@@ -217,5 +211,3 @@ AUTHENTICATION_BACKENDS = [
     'axes.backends.AxesStandaloneBackend',      # <-- el nuevo nombre en django-axes 5.x
     'django.contrib.auth.backends.ModelBackend',
 ]
-
-

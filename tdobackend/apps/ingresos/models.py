@@ -1,3 +1,4 @@
+# apps/ingresos/models.py
 from django.db import models
 
 # Create your models here.
@@ -33,5 +34,3 @@ class Ingreso(models.Model):
 
     def __str__(self):
         return f"{self.fecha}: {self.monto} — {self.descripcion}"
-        
-    

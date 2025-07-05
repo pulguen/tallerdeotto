@@ -1,3 +1,4 @@
+// AuthProvider.jsx
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from './customAxios';
@@ -5,20 +6,23 @@ import AuthContext from './AuthContext';
 
 export default function AuthProvider({ children }) {
   const navigate = useNavigate();
-  const [user,    setUser]    = useState(null);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Refresh token on mount
+  // 🚀 Cargar perfil tras refrescar token
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.post(
+        const { data: tokenData } = await axios.post(
           'users/token/refresh/',
           {},
           { skipAuth: true }
         );
-        window.accessToken = data.access;
-        setUser({}); // podrías fetchear /users/me/ aquí
+        window.accessToken = tokenData.access;
+
+        // 🔁 Traer perfil real con grupos
+        const { data: profile } = await axios.get('users/me/');
+        setUser(profile);
       } catch {
         setUser(null);
       } finally {
@@ -27,17 +31,23 @@ export default function AuthProvider({ children }) {
     })();
   }, []);
 
+  // 🚀 Login: obtener token + perfil
   const login = useCallback(async (username, password) => {
-    const { data } = await axios.post(
+    const { data: tokenData } = await axios.post(
       'users/token/',
       { username, password },
       { skipAuth: true }
     );
-    window.accessToken = data.access;
-    setUser({ username });
+    window.accessToken = tokenData.access;
+
+    // 🔁 Traer perfil real con grupos
+    const { data: profile } = await axios.get('users/me/');
+    setUser(profile);
+
     navigate('/admin');
   }, [navigate]);
 
+  // Logout
   const logout = useCallback(async () => {
     try {
       await axios.post('users/token/blacklist/', {}, { skipAuth: true });
