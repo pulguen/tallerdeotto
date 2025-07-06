@@ -41,7 +41,6 @@ export default function App() {
               </PrivateRoute>
             }
           />
-          <Route path="*" element={<Navigate to="/" replace />} />
           {/* Si se accede a una ruta no definida, muestra una página de error o redirige */}
           <Route path="*" element={<div>404 Not Found</div>} />
         </Routes>

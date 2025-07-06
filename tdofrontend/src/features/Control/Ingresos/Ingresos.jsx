@@ -1,24 +1,33 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from '../../../context/customAxios';
 import { useAuth } from '../../../context/useAuth';
+import CommonTable from '../../../common/Components/Tabla/CommonTable';
+import CommonModal from '../../../common/Components/Modal/CommonModal';
+import CustomButton from '../../../common/Button/CustomButton';
+import TotalBox from '../../../common/Components/Resumen/TotalBox';
+
 
 export default function Ingresos() {
   const { user } = useAuth();
-
   const isAdmin = user?.groups?.includes('Admin');
   const isStaff = user?.groups?.includes('Staff');
   const canEdit = isAdmin || isStaff;
-
   const [ingresos, setIngresos] = useState([]);
   const [newDescripcion, setNewDescripcion] = useState('');
+  const [newCliente, setNewCliente] = useState('');
   const [newFecha, setNewFecha] = useState('');
   const [newMonto, setNewMonto] = useState('');
   const [editingId, setEditingId] = useState(null);
   const [editDescripcion, setEditDescripcion] = useState('');
+  const [editCliente, setEditCliente] = useState('');
   const [editFecha, setEditFecha] = useState('');
   const [editMonto, setEditMonto] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showModal, setShowModal] = useState(false);
+
+  const totalIngresos = ingresos.reduce((sum, ingreso) => sum + parseFloat(ingreso.monto), 0);
+
 
   const normalizeData = data => {
     if (Array.isArray(data)) return data;
@@ -33,7 +42,6 @@ export default function Ingresos() {
     setError('');
     try {
       const { data } = await axios.get('ingresos/');
-      console.log('Respuesta de la API:', data);
       setIngresos(normalizeData(data));
     } catch (err) {
       console.error(err);
@@ -44,11 +52,8 @@ export default function Ingresos() {
   }, []);
 
   useEffect(() => {
-    console.log("Componente Ingresos montado");
-    console.log("Usuario actual:", user);
-    console.log("Grupos:", user?.groups);
     fetchIngresos();
-  }, [fetchIngresos, user]);
+  }, [fetchIngresos]);
 
   const handleAdd = async () => {
     if (!canEdit) return;
@@ -65,11 +70,14 @@ export default function Ingresos() {
         descripcion: newDescripcion,
         fecha: newFecha,
         monto: montoNum,
+        cliente: newCliente,
       });
       setIngresos(prev => [...prev, created]);
       setNewDescripcion('');
+      setNewCliente('');
       setNewFecha('');
       setNewMonto('');
+      setShowModal(false);
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.detail || err.message);
@@ -97,6 +105,7 @@ export default function Ingresos() {
     if (!canEdit) return;
     setEditingId(ingreso.id);
     setEditDescripcion(ingreso.descripcion);
+    setEditCliente(ingreso.cliente || '');
     setEditFecha(ingreso.fecha);
     setEditMonto(String(ingreso.monto));
     setError('');
@@ -117,6 +126,7 @@ export default function Ingresos() {
         descripcion: editDescripcion,
         fecha: editFecha,
         monto: montoNum,
+        cliente: editCliente,
       });
       setIngresos(prev => prev.map(i => i.id === id ? updated : i));
       setEditingId(null);
@@ -129,22 +139,168 @@ export default function Ingresos() {
   };
 
   return (
-    <div className="p-6 max-w-xl mx-auto">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Gestión de Ingresos</h1>
+    <div className="p-6 max-w-4xl mx-auto">
+      <div className="flex justify-between items-center mb-3">
+        <h2 className="text-2xl font-bold">Ingresos</h2>
       </div>
 
       {error && <div className="mb-4 text-red-600">{error}</div>}
       {loading && <div className="mb-4">Cargando...</div>}
 
+      {!loading && ingresos.length === 0 && !error && (
+        <div className="text-gray-600">No hay ingresos registrados.</div>
+      )}
+
       {canEdit && (
-        <div className="flex flex-col sm:flex-row gap-2 mb-6">
+        <div className="mb-3">
+          <TotalBox label="Total de Ingresos" value={totalIngresos} />
+        </div>
+      )}
+
+
+      {!loading && ingresos.length > 0 && (
+        <CommonTable
+          columns={[
+            {
+              key: 'cliente',
+              header: 'Cliente',
+              render: (_, row) =>
+                editingId === row.id ? (
+                  <input
+                    className="border p-1 w-full"
+                    type="text"
+                    value={editCliente}
+                    onChange={e => setEditCliente(e.target.value)}
+                    disabled={loading}
+                  />
+                ) : (
+                  row.cliente || ''
+                ),
+            },
+            {
+              key: 'descripcion',
+              header: 'Descripción',
+              render: (_, row) =>
+                editingId === row.id ? (
+                  <input
+                    className="border p-1 w-full"
+                    type="text"
+                    value={editDescripcion}
+                    onChange={e => setEditDescripcion(e.target.value)}
+                    disabled={loading}
+                  />
+                ) : (
+                  row.descripcion
+                ),
+            },
+
+            {
+              key: 'fecha',
+              header: 'Fecha',
+              render: (_, row) =>
+                editingId === row.id ? (
+                  <input
+                    className="border p-1"
+                    type="date"
+                    value={editFecha}
+                    onChange={e => setEditFecha(e.target.value)}
+                    disabled={loading}
+                  />
+                ) : (
+                  row.fecha
+                ),
+            },
+            {
+              key: 'monto',
+              header: 'Monto',
+              render: (_, row) =>
+                editingId === row.id ? (
+                  <input
+                    className="border p-1 w-24"
+                    type="number"
+                    value={editMonto}
+                    onChange={e => setEditMonto(e.target.value)}
+                    disabled={loading}
+                  />
+                ) : (
+                  `$${parseFloat(row.monto).toLocaleString('es-AR')}`
+                ),
+            },
+          ]}
+          data={ingresos}
+          actions={(row) =>
+            editingId === row.id ? (
+              <div className="flex gap-2">
+                <CustomButton
+                  variant="success"
+                  size="sm"
+                  onClick={() => handleUpdate(row.id)}
+                  disabled={loading}
+                >
+                  Guardar
+                </CustomButton>
+                <CustomButton
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => setEditingId(null)}
+                  disabled={loading}
+                >
+                  Cancelar
+                </CustomButton>
+              </div>
+            ) : (
+              canEdit && (
+                <div className="flex gap-2">
+                  <CustomButton
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleEdit(row)}
+                    disabled={loading}
+                  >
+                    Editar
+                  </CustomButton>
+                  <CustomButton
+                    variant="danger"
+                    size="sm"
+                    onClick={() => handleDelete(row.id)}
+                    disabled={loading}
+                  >
+                    Eliminar
+                  </CustomButton>
+                </div>
+              )
+            )
+          }
+        />
+      )}
+      <div className="flex justify-between items-center mt-2 mb-4">
+        {canEdit && (
+          <CustomButton onClick={() => setShowModal(true)} disabled={loading}>
+            Nuevo Ingreso
+          </CustomButton>
+        )}
+      </div>
+      {/* Modal para nuevo ingreso */}
+      <CommonModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        title="Nuevo Ingreso"
+      >
+        <div className="flex flex-col gap-2">
           <input
-            className="border p-2 flex-1"
+            className="border p-2"
             type="text"
             placeholder="Descripción"
             value={newDescripcion}
             onChange={e => setNewDescripcion(e.target.value)}
+            disabled={loading}
+          />
+          <input
+            className="border p-2"
+            type="text"
+            placeholder="Cliente"
+            value={newCliente}
+            onChange={e => setNewCliente(e.target.value)}
             disabled={loading}
           />
           <input
@@ -155,104 +311,32 @@ export default function Ingresos() {
             disabled={loading}
           />
           <input
-            className="border p-2 w-32"
+            className="border p-2"
             type="number"
             placeholder="Monto"
             value={newMonto}
             onChange={e => setNewMonto(e.target.value)}
             disabled={loading}
           />
-          <button
-            className="bg-blue-600 text-white px-4 py-2 rounded disabled:opacity-50"
-            onClick={handleAdd}
-            disabled={loading}
-          >
-            Agregar
-          </button>
+          <div className="flex justify-end gap-2 mt-4">
+            <CustomButton
+              variant="secondary"
+              onClick={() => setShowModal(false)}
+              disabled={loading}
+            >
+              Cancelar
+            </CustomButton>
+            <CustomButton
+              variant="success"
+              onClick={handleAdd}
+              disabled={loading}
+              loading={loading}
+            >
+              Guardar
+            </CustomButton>
+          </div>
         </div>
-      )}
-
-      {!loading && ingresos.length === 0 && !error && (
-        <div className="text-gray-600">No hay ingresos registrados.</div>
-      )}
-
-      <ul className="space-y-4">
-        {ingresos.map(ing => (
-          <li
-            key={ing.id}
-            className="border p-4 rounded shadow-sm flex justify-between items-center"
-          >
-            {editingId === ing.id ? (
-              <div className="flex flex-col sm:flex-row gap-2 flex-1">
-                <input
-                  className="border p-1 flex-1"
-                  type="text"
-                  value={editDescripcion}
-                  onChange={e => setEditDescripcion(e.target.value)}
-                  disabled={loading}
-                />
-                <input
-                  className="border p-1"
-                  type="date"
-                  value={editFecha}
-                  onChange={e => setEditFecha(e.target.value)}
-                  disabled={loading}
-                />
-                <input
-                  className="border p-1 w-24"
-                  type="number"
-                  value={editMonto}
-                  onChange={e => setEditMonto(e.target.value)}
-                  disabled={loading}
-                />
-                <button
-                  className="bg-green-500 text-white px-2 py-1 rounded disabled:opacity-50"
-                  onClick={() => handleUpdate(ing.id)}
-                  disabled={loading}
-                >
-                  Guardar
-                </button>
-                <button
-                  className="bg-gray-300 px-2 py-1 rounded"
-                  onClick={() => setEditingId(null)}
-                  disabled={loading}
-                >
-                  Cancelar
-                </button>
-              </div>
-            ) : (
-              <>
-                <div className="flex-1">
-                  <div className="font-medium">{ing.descripcion}</div>
-                  <div className="text-sm text-gray-600">
-                    {ing.fecha} — ${ing.monto}
-                  </div>
-                </div>
-                <div className="flex gap-2">
-                  {canEdit && (
-                    <>
-                      <button
-                        className="text-blue-600 hover:underline"
-                        onClick={() => handleEdit(ing)}
-                        disabled={loading}
-                      >
-                        Editar
-                      </button>
-                      <button
-                        className="text-red-600 hover:underline"
-                        onClick={() => handleDelete(ing.id)}
-                        disabled={loading}
-                      >
-                        Eliminar
-                      </button>
-                    </>
-                  )}
-                </div>
-              </>
-            )}
-          </li>
-        ))}
-      </ul>
+      </CommonModal>
     </div>
   );
 }

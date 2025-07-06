@@ -9,6 +9,12 @@ from simple_history.models import HistoricalRecords
 class Ingreso(models.Model):
     history = HistoricalRecords()
 
+    cliente = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="Nombre del Cliente"
+    )
+
     monto = models.DecimalField(
         max_digits=10, decimal_places=2,
         help_text="Cantidad de dinero ingresada"
