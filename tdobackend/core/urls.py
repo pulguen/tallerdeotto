@@ -19,4 +19,8 @@ urlpatterns = [
 
     # Endpoints de ingresos
     path('api/ingresos/', include('apps.ingresos.urls')),
+
+    # Endpoints de gastos
+    path('api/gastos/', include('apps.gastos.urls')),
+
 ]

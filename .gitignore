@@ -1,16 +1,33 @@
-# Python/Django
-**/venv/
-**/__pycache__/
-**/*.py[cod]
+# Python / Django
+venv/
+env/
+.env
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.sqlite3
 db.sqlite3
 /logs/
 *.log
 
-# Node / Vite / React
+# Django migrations (si querés ignorarlas, opcional)
+# **/migrations/
+# !**/migrations/__init__.py
+
+# Node / React / Vite
 tdofrontend/node_modules/
 tdofrontend/dist/
 tdofrontend/.env
+tdofrontend/yarn.lock
+tdofrontend/package-lock.json
 
-# VSCode, macOS, etc.
+# VSCode, JetBrains, OS
 .vscode/
+.idea/
+*.iml
 .DS_Store
+
+# Otros
+*.sublime-workspace
+*.txt

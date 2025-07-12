@@ -1,3 +1,31 @@
-Crud de ingresos
-nuevo ingresos
-lista de ingresos
+Gastos
+crear secciones
+ej: fijos / cotideanos / emprendimiento
+
+items secciones
+ej:
+    FIJOS: monotributo, seguro, luz,
+    COTIDEANOS: salud, gimnasio, indumentaria
+
+[Resumen general]
+  → Total gastado este mes
+  → Presupuesto total vs gasto
+
+[Panel de creación]
+  → Formulario para: Categoría / Subcategoría / Gasto
+  → (opcional) Definir presupuesto mensual
+
+[Tabla de gastos]
+  → Listado filtrable (mes, categoría, etc.)
+  → Totales por subcategoría
+
+[Gráficos y alertas]
+  → Barras comparativas presupuesto vs gasto
+  → Alerta si se excede el presupuesto
+
+
+Compras 
+
+
+
+Ventas

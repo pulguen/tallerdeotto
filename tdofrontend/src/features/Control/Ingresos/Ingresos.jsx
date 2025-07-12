@@ -3,7 +3,7 @@ import axios from '../../../context/customAxios';
 import { useAuth } from '../../../context/useAuth';
 import CommonTable from '../../../common/Components/Tabla/CommonTable';
 import CommonModal from '../../../common/Components/Modal/CommonModal';
-import CustomButton from '../../../common/Button/CustomButton';
+import CustomButton from '../../../common/Components/Button/CustomButton';
 import TotalBox from '../../../common/Components/Resumen/TotalBox';
 
 
@@ -27,7 +27,6 @@ export default function Ingresos() {
   const [showModal, setShowModal] = useState(false);
 
   const totalIngresos = ingresos.reduce((sum, ingreso) => sum + parseFloat(ingreso.monto), 0);
-
 
   const normalizeData = data => {
     if (Array.isArray(data)) return data;
@@ -265,7 +264,7 @@ export default function Ingresos() {
                     onClick={() => handleDelete(row.id)}
                     disabled={loading}
                   >
-                    Eliminar
+                    x
                   </CustomButton>
                 </div>
               )

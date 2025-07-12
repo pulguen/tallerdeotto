@@ -23,6 +23,7 @@ INSTALLED_APPS = [
 
     'apps.users.apps.UsersConfig',
     'apps.ingresos',
+    'apps.gastos',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -141,8 +142,8 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.UserRateThrottle',
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '10/min',
-        'user': '100/min',
+        'anon': '1000/min',
+        'user': '10000/min',
     },
 }
 
@@ -182,8 +183,8 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'
 
 # django-axes (bloqueo de logins abusivos)
-AXES_FAILURE_LIMIT = 5
-AXES_COOLOFF_TIME = 1  # en horas
+AXES_FAILURE_LIMIT = 20
+AXES_COOLOFF_TIME = 0.01  # en horas
 
 # Crear carpeta logs/ si no existe y configurar logging
 LOG_DIR = BASE_DIR / 'logs'
@@ -211,3 +212,4 @@ AUTHENTICATION_BACKENDS = [
     'axes.backends.AxesStandaloneBackend',      # <-- el nuevo nombre en django-axes 5.x
     'django.contrib.auth.backends.ModelBackend',
 ]
+
