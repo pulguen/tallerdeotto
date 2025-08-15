@@ -11,5 +11,15 @@
 
 .mySwiper{
     background-color: rgb(146, 144, 144);
-    height: 400px;
+    height: 400px;    
+}
+
+.swiper-slide-descatados {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: black;
+        background-color: rgb(146, 144, 144);
+    height: 400px; 
 }

@@ -5,6 +5,7 @@ import CommonTable from '../../../common/Components/Tabla/CommonTable';
 import CommonModal from '../../../common/Components/Modal/CommonModal';
 import CustomButton from '../../../common/Components/Button/CustomButton';
 import TotalBox from '../../../common/Components/Resumen/TotalBox';
+import { formatDate } from '../../../utils/formatDate';
 
 
 export default function Ingresos() {
@@ -206,7 +207,7 @@ export default function Ingresos() {
                     disabled={loading}
                   />
                 ) : (
-                  row.fecha
+                  formatDate(row.fecha)
                 ),
             },
             {

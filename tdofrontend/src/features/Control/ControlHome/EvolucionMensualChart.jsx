@@ -1,4 +1,3 @@
-import React from "react";
 import {
   ResponsiveContainer,
   LineChart,
@@ -10,7 +9,7 @@ import {
   CartesianGrid
 } from "recharts";
 
-export default function EvolucionMensualChart({ data }) {
+ export default function EvolucionMensualChart({ data }) {
   return (
     <div className="bg-white rounded-2xl shadow p-4 mb-8">
       <h4 className="mb-2 font-semibold">Evolución Mensual</h4>
