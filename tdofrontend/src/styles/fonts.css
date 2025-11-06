@@ -1,0 +1,63 @@
+/* Clases utilitarias para activar las fuentes Typekit en partes del sistema */
+
+/* Opcional: variable con fallback */
+:root {
+  --ui-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Brokenscript regular (nombre según Typekit) */
+.ff-brokenscript {
+  font-family: "ff-brokenscript-web", var(--ui-sans);
+  font-weight: 700; /* según la fuente añadida */
+  font-style: normal;
+  /* ajuste fino */
+  line-height: 1;
+  letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Brokenscript condensed / bold */
+.ff-brokenscript-cond {
+  font-family: "ff-brokenscript-bc-web", var(--ui-sans);
+  font-weight: 700;
+  font-style: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ejemplos de utilidades extra */
+.u-display-brokenscript {
+  font-size: clamp(1.25rem, 3.8vw, 2.5rem);
+}
+
+/* Si necesitas aplicar la fuente a todo el site (opcional):
+   body.use-brokenscript { font-family: "ff-brokenscript-web", var(--ui-sans); }
+*/
+
+/* Utilidades para las familias cargadas desde Typekit / Adobe Fonts */
+
+:root {
+  --ui-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Brokenscript Bold (display) */
+.ff-brokenscript {
+  font-family: "ff-brokenscript-web", var(--ui-sans);
+  font-weight: 700;
+  font-style: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Brokenscript Condensed Bold */
+.ff-brokenscript-cond {
+  font-family: "ff-brokenscript-bc-web", var(--ui-sans);
+  font-weight: 700;
+  font-style: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Opcional: utilidades para tamaños */
+.u-brokenscript-lg { font-size: clamp(1.25rem, 3.5vw, 2.25rem); }
+.u-brokenscript-sm { font-size: clamp(0.9rem, 2.2vw, 1rem); }

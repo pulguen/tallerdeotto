@@ -12,12 +12,6 @@ export default function Footer() {
             <i className="fab fa-facebook-f"></i>
           </a>
           <a href="/" className="me-4 text-reset">
-            <i className="fab fa-twitter"></i>
-          </a>
-          <a href="/" className="me-4 text-reset">
-            <i className="fab fa-google"></i>
-          </a>
-          <a href="/" className="me-4 text-reset">
             <i className="fab fa-instagram"></i>
           </a>
           <a href="/" className="me-4 text-reset">
@@ -38,7 +32,7 @@ export default function Footer() {
                 Taller de Otto
               </h6>
               <p>
-                Taller de diseño gráfico, edición y serigrafía para instituciones, empresas y emprendimientos.
+                Soluciones creativas y tecnológicas para instituciones, empresas y emprendimientos.
               </p>
             </div>
 
@@ -46,15 +40,17 @@ export default function Footer() {
               <h6 className="text-uppercase fw-bold mb-4">Productos</h6>
               <p><a href="#!" className="text-reset">Remeras</a></p>
               <p><a href="#!" className="text-reset">Buzos</a></p>
+              <p><a href="#!" className="text-reset">Camperas</a></p>
               <p><a href="#!" className="text-reset">Gorras</a></p>
-              <p><a href="#!" className="text-reset">Gorros</a></p>
+              <p><a href="#!" className="text-reset">Rockys</a></p>
             </div>
 
             <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
               <h6 className="text-uppercase fw-bold mb-4">Servicios</h6>
               <p><a href="#!" className="text-reset">Diseño gráfico</a></p>
-              <p><a href="#!" className="text-reset">Serigrafía</a></p>
-              <p><a href="#!" className="text-reset">Presupuestos</a></p>
+              <p><a href="#!" className="text-reset">Programación</a></p>
+              <p><a href="#!" className="text-reset">Estampado</a></p>
+              <p><a href="#!" className="text-reset">Impresiones</a></p>
               <p><a href="#!" className="text-reset">Asesoramiento</a></p>
             </div>
 

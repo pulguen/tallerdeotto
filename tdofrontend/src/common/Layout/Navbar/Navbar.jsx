@@ -37,7 +37,7 @@ const CustomNavbar = () => {
           <Nav className="me-auto">
             <Nav.Link href="/" className="text-white">Home</Nav.Link>
             <Nav.Link href="/about" className="text-white">Tienda</Nav.Link>
-            <Nav.Link href="/services" className="text-white">Presupuestos</Nav.Link>
+            <Nav.Link href="/services" className="text-white">Servicios</Nav.Link>
             <Nav.Link href="/services" className="text-white">El taller</Nav.Link>
             <Nav.Link href="/services" className="text-white">Contacto</Nav.Link>
 
@@ -45,7 +45,9 @@ const CustomNavbar = () => {
             <NavDropdown title="Productos" id="basic-nav-dropdown" className="text-white">
               <NavDropdown.Item href="#action/3.1">Remeras</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Buzos</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">Camperas</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Gorras</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">Rockys</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">Otra categoría</NavDropdown.Item>
             </NavDropdown>
@@ -57,3 +59,4 @@ const CustomNavbar = () => {
 };
 
 export default CustomNavbar;
+

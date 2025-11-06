@@ -11,6 +11,7 @@ import useAutoLogout from './hooks/useAutoLogout';
 import App from './App.jsx';
 import './index.css';
 import GlobalLayout from './common/Layout/GlobalLayout/GlobalLayout.jsx';
+import './styles/fonts.css'; // <-- importar utilidades de fuentes
 
 
 /* eslint-disable react-refresh/only-export-components */

@@ -4,7 +4,7 @@ ej: fijos / cotideanos / emprendimiento
 
 items secciones
 ej:
-    FIJOS: monotributo, seguro, luz,
+    FIJOS: monotributo, seguro, luz, 
     COTIDEANOS: salud, gimnasio, indumentaria
 
 [Resumen general]
@@ -23,9 +23,7 @@ ej:
   → Barras comparativas presupuesto vs gasto
   → Alerta si se excede el presupuesto
 
-
 Compras 
-
 
 
 Ventas

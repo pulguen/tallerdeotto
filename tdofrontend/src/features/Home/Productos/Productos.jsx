@@ -1,40 +1,59 @@
 // src/features/Home/Productos/Productos.jsx
-
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
 import './Productos.css';
-
-// import required modules
 import { FreeMode, Pagination } from 'swiper/modules';
 
 export default function ProductosSwiper() {
+  const products = [
+    { id: 'remeras',  title: 'Remeras',  image: '/Images/Productos/remeras.png' },
+    { id: 'buzos',    title: 'Buzos',    image: '/Images/Productos/buzos.png' },
+    { id: 'camperas', title: 'Camperas', image: '/Images/Productos/camperas.png' },
+    { id: 'gorras',   title: 'Gorras',   image: '/Images/Productos/gorras.png' },
+    { id: 'gorritos', title: 'Rockys', image: '/Images/Productos/rockys.png' },
+    { id: 'pilusos', title: 'Pilusos', image: '/Images/Productos/pilusos.png' }
+  ];
+
+  const colors = ['#FFF4E6', '#E8F7FF', '#F0FDF4', '#FFF7ED', '#F8EEF8'];
+
   return (
     <>
       <h2>Nuestros productos</h2>
       <Swiper
         spaceBetween={30}
-        freeMode={true}
+        freeMode
         pagination={{ clickable: true }}
         modules={[FreeMode, Pagination]}
         className="mySwiper"
         breakpoints={{
-          // width >= 0px
-          0:   { slidesPerView: 2 },
-          // width >= 601px
-          601: { slidesPerView: 3 },
-          // width >= 991px
-          991: { slidesPerView: 4 },
-          // width >= 1201px
-          1201:{ slidesPerView: 5 },
+          0:    { slidesPerView: 2 },
+          601:  { slidesPerView: 3 },
+          991:  { slidesPerView: 4 },
+          1201: { slidesPerView: 5 },
         }}
       >
-        <SwiperSlide>Remeras</SwiperSlide>
-        <SwiperSlide>Buzos</SwiperSlide>
-        <SwiperSlide>Camperas</SwiperSlide>
-        <SwiperSlide>Gorras</SwiperSlide>
-        <SwiperSlide>Gorritos</SwiperSlide>
+        {products.map((p, idx) => (
+          <SwiperSlide
+            key={p.id}
+            className="producto-slide"
+            style={{ backgroundColor: colors[idx % colors.length] }}
+          >
+            <figure className="producto-figure">
+              <img
+                src={p.image}
+                alt={p.title}
+                loading="lazy"
+                className="producto-image"
+              />
+              {/* title para ver completo en hover */}
+              <figcaption className="producto-caption" title={p.title}>
+                {p.title}
+              </figcaption>
+            </figure>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </>
   );
