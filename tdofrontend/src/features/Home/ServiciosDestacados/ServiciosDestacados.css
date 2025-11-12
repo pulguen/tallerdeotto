@@ -1,12 +1,12 @@
-/* ===== Variables y reset pequeño ===== */
+/* ===== Variables ===== */
 :root {
   --sd-bg: #f7f7f8;
   --sd-card-bg: #ffffff;
-  --sd-text: #111827;       /* slate-900 */
-  --sd-text-muted: #4b5563; /* slate-600 */
-  --sd-primary: #111827;    /* negro/gris oscuro, cambialo por tu marca */
+  --sd-text: #111827;
+  --sd-text-muted: #4b5563;
+  --sd-primary: #111827;
   --sd-primary-hover: #0b1220;
-  --sd-border: #e5e7eb;     /* gray-200 */
+  --sd-border: #e5e7eb;
   --sd-shadow: 0 6px 18px rgba(0,0,0,0.06);
   --sd-radius: 12px;
 }
@@ -20,21 +20,21 @@
 
 .titulo-servicios-destacados {
   margin: 10px 16px 0;
-  font-size: 1.25rem; /* 20px */
+  font-size: 1.25rem;
   line-height: 1.2;
   color: var(--sd-text);
   font-weight: 700;
 }
 
-/* ===== Swiper base ===== */
+/* ===== Swiper ===== */
 .mySwiper {
-  background: transparent;              /* sacamos el gris de fondo */
-  padding: 10px 8px 24px;               /* respiración y espacio para bullets */
+  background: transparent;
+  padding: 10px 8px 24px;
 }
 
-.swiper-slide-destacados {              /* CORRECCIÓN: nombre correcto */
+.swiper-slide-destacados {
   display: flex;
-  height: auto;                         /* altura dinámica */
+  height: auto;
 }
 
 .slide-card {
@@ -49,8 +49,9 @@
   overflow: hidden;
 }
 
-/* Media con ratio agradable y recorte */
+/* ===== Media con título overlay ===== */
 .slide-media {
+  position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
@@ -62,36 +63,69 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  object-position: center;
 }
 
-/* Contenido */
+/* Banda superior con gradiente y título centrado */
+.slide-title-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* gradiente sutil para contraste del texto sobre la imagen */
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.55),
+      rgba(0,0,0,0.25),
+      rgba(0,0,0,0)
+    );
+  padding: 10px 12px 22px; /* extra padding para el fade */
+  display: flex;
+  justify-content: center;
+  pointer-events: none; /* no interfiere con clicks en la imagen */
+}
+
+.slide-title {
+  margin: 0;
+  font-size: 1.8 rem;
+  line-height: 1.25;
+  color: #fff;              /* blanco sobre gradiente */
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: 0.2px;
+  text-shadow: 0 1px 2px rgba(0,0,0,.35);
+  padding: 6px 10px;
+  
+}
+
+/* Variante cuando el título no va en overlay */
+.slide-title.no-overlay {
+  color: var(--sd-text);
+  text-shadow: none;
+  text-align: left;
+}
+
+/* ===== Contenido ===== */
 .slide-content {
   display: grid;
   gap: 8px;
   padding: 12px;
 }
 
-.slide-title {
-  font-size: 1.05rem;
-  line-height: 1.25;
-  color: var(--sd-text);
-  font-weight: 700;
-  margin: 0;
-}
-
-/* Limitar desborde del copy en tarjetas pequeñas */
 .slide-desc {
   color: var(--sd-text-muted);
   font-size: 0.95rem;
   line-height: 1.35;
   margin: 0;
   display: -webkit-box;
-  line-clamp: 3;      /* ~3 líneas en mobile */
+  /* Estándar + prefijo para compatibilidad */
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* Botón/CTA */
 .slide-cta {
   justify-self: start;
   margin-top: 4px;
@@ -116,12 +150,12 @@
   outline: none;
 }
 
-/* ===== Paginación (bullets) ===== */
+/* ===== Paginación ===== */
 .swiper-pagination-bullets .swiper-pagination-bullet {
   width: 8px;
   height: 8px;
   opacity: .5;
-  background: #9ca3af; /* gray-400 */
+  background: #9ca3af;
   transition: transform .15s ease, opacity .15s ease;
 }
 
@@ -131,10 +165,10 @@
   background: var(--sd-primary);
 }
 
-/* ===== Navegación (oculta en mobile) ===== */
+/* ===== Navegación ===== */
 .swiper-button-next,
 .swiper-button-prev {
-  display: none; /* mobile-first: oculto */
+  display: none; /* mobile-first */
   color: var(--sd-text);
 }
 
@@ -144,23 +178,20 @@
     margin: 12px 18px 0;
     font-size: 1.35rem;
   }
-  .slide-title { font-size: 1.1rem; }
+  .slide-title { font-size: 1.15rem; }
 }
 
 @media (min-width: 768px) {
-  .mySwiper {
-    padding: 12px 10px 30px;
-  }
+  .mySwiper { padding: 12px 10px 30px; }
   .swiper-button-next,
-  .swiper-button-prev {
-    display: flex;            /* mostrar flechas en tablet/desktop */
-  }
-  .slide-card {
-    grid-template-rows: auto 1fr;
-  }
+  .swiper-button-prev { display: flex; }
+
+  /* Más alto el media para desktop chico */
+  .slide-media { aspect-ratio: 16 / 8.5; }
+
   .slide-desc {
     line-clamp: 4;
-    -webkit-line-clamp: 4;   /* un poco más de texto */
+    -webkit-line-clamp: 4;
   }
 }
 
@@ -169,17 +200,13 @@
     margin: 14px 24px 0;
     font-size: 1.5rem;
   }
-  .mySwiper {
-    padding: 14px 12px 36px;
-  }
+  .mySwiper { padding: 14px 12px 36px; }
   .slide-content { padding: 14px; }
-  .slide-title { font-size: 1.15rem; }
+  .slide-title { font-size: 1.2rem; }
   .slide-desc { font-size: 1rem; }
 }
 
-/* ===== Accesibilidad y motion ===== */
+/* ===== Motion ===== */
 @media (prefers-reduced-motion: reduce) {
-  .slide-cta {
-    transition: none;
-  }
+  .slide-cta { transition: none; }
 }

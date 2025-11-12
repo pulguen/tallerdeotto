@@ -48,22 +48,23 @@ const HeaderHome = () => {
           </div>
 
           <ul className="hero-features" aria-label="Beneficios">
-            <li>⚡ Entregas ágiles</li>
+            <li>⚡ En
+              tregas ágiles</li>
             <li>🎯 Enfoque a resultados</li>
-            <li>🌱 Comunicación coherente en todos los canales </li>
+            <li>🌱 Comunicación efectiva para todos tus canales </li>
           </ul>
 
           <div className="hero-stats" aria-label="Indicadores">
             <div className="stat">
               <span className="stat-number">+10</span>
-              <span className="stat-label">Proyectos completados</span>
+              <span className="stat-label">Años de experiencia</span>
             </div>
             <div className="stat">
               <span className="stat-number">4 áreas</span>
               <span className="stat-label">Diseño, web, estampado, impresión</span>
             </div>
             <div className="stat">
-              <span className="stat-number">+100</span>
+              <span className="stat-number">100+</span>
               <span className="stat-label">Proyectos completados</span>
             </div>
           </div>

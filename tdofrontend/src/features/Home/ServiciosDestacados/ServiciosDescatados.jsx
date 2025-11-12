@@ -10,10 +10,13 @@ import './ServiciosDestacados.css';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import '../../../styles/fonts.css'; // <-- importar utilidades de fuentes
+import '../../../styles/fonts.css'; // utilidades de fuentes
 
-export default function ServiciosDestacados({ slidesData, fetchFromApi = false, apiEndpoint = '/api/servicios' }) {
-  // Ejemplo de datos estáticos; reemplaza por props o fetch si necesitas datos dinámicos
+export default function ServiciosDestacados({
+  slidesData,
+  fetchFromApi = false,
+  apiEndpoint = '/api/servicios'
+}) {
   const defaultSlides = [
     {
       id: 1,
@@ -26,49 +29,56 @@ export default function ServiciosDestacados({ slidesData, fetchFromApi = false, 
     },
     {
       id: 2,
+      title: 'Social Media Management',
+      description: 'Gestión integral de redes: planificación, contenido, métricas y campañas.',
+      image: '/Images/Servicios/social-media.png',
+      alt: 'Gestión profesional de redes sociales y marketing digital',
+      cta: 'Conocer más',
+      link: '/contacto'
+    },
+    {
+      id: 3,
       title: 'Diseño web',
-      description: 'Sitios rápidos en React/Next, omptimizados para SEO.',
+      description: 'Sitios rápidos en React/Next, optimizados para SEO.',
       image: '/Images/Servicios/diseno-web.png',
       alt: 'Diseño de sitios web',
       cta: 'Solicitar presupuesto',
       link: '/contacto'
     },
     {
-      id: 3,
-      title: 'Serigrafía',
-      description: 'Estampado de indumentaria, textiles y más',
+      id: 4,
+      title: 'Serigrafía - Vinilo - DTF',
+      description: 'Estampado de indumentaria, textiles y más.',
       image: '/Images/Servicios/serigrafia.png',
-      alt: 'estampado sobre remeras',
+      alt: 'Estampado sobre remeras',
       cta: 'Ver opciones',
       link: '/servicios/estampado'
     },
-        {
-      id: 4,
+    {
+      id: 5,
       title: 'Desarrollo de Software',
-      description: 'Apps a medida, paneles y automatizaciones',
+      description: 'Apps a medida, paneles y automatizaciones.',
       image: '/Images/Servicios/desarrollo-software.png',
-      alt: 'Código de editor',
+      alt: 'Código en editor',
       cta: 'Charlemos tu proyecto',
       link: '/contacto'
     },
     {
-      id: 5,
+      id: 6,
       title: 'Impresiones profesionales',
-      description: 'Impresión digital y offset de alta calidad en folletos, tarjetas, gigantografías y mas ',
+      description: 'Digital y offset de alta calidad en folletos, tarjetas y gran formato.',
       image: '/Images/Servicios/impresiones.png',
-      alt: 'Ejemplo de impresiones gráficas en papel y gran formato',
+      alt: 'Ejemplos de impresiones',
       cta: 'Solicitar presupuesto',
       link: '/contacto'
     }
   ];
 
-  // Normaliza datos provenientes del admin/API a la for 
-  // ma que espera el componente
   const normalizeSlides = (raw = []) => {
     if (!Array.isArray(raw)) return [];
     return raw.map((item, idx) => ({
       id: item.id ?? item.slug ?? idx,
-      title: item.title ?? item.name ?? 'Servicio',
+      title: item.title ?? item.name ?? '',
       description: item.description ?? item.summary ?? '',
       image: item.imageUrl ?? item.image ?? '/images/default-servicio.jpg',
       alt: item.alt ?? item.imageAlt ?? item.title ?? 'Servicio',
@@ -77,19 +87,15 @@ export default function ServiciosDestacados({ slidesData, fetchFromApi = false, 
     }));
   };
 
-  // Usa slidesData (prop) si viene; si no usa estado interno que puede venir de fetch o del default
   const [localSlides, setLocalSlides] = useState(() =>
     Array.isArray(slidesData) && slidesData.length ? normalizeSlides(slidesData) : defaultSlides
   );
 
   useEffect(() => {
-    // si llegan slides por props, actualiza localSlides
     if (Array.isArray(slidesData) && slidesData.length) {
       setLocalSlides(normalizeSlides(slidesData));
       return;
     }
-
-    // si está activado el fetch desde API (admin) y no hay slides por props, traerlos
     if (fetchFromApi) {
       let cancelled = false;
       fetch(apiEndpoint)
@@ -102,18 +108,14 @@ export default function ServiciosDestacados({ slidesData, fetchFromApi = false, 
           const normalized = normalizeSlides(data);
           if (normalized.length) setLocalSlides(normalized);
         })
-        .catch(() => {
-          // En caso de error, mantener defaultSlides (silencioso). Puedes loguear si lo precisas.
-        });
-      return () => {
-        cancelled = true;
-      };
+        .catch(() => {});
+      return () => { cancelled = true; };
     }
   }, [slidesData, fetchFromApi, apiEndpoint]);
 
   return (
     <>
-      <h2 className='titulo-servicios-destacados'>Servicios Destacados</h2>
+      <h2 className="titulo-servicios-destacados">Servicios Destacados</h2>
       <Swiper
         centeredSlides={false}
         slidesPerView={1}
@@ -124,46 +126,67 @@ export default function ServiciosDestacados({ slidesData, fetchFromApi = false, 
         breakpoints={{
           640: { slidesPerView: 1.2, spaceBetween: 14, centeredSlides: true },
           768: { slidesPerView: 2, spaceBetween: 16 },
-          1024:{ slidesPerView: 3, spaceBetween: 20 }
+          1024: { slidesPerView: 3, spaceBetween: 20 }
         }}
         modules={[Autoplay, Pagination, Navigation]}
         className="mySwiper"
-  aria-label="Carrusel de servicios destacados"
+        aria-label="Carrusel de servicios destacados"
       >
-        {localSlides.map((s) => (
-          <SwiperSlide key={s.id} className='swiper-slide-destacados'>
-            <article className="slide-card" role="group" aria-labelledby={`slide-title-${s.id}`}>
-              <div className="slide-media">
-                {/* lazy loading para mejor performance */}
-                <img
-                  src={s.image}
-                  alt={s.alt || s.title}
-                  loading="lazy"
-                  className="slide-image"
-                />
-              </div>
-              <div className="slide-content">
-                <h3 id={`slide-title-${s.id}`} className="slide-title ff-brokenscript-cond">{s.title}</h3>
-                <p className="slide-desc">{s.description}</p>
-                <a
-                  className="slide-cta"
-                  href={s.link || '#'}
-                  target={s.link && s.link.startsWith('http') ? '_blank' : '_self'}
-                  rel={s.link && s.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  aria-label={`${s.cta} - ${s.title}`}
-                >
-                  {s.cta}
-                </a>
-              </div>
-            </article>
-          </SwiperSlide>
-        ))}
+        {localSlides.map((s) => {
+          const hasTitle = Boolean(s.title && s.title.trim());
+          const titleId = hasTitle ? `slide-title-${s.id}` : undefined;
+          return (
+            <SwiperSlide key={s.id} className="swiper-slide-destacados">
+              <article
+                className="slide-card"
+                role="group"
+                aria-labelledby={titleId}
+                {...(!hasTitle ? { 'aria-label': s.alt || 'Servicio' } : {})}
+              >
+                <div className="slide-media">
+                  {/* Título overlay centrado arriba */}
+                  {hasTitle && (
+                    <div className="slide-title-overlay">
+                      <h3 id={titleId} className="slide-title ff-brokenscript-cond">
+                        {s.title}
+                      </h3>
+                    </div>
+                  )}
+                  <img
+                    src={s.image}
+                    alt={s.alt || s.title || 'Servicio'}
+                    loading="lazy"
+                    className="slide-image"
+                  />
+                </div>
+
+                <div className="slide-content">
+                  {/* Si no hay título arriba de la imagen, mostramos uno normal en contenido */}
+                  {!hasTitle && (
+                    <h3 className="slide-title no-overlay ff-brokenscript-cond">
+                      {s.title || 'Servicio'}
+                    </h3>
+                  )}
+                  <p className="slide-desc">{s.description}</p>
+                  <a
+                    className="slide-cta"
+                    href={s.link || '#'}
+                    target={s.link && s.link.startsWith('http') ? '_blank' : '_self'}
+                    rel={s.link && s.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    aria-label={`${s.cta} - ${s.title || 'Servicio'}`}
+                  >
+                    {s.cta}
+                  </a>
+                </div>
+              </article>
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
     </>
   );
 }
 
-// PropTypes y defaultProps para documentar la interfaz del componente
 ServiciosDestacados.propTypes = {
   slidesData: PropTypes.arrayOf(PropTypes.object),
   fetchFromApi: PropTypes.bool,
@@ -175,12 +198,3 @@ ServiciosDestacados.defaultProps = {
   fetchFromApi: false,
   apiEndpoint: '/api/servicios'
 };
-
-/*
-Notas:
-- En el admin deberías exponer un endpoint que devuelva una lista con campos (id/title/description/imageUrl/ctaText/url)
-  que aquí se normalizan con normalizeSlides.
-- En producción conviene validar datos en el server y versionar el API; aquí el componente acepta tanto datos ya normalizados
-  (por props) como cargarlos directamente si fetchFromApi=true.
-- Ajusta ServiciosDestacados.css para los new classes (slide-card, slide-media, slide-image, slide-content, slide-cta).
-*/
