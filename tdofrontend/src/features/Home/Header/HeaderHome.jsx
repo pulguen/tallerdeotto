@@ -2,6 +2,16 @@
 import './HeaderHome.css';
 
 const HeaderHome = () => {
+  // Reemplazá este número por tu número real de WhatsApp en formato internacional
+  // 54 = Argentina, luego código de área sin 0, y número sin 15
+  const whatsappNumber = '5491123321006';
+
+  const whatsappMessage = encodeURIComponent(
+    '¡Hola! Me gustaría trabajar con Taller de Otto y pedir un presupuesto 😊'
+  );
+
+  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+
   return (
     <header className="hero">
       {/* Fondo decorativo suave */}
@@ -14,8 +24,8 @@ const HeaderHome = () => {
               <stop offset="100%" stopColor="var(--brand-700)" />
             </linearGradient>
           </defs>
-          <circle cx="120" cy="120" r="120" fill="url(#g1)" opacity="0.35"/>
-          <circle cx="700" cy="300" r="180" fill="url(#g1)" opacity="0.25"/>
+          <circle cx="120" cy="120" r="120" fill="url(#g1)" opacity="0.35" />
+          <circle cx="700" cy="300" r="180" fill="url(#g1)" opacity="0.25" />
         </svg>
       </div>
 
@@ -34,30 +44,39 @@ const HeaderHome = () => {
           <p className="eyebrow">DISEÑO GRÁFICO - UX/UI - DESARROLLO DE SOFTWARE</p>
 
           <h1 className="hero-title">
-            Soluciones <span className="highlight ff-brokenscript"> creativas</span> y <span className="highlight ff-brokenscript"> tecnológicas</span> para tu negocio
+            Soluciones <span className="highlight ff-brokenscript"> creativas</span> y{' '}
+            <span className="highlight ff-brokenscript"> tecnológicas</span> para marcas, empresas e instituciones
           </h1>
 
           <p className="hero-subtitle">
             Combinamos diseño, tecnología y producción gráfica para ofrecer resultados integrales:
             desde tu identidad visual hasta plataformas web personalizadas.
           </p>
+
           <div className="hero-ctas" role="group" aria-label="Acciones principales">
-            <a href="/contacto" className="btn btn-primary highlight ff-brokenscript " aria-label="Ir a contacto para comenzar">
+            <a
+              href={whatsappLink}
+              className="btn btn-primary highlight ff-brokenscript"
+              aria-label="Abrir conversación de WhatsApp con Taller de Otto para comenzar un proyecto"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {/* Si tenés Font Awesome cargado, podés agregar el ícono */}
+              <i className="fa-brands fa-whatsapp" style={{ marginRight: '0.5rem' }} aria-hidden="true" />
               Trabajemos juntos
             </a>
           </div>
 
           <ul className="hero-features" aria-label="Beneficios">
-            <li>⚡ En
-              tregas ágiles</li>
+            <li>⚡ Entregas ágiles</li>
             <li>🎯 Enfoque a resultados</li>
-            <li>🌱 Comunicación efectiva para todos tus canales </li>
+            <li>🌱 Comunicación efectiva para todos tus canales</li>
           </ul>
 
           <div className="hero-stats" aria-label="Indicadores">
             <div className="stat">
               <span className="stat-number">+10</span>
-              <span className="stat-label">Años de experiencia</span>
+              <span className="stat-label">Años de trayectoria</span>
             </div>
             <div className="stat">
               <span className="stat-number">4 áreas</span>
@@ -65,7 +84,7 @@ const HeaderHome = () => {
             </div>
             <div className="stat">
               <span className="stat-number">100+</span>
-              <span className="stat-label">Proyectos completados</span>
+              <span className="stat-label">Proyectos realizados</span>
             </div>
           </div>
         </div>
@@ -74,11 +93,7 @@ const HeaderHome = () => {
         <div className="hero-visual" aria-hidden="true">
           <picture>
             <source srcSet="/images/hero/hero-home-1280.webp" type="image/webp" />
-            <img
-              src="/images/hero/hero-home-1280.jpg"
-              alt=""
-              loading="eager"
-            />
+            <img src="/images/hero/hero-home-1280.jpg" alt="" loading="eager" />
           </picture>
         </div>
       </div>

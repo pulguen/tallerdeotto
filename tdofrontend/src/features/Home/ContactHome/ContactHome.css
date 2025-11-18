@@ -1,0 +1,226 @@
+/* src/components/Home/ContactoHome.css */
+
+.contacto-home {
+  position: relative;
+  padding: 4rem 1.5rem;
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.06), transparent 55%),
+              radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.04), transparent 55%),
+              var(--surface-950, #050816);
+  color: #f9fafb;
+}
+
+.contacto-home__container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 3rem;
+  align-items: stretch;
+}
+
+/* Columna texto */
+.contacto-home__info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contacto-home__title {
+  font-size: clamp(1.8rem, 2.3vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.contacto-home__subtitle {
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: rgba(249, 250, 251, 0.75);
+  max-width: 36rem;
+}
+
+.contacto-home__highlights {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.contacto-home__highlights li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(15, 23, 42, 0.7);
+  border-radius: 999px;
+  padding: 0.55rem 0.95rem;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  backdrop-filter: blur(10px);
+}
+
+.contacto-home__whatsapp {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  font-size: 0.95rem;
+  color: rgba(249, 250, 251, 0.8);
+}
+
+.contacto-home__whatsapp-btn {
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background: var(--brand-500, #22c55e);
+  color: #022c22;
+  box-shadow: 0 12px 30px rgba(34, 197, 94, 0.28);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.contacto-home__whatsapp-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 35px rgba(34, 197, 94, 0.35);
+  background: var(--brand-400, #4ade80);
+}
+
+/* Columna formulario */
+
+.contacto-home__form-wrapper {
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 20px;
+  padding: 1.8rem 1.6rem;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  box-shadow: 0 16px 45px rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(18px);
+}
+
+.contacto-home__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contacto-home__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.contacto-home__field-group {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.contacto-home__field label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.contacto-home__field input,
+.contacto-home__field select,
+.contacto-home__field textarea {
+  border-radius: 10px;
+  border: 1px solid rgba(51, 65, 85, 0.9);
+  padding: 0.65rem 0.8rem;
+  font-size: 0.92rem;
+  background: rgba(15, 23, 42, 0.9);
+  color: #e5e7eb;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.contacto-home__field input::placeholder,
+.contacto-home__field textarea::placeholder {
+  color: rgba(148, 163, 184, 0.7);
+}
+
+.contacto-home__field input:focus,
+.contacto-home__field select:focus,
+.contacto-home__field textarea:focus {
+  border-color: var(--brand-400, #38bdf8);
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.5);
+  background: rgba(15, 23, 42, 0.95);
+}
+
+.contacto-home__feedback {
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.contacto-home__feedback--error {
+  color: #fecaca;
+}
+
+.contacto-home__feedback--success {
+  color: #bbf7d0;
+}
+
+.contacto-home__submit {
+  margin-top: 0.4rem;
+  width: 100%;
+  border-radius: 999px;
+  padding: 0.75rem 1.2rem;
+  border: none;
+  font-size: 0.98rem;
+  font-weight: 600;
+  background: linear-gradient(120deg, var(--brand-500, #38bdf8), var(--brand-600, #2563eb));
+  color: #f9fafb;
+  cursor: pointer;
+  box-shadow: 0 14px 35px rgba(37, 99, 235, 0.45);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease, opacity 0.15s ease;
+}
+
+.contacto-home__submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 40px rgba(37, 99, 235, 0.6);
+  filter: brightness(1.04);
+}
+
+.contacto-home__submit:disabled {
+  opacity: 0.7;
+  cursor: default;
+  transform: none;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.7);
+}
+
+/* Responsivo */
+
+@media (max-width: 900px) {
+  .contacto-home {
+    padding: 3rem 1.25rem;
+  }
+
+  .contacto-home__container {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .contacto-home__form-wrapper {
+    order: 1;
+  }
+
+  .contacto-home__info {
+    order: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .contacto-home__field-group {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .contacto-home__form-wrapper {
+    padding: 1.5rem 1.2rem;
+  }
+
+  .contacto-home__title {
+    font-size: 1.5rem;
+  }
+}

@@ -3,6 +3,8 @@
 import ServiciosDestacados from './ServiciosDestacados/ServiciosDescatados';
 import Productos from './Productos/Productos';
 import HeaderHome from './Header/HeaderHome';
+import BasicoStoreBanner from './BasicoStore/BasicoStoreBanner';
+import ContactHome from './ContactHome/ContactHome';
 
 const Home = () => {
   return (
@@ -11,6 +13,8 @@ const Home = () => {
       <ServiciosDestacados />
       <Productos/>
       <h2>Productos destacados</h2>
+      <BasicoStoreBanner />      
+      <ContactHome />
     </div>
     );
 };
