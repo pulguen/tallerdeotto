@@ -11,8 +11,7 @@ import useAutoLogout from './hooks/useAutoLogout';
 import App from './App.jsx';
 import './index.css';
 import GlobalLayout from './common/Layout/GlobalLayout/GlobalLayout.jsx';
-import './styles/fonts.css'; // <-- importar utilidades de fuentes
-
+import './styles/fonts.css'; // utilidades de fuentes
 
 /* eslint-disable react-refresh/only-export-components */
 
@@ -24,10 +23,10 @@ function Root() {
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter> 
+    <BrowserRouter>
       <AuthProvider>
-      <GlobalLayout>    
-        <Root />
+        <GlobalLayout>
+          <Root />
         </GlobalLayout>
       </AuthProvider>
     </BrowserRouter>

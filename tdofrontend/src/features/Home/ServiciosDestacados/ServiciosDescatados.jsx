@@ -1,12 +1,9 @@
-// Import Swiper React components
+// src/features/Home/ServiciosDestacados/ServiciosDescatados.jsx
 import { Swiper, SwiperSlide } from 'swiper/react';
-
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 import './ServiciosDestacados.css';
 
-// import required modules
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
@@ -129,7 +126,7 @@ export default function ServiciosDestacados({
           1024: { slidesPerView: 3, spaceBetween: 20 }
         }}
         modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper"
+        className="servicios-swiper"
         aria-label="Carrusel de servicios destacados"
       >
         {localSlides.map((s) => {
@@ -144,7 +141,6 @@ export default function ServiciosDestacados({
                 {...(!hasTitle ? { 'aria-label': s.alt || 'Servicio' } : {})}
               >
                 <div className="slide-media">
-                  {/* Título overlay centrado arriba */}
                   {hasTitle && (
                     <div className="slide-title-overlay">
                       <h3 id={titleId} className="slide-title ff-brokenscript-cond">
@@ -161,7 +157,6 @@ export default function ServiciosDestacados({
                 </div>
 
                 <div className="slide-content">
-                  {/* Si no hay título arriba de la imagen, mostramos uno normal en contenido */}
                   {!hasTitle && (
                     <h3 className="slide-title no-overlay ff-brokenscript-cond">
                       {s.title || 'Servicio'}

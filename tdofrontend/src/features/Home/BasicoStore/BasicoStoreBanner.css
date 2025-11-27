@@ -1,7 +1,8 @@
+/* src/features/Home/BasicoStore/BasicoStoreBanner.css */
+
 .basico-banner {
   position: relative;
-  margin: 2.5rem auto;
-  padding-inline: 1.5rem;
+  margin: 2.5rem 0;
 }
 
 .basico-banner__inner {
@@ -9,17 +10,14 @@
   margin: 0 auto;
   border-radius: 18px;
   padding: 1.75rem 2rem;
-  background: radial-gradient(circle at top left,
-      rgba(255, 255, 255, 0.18),
-      rgba(255, 255, 255, 0.02))
-    , linear-gradient(135deg, var(--brand-500, #2563eb), var(--brand-700, #1d4ed8));
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.1), transparent 55%),
+    linear-gradient(135deg, var(--brand-500), var(--brand-700));
   color: #f9fafb;
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
   gap: 1.75rem;
-  box-shadow:
-    0 18px 45px rgba(15, 23, 42, 0.35),
-    0 0 0 1px rgba(148, 163, 184, 0.18);
+  box-shadow: var(--shadow-strong);
   overflow: hidden;
 }
 
@@ -34,7 +32,7 @@
   font-size: 0.8rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  opacity: 0.82;
+  opacity: 0.9;
   margin: 0;
 }
 
@@ -47,7 +45,7 @@
 .basico-banner__subtitle {
   font-size: 0.98rem;
   margin: 0.4rem 0 0.3rem;
-  opacity: 0.92;
+  opacity: 0.94;
   max-width: 32rem;
 }
 
@@ -107,7 +105,7 @@
 
 .basico-banner__hint {
   font-size: 0.78rem;
-  opacity: 0.82;
+  opacity: 0.88;
 }
 
 /* Columna visual */
@@ -187,9 +185,7 @@
 
 @media (max-width: 480px) {
   .basico-banner {
-    margin: 0;
-    padding-inline: 0.5rem;
-    
+    margin: 1.5rem 0 0;
   }
 
   .basico-banner__inner {

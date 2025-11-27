@@ -1,3 +1,4 @@
+// src/features/Home/BasicoStore/BasicoStoreBanner.jsx
 import { Link } from 'react-router-dom';
 import './BasicoStoreBanner.css';
 
@@ -15,7 +16,7 @@ const BasicoStoreBanner = () => {
 
           <ul className="basico-banner__features">
             <li>🧵 Algodón premium y cómodas al tacto</li>
-            <li>🎨 Ideales para serigrafía , vinilo textil y dtf</li>
+            <li>🎨 Ideales para serigrafía, vinilo textil y DTF</li>
             <li>📦 Stock continuo en talles y colores clave</li>
           </ul>
 

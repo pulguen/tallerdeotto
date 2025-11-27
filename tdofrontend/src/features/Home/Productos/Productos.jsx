@@ -12,21 +12,23 @@ export default function ProductosSwiper() {
     { id: 'buzos',    title: 'Buzos',    image: '/Images/Productos/buzos.png' },
     { id: 'camperas', title: 'Camperas', image: '/Images/Productos/camperas.png' },
     { id: 'gorras',   title: 'Gorras',   image: '/Images/Productos/gorras.png' },
-    { id: 'gorritos', title: 'Rockys', image: '/Images/Productos/rockys.png' },
-    { id: 'pilusos', title: 'Pilusos', image: '/Images/Productos/pilusos.png' }
+    { id: 'gorritos', title: 'Rockys',   image: '/Images/Productos/rockys.png' },
+    { id: 'pilusos',  title: 'Pilusos',  image: '/Images/Productos/pilusos.png' }
   ];
 
   const colors = ['#FFF4E6', '#E8F7FF', '#F0FDF4', '#FFF7ED', '#F8EEF8'];
 
   return (
     <>
-      <h2>Nuestros productos</h2>
+      {/* usa la misma clase que el resto de secciones */}
+      <h2 className="home-section__title">Nuestros productos</h2>
+
       <Swiper
         spaceBetween={30}
         freeMode
         pagination={{ clickable: true }}
         modules={[FreeMode, Pagination]}
-        className="mySwiper"
+        className="productos-swiper"
         breakpoints={{
           0:    { slidesPerView: 2 },
           601:  { slidesPerView: 3 },
@@ -47,7 +49,6 @@ export default function ProductosSwiper() {
                 loading="lazy"
                 className="producto-image"
               />
-              {/* title para ver completo en hover */}
               <figcaption className="producto-caption" title={p.title}>
                 {p.title}
               </figcaption>

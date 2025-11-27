@@ -1,4 +1,4 @@
-// src/components/Home/ContactoHome.jsx
+// src/features/Home/ContactHome/ContactHome.jsx
 import React, { useState } from 'react';
 import './ContactHome.css';
 
@@ -28,7 +28,6 @@ const ContactoHome = ({ onSubmit }) => {
     setError('');
     setSuccess('');
 
-    // Validaciones básicas
     if (!formData.nombre.trim() || !formData.mensaje.trim()) {
       setError('Por favor completá tu nombre y el mensaje.');
       return;
@@ -37,10 +36,8 @@ const ContactoHome = ({ onSubmit }) => {
     setSending(true);
     try {
       if (onSubmit) {
-        // Si el padre pasa una función, la usamos
         await onSubmit(formData);
       } else {
-        // Placeholder: acá después podés pegar tu fetch a la API
         console.log('Datos de contacto enviados:', formData);
       }
       setSuccess('¡Mensaje enviado! Te vamos a responder a la brevedad.');

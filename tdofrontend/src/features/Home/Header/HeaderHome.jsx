@@ -1,9 +1,7 @@
-// src/components/Header/HeaderHome.jsx
+// src/features/Home/Header/HeaderHome.jsx
 import './HeaderHome.css';
 
 const HeaderHome = () => {
-  // Reemplazá este número por tu número real de WhatsApp en formato internacional
-  // 54 = Argentina, luego código de área sin 0, y número sin 15
   const whatsappNumber = '5491123321006';
 
   const whatsappMessage = encodeURIComponent(
@@ -61,7 +59,6 @@ const HeaderHome = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              {/* Si tenés Font Awesome cargado, podés agregar el ícono */}
               <i className="fa-brands fa-whatsapp" style={{ marginRight: '0.5rem' }} aria-hidden="true" />
               Trabajemos juntos
             </a>
@@ -89,7 +86,7 @@ const HeaderHome = () => {
           </div>
         </div>
 
-        {/* Columna visual (opcional) */}
+        {/* Columna visual */}
         <div className="hero-visual" aria-hidden="true">
           <picture>
             <source srcSet="/images/hero/hero-home-1280.webp" type="image/webp" />
@@ -98,12 +95,8 @@ const HeaderHome = () => {
         </div>
       </div>
 
-      {/* Separador inferior */}
-      <div className="hero-divider" aria-hidden="true">
-        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
-          <path d="M0,64 C240,128 480,0 720,48 C960,96 1200,96 1440,32 L1440,120 L0,120 Z" />
-        </svg>
-      </div>
+      {/* Separador inferior suave (sin onda) */}
+      <div className="hero-divider" aria-hidden="true" />
     </header>
   );
 };

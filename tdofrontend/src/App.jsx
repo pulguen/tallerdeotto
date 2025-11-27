@@ -1,5 +1,7 @@
+// src/App.jsx
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+
 import { useAuth } from './context/useAuth';
 import ProtectedLayout from './common/Layout/ProtectedLayout/ProtectedLayout';
 
@@ -12,16 +14,29 @@ import GastosHome from './features/Control/Gastos/GastosHome';
 
 function PrivateRoute({ children }) {
   const { user, loading } = useAuth();
-  if (loading) return <div>Cargando...</div>;
+
+  if (loading) {
+    return (
+      <div style={{ padding: '2rem', textAlign: 'center', color: '#e5edf3' }}>
+        Cargando...
+      </div>
+    );
+  }
+
   return user ? children : <Navigate to="/login" replace />;
 }
+
+import { Navigate } from 'react-router-dom';
 
 export default function App() {
   return (
     <Routes>
+      {/* Público */}
       <Route path="/login"    element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/"         element={<Home />} />
+
+      {/* Admin / Control */}
       <Route
         path="/admin"
         element={
@@ -52,7 +67,16 @@ export default function App() {
           </PrivateRoute>
         }
       />
-      <Route path="*" element={<div>404 Not Found</div>} />
+
+      {/* 404 */}
+      <Route
+        path="*"
+        element={
+          <div style={{ padding: '2rem', color: '#e5edf3' }}>
+            404 Not Found
+          </div>
+        }
+      />
     </Routes>
   );
 }

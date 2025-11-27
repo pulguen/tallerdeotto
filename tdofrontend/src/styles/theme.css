@@ -1,0 +1,61 @@
+/* src/styles/theme.css */
+/* ==== Tokens globales Taller de Otto ==== */
+:root {
+  /* Marca (alineado con login) */
+  --brand-400: #38d5f0;
+  --brand-500: #22d3ee;  /* = login-accent */
+  --brand-600: #06b6d4;  /* = login-accent-600 */
+  --brand-700: #0e7490;
+
+  /* Fondo general dark */
+  --bg: #020617;
+  --bg-soft: #020617;
+
+  /* Texto */
+  --ink: #e5edf3;
+  --muted: #9ca3af;
+
+  /* Cards glass */
+  --card: rgba(15, 23, 42, 0.92);
+  --card-soft: rgba(15, 23, 42, 0.78);
+  --border-subtle: rgba(148, 163, 184, 0.32);
+
+  /* Bordes, sombras, radios */
+  --ring: rgba(34, 211, 238, 0.6);
+  --radius-lg: 16px;
+  --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.8);
+  --shadow-strong: 0 18px 45px rgba(0, 0, 0, 0.9);
+
+  /* Superficie oscura para secciones como contacto */
+  --surface-950: #020617;
+}
+
+/* ===== Layout Home público (fondo general) ===== */
+.contenedor-home {
+  background:
+    radial-gradient(circle at top, rgba(34, 211, 238, 0.06), transparent 55%),
+    var(--bg);
+}
+
+/* Títulos directos dentro del home (fallback genérico) */
+.contenedor-home > h2 {
+  margin: 2.25rem 1.5rem 0.75rem;
+  font-size: clamp(1.4rem, 2.2vw, 1.7rem);
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* Contenedor común para centrar contenido y limitar ancho */
+.page-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-inline: 1.25rem;
+  box-sizing: border-box;
+}
+
+@media (min-width: 900px) {
+  .page-container {
+    padding-inline: 1.75rem;
+  }
+}

@@ -1,61 +1,48 @@
-/* ===== Variables ===== */
-:root {
-  --sd-bg: #f7f7f8;
-  --sd-card-bg: #ffffff;
-  --sd-text: #111827;
-  --sd-text-muted: #4b5563;
-  --sd-primary: #111827;
-  --sd-primary-hover: #0b1220;
-  --sd-border: #e5e7eb;
-  --sd-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  --sd-radius: 12px;
-}
+/* src/features/Home/ServiciosDestacados/ServiciosDestacados.css */
 
-.contenedor-servicios-destacados {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  background: var(--sd-bg);
-}
+/* ===== Servicios Destacados ===== */
 
 .titulo-servicios-destacados {
-  margin: 10px 16px 0;
-  font-size: 1.25rem;
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.4rem, 2.2vw, 1.6rem);
   line-height: 1.2;
-  color: var(--sd-text);
+  color: var(--ink);
   font-weight: 700;
 }
 
-/* ===== Swiper ===== */
-.mySwiper {
+/* Swiper contenedor */
+.servicios-swiper {
   background: transparent;
   padding: 10px 8px 24px;
 }
 
+/* Slide wrapper */
 .swiper-slide-destacados {
   display: flex;
   height: auto;
 }
 
+/* Card de servicio */
 .slide-card {
   display: grid;
   grid-template-rows: auto 1fr;
   gap: 10px;
   width: 100%;
-  background: var(--sd-card-bg);
-  border: 1px solid var(--sd-border);
-  border-radius: var(--sd-radius);
-  box-shadow: var(--sd-shadow);
+  background: var(--card-soft);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
   overflow: hidden;
+  backdrop-filter: blur(10px);
 }
 
-/* ===== Media con título overlay ===== */
+/* Media con título overlay */
 .slide-media {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  background: #e5e7eb;
+  background: #020617;
 }
 
 .slide-image {
@@ -66,47 +53,45 @@
   object-position: center;
 }
 
-/* Banda superior con gradiente y título centrado */
+/* Banda superior con gradiente + título centrado */
 .slide-title-overlay {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  /* gradiente sutil para contraste del texto sobre la imagen */
   background:
     linear-gradient(
       to bottom,
-      rgba(0,0,0,0.55),
-      rgba(0,0,0,0.25),
-      rgba(0,0,0,0)
+      rgba(0, 0, 0, 0.65),
+      rgba(0, 0, 0, 0.35),
+      rgba(0, 0, 0, 0)
     );
-  padding: 10px 12px 22px; /* extra padding para el fade */
+  padding: 10px 12px 22px;
   display: flex;
   justify-content: center;
-  pointer-events: none; /* no interfiere con clicks en la imagen */
+  pointer-events: none;
 }
 
 .slide-title {
   margin: 0;
-  font-size: 1.8 rem;
+  font-size: 1.1rem;
   line-height: 1.25;
-  color: #fff;              /* blanco sobre gradiente */
+  color: #fff;
   font-weight: 800;
   text-align: center;
   letter-spacing: 0.2px;
-  text-shadow: 0 1px 2px rgba(0,0,0,.35);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
   padding: 6px 10px;
-  
 }
 
 /* Variante cuando el título no va en overlay */
 .slide-title.no-overlay {
-  color: var(--sd-text);
+  color: var(--ink);
   text-shadow: none;
   text-align: left;
 }
 
-/* ===== Contenido ===== */
+/* Contenido */
 .slide-content {
   display: grid;
   gap: 8px;
@@ -114,18 +99,19 @@
 }
 
 .slide-desc {
-  color: var(--sd-text-muted);
+  color: var(--muted);
   font-size: 0.95rem;
-  line-height: 1.35;
+  line-height: 1.4;
   margin: 0;
+
   display: -webkit-box;
-  /* Estándar + prefijo para compatibilidad */
-  line-clamp: 3;
-  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
   overflow: hidden;
 }
 
+/* CTA */
 .slide-cta {
   justify-self: start;
   margin-top: 4px;
@@ -133,80 +119,100 @@
   align-items: center;
   gap: 8px;
   padding: 10px 14px;
-  background: var(--sd-primary);
-  color: #fff;
+  background: var(--brand-600);
+  color: #022c22;
   text-decoration: none;
   border-radius: 999px;
   font-weight: 600;
   font-size: 0.95rem;
-  transition: transform .12s ease, background .12s ease, box-shadow .12s ease;
-  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+  transition:
+    transform 0.12s ease,
+    background 0.12s ease,
+    box-shadow 0.12s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
 }
 
 .slide-cta:hover,
 .slide-cta:focus-visible {
-  background: var(--sd-primary-hover);
+  background: var(--brand-500);
   transform: translateY(-1px);
   outline: none;
 }
 
-/* ===== Paginación ===== */
+/* Paginación */
 .swiper-pagination-bullets .swiper-pagination-bullet {
   width: 8px;
   height: 8px;
-  opacity: .5;
+  opacity: 0.5;
   background: #9ca3af;
-  transition: transform .15s ease, opacity .15s ease;
+  transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
 .swiper-pagination-bullets .swiper-pagination-bullet-active {
   transform: scale(1.25);
   opacity: 1;
-  background: var(--sd-primary);
+  background: var(--brand-500);
 }
 
-/* ===== Navegación ===== */
+/* Navegación (desktop) */
 .swiper-button-next,
 .swiper-button-prev {
-  display: none; /* mobile-first */
-  color: var(--sd-text);
+  display: none;
+  color: var(--ink);
 }
 
-/* ===== Responsivo ===== */
+/* ===== Breakpoints ===== */
 @media (min-width: 640px) {
   .titulo-servicios-destacados {
-    margin: 12px 18px 0;
-    font-size: 1.35rem;
+    margin-bottom: 1rem;
   }
-  .slide-title { font-size: 1.15rem; }
+
+  .slide-title {
+    font-size: 1.15rem;
+  }
 }
 
 @media (min-width: 768px) {
-  .mySwiper { padding: 12px 10px 30px; }
-  .swiper-button-next,
-  .swiper-button-prev { display: flex; }
+  .servicios-swiper {
+    padding: 12px 10px 30px;
+  }
 
-  /* Más alto el media para desktop chico */
-  .slide-media { aspect-ratio: 16 / 8.5; }
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: flex;
+  }
+
+  .slide-media {
+    aspect-ratio: 16 / 8.5;
+  }
 
   .slide-desc {
-    line-clamp: 4;
     -webkit-line-clamp: 4;
+    line-clamp: 4;
   }
 }
 
 @media (min-width: 1024px) {
-  .titulo-servicios-destacados {
-    margin: 14px 24px 0;
-    font-size: 1.5rem;
+  .servicios-swiper {
+    padding: 14px 12px 36px;
   }
-  .mySwiper { padding: 14px 12px 36px; }
-  .slide-content { padding: 14px; }
-  .slide-title { font-size: 1.2rem; }
-  .slide-desc { font-size: 1rem; }
+
+  .slide-content {
+    padding: 14px;
+  }
+
+  .slide-title {
+    font-size: 1.2rem;
+  }
+
+  .slide-desc {
+    font-size: 1rem;
+  }
 }
 
-/* ===== Motion ===== */
+/* Motion */
 @media (prefers-reduced-motion: reduce) {
-  .slide-cta { transition: none; }
+  .slide-cta {
+    transition: none;
+  }
 }

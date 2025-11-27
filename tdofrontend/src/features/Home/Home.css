@@ -1,0 +1,32 @@
+/* src/features/Home/Home.css */
+
+/* Contenedor principal del home (fondo viene de theme.css) */
+.home-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sección genérica del home */
+.home-section {
+  padding-block: 1.8rem;
+}
+
+/* Para secciones que ya traen su propio padding/fondo (hero / contacto) */
+.home-section--flush {
+  padding-block: 0;
+}
+
+/* Título reutilizable dentro de secciones del home */
+.home-section__title {
+  margin: 0 0 1rem;
+  font-size: clamp(1.3rem, 2.1vw, 1.6rem);
+  color: var(--ink);
+  font-weight: 700;
+}
+
+@media (min-width: 900px) {
+  .home-section {
+    padding-block: 2.2rem;
+  }
+}

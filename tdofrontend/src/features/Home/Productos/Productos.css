@@ -1,13 +1,11 @@
-/* ---- Swiper base ---- */
-.swiper {
+/* ---- Swiper base para la sección de productos ---- */
+.productos-swiper {
   width: 100%;
   height: 100%;
-}
-
-.mySwiper {
   padding-bottom: 24px;
 }
 
+/* Cada slide de producto con fondo pastel */
 .producto-slide {
   padding: 14px;
   border-radius: 10px;
@@ -17,6 +15,10 @@
   justify-content: flex-start;
   min-height: 140px;
   overflow: hidden;
+
+  /* bordecito suave para que se destaque sobre el fondo oscuro del home */
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.15);
 }
 
 /* Figura: imagen + texto al lado en desktop */
@@ -47,7 +49,7 @@
   margin: 0;
   padding-top: 6px;
   font-weight: 600;
-  color: #111;
+  color: #111827; /* texto oscuro sobre fondo claro */
   line-height: 1.25;
 
   display: -webkit-box;
