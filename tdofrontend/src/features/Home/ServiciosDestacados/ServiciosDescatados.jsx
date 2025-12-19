@@ -2,6 +2,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import CustomButton from "../../../common/Components/Button/CustomButton";
 import './ServiciosDestacados.css';
 
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
@@ -21,8 +22,8 @@ export default function ServiciosDestacados({
       description: 'Identidad visual, flyers, catálogos y piezas para redes sociales.',
       image: '/Images/Servicios/diseno-grafico.png',
       alt: 'Muestras de diseño gráfico',
-      cta: 'Ver porfolio',
-      link: '/servicios/diseño-gráfico'
+      cta: 'Ver servicio',
+      link: '/servicios/diseño-grafico'
     },
     {
       id: 2,
@@ -31,7 +32,7 @@ export default function ServiciosDestacados({
       image: '/Images/Servicios/social-media.png',
       alt: 'Gestión profesional de redes sociales y marketing digital',
       cta: 'Conocer más',
-      link: '/contacto'
+      link: '/servicios/social-media'
     },
     {
       id: 3,
@@ -40,10 +41,20 @@ export default function ServiciosDestacados({
       image: '/Images/Servicios/diseno-web.png',
       alt: 'Diseño de sitios web',
       cta: 'Solicitar presupuesto',
-      link: '/contacto'
+      link: '/servicios/diseño-web'
     },
+
     {
       id: 4,
+      title: 'Desarrollo de Software',
+      description: 'Apps a medida, paneles y automatizaciones.',
+      image: '/Images/Servicios/desarrollo-software.png',
+      alt: 'Código en editor',
+      cta: 'Charlemos tu proyecto',
+      link: '/servicios/desarrollo-software'
+    },
+        {
+      id: 5,
       title: 'Serigrafía - Vinilo - DTF',
       description: 'Estampado de indumentaria, textiles y más.',
       image: '/Images/Servicios/serigrafia.png',
@@ -52,22 +63,13 @@ export default function ServiciosDestacados({
       link: '/servicios/estampado'
     },
     {
-      id: 5,
-      title: 'Desarrollo de Software',
-      description: 'Apps a medida, paneles y automatizaciones.',
-      image: '/Images/Servicios/desarrollo-software.png',
-      alt: 'Código en editor',
-      cta: 'Charlemos tu proyecto',
-      link: '/contacto'
-    },
-    {
       id: 6,
       title: 'Impresiones profesionales',
       description: 'Digital y offset de alta calidad en folletos, tarjetas y gran formato.',
       image: '/Images/Servicios/impresiones.png',
       alt: 'Ejemplos de impresiones',
       cta: 'Solicitar presupuesto',
-      link: '/contacto'
+      link: '/servicios/impresiones-profesionales'
     }
   ];
 
@@ -163,15 +165,16 @@ export default function ServiciosDestacados({
                     </h3>
                   )}
                   <p className="slide-desc">{s.description}</p>
-                  <a
-                    className="slide-cta"
-                    href={s.link || '#'}
-                    target={s.link && s.link.startsWith('http') ? '_blank' : '_self'}
-                    rel={s.link && s.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    aria-label={`${s.cta} - ${s.title || 'Servicio'}`}
-                  >
-                    {s.cta}
-                  </a>
+                    <CustomButton
+                      as="a"
+                      href={s.link || '#'}
+                      target={s.link && s.link.startsWith('http') ? '_blank' : undefined}
+                      rel={s.link && s.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      variant="primary"
+                      className="slide-cta-btn"
+                    >
+                      {s.cta}
+                    </CustomButton>
                 </div>
               </article>
             </SwiperSlide>

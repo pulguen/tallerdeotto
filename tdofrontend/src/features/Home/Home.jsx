@@ -3,6 +3,7 @@
 import './Home.css';
 
 import ServiciosDestacados from './ServiciosDestacados/ServiciosDescatados';
+import TrabajosRecientes from './TrabajosRecientes/TrabajosRecientes';
 import Productos from './Productos/Productos';
 import HeaderHome from './Header/HeaderHome';
 import BasicoStoreBanner from './BasicoStore/BasicoStoreBanner';
@@ -23,10 +24,18 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Ultimos Trabajos */}
+      <section className="home-section">
+        <div className="page-container">
+          <TrabajosRecientes />
+        </div>
+      </section>
+
       {/* Carrusel de productos */}
       <section className="home-section">
         <div className="page-container">
-          <Productos />
+          <Productos /
+            >
         </div>
       </section>
 

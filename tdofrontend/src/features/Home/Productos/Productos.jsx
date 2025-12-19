@@ -12,8 +12,8 @@ export default function ProductosSwiper() {
     { id: 'buzos',    title: 'Buzos',    image: '/Images/Productos/buzos.png' },
     { id: 'camperas', title: 'Camperas', image: '/Images/Productos/camperas.png' },
     { id: 'gorras',   title: 'Gorras',   image: '/Images/Productos/gorras.png' },
+    { id: 'pilusos',  title: 'Pilusos',  image: '/Images/Productos/pilusos.png' },
     { id: 'gorritos', title: 'Rockys',   image: '/Images/Productos/rockys.png' },
-    { id: 'pilusos',  title: 'Pilusos',  image: '/Images/Productos/pilusos.png' }
   ];
 
   const colors = ['#FFF4E6', '#E8F7FF', '#F0FDF4', '#FFF7ED', '#F8EEF8'];

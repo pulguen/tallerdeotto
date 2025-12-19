@@ -1,5 +1,6 @@
 // src/features/Home/ContactHome/ContactHome.jsx
 import React, { useState } from 'react';
+import CustomButton from "../../../common/Components/Button/CustomButton";
 import './ContactHome.css';
 
 const ContactoHome = ({ onSubmit }) => {
@@ -49,6 +50,7 @@ const ContactoHome = ({ onSubmit }) => {
         mensaje: '',
       });
     } catch (err) {
+      console.error('Error enviando contacto:', err);
       setError('No pudimos enviar el mensaje. Probá de nuevo en unos segundos.');
     } finally {
       setSending(false);
@@ -74,14 +76,20 @@ const ContactoHome = ({ onSubmit }) => {
 
           <div className="contacto-home__whatsapp">
             <span>¿Preferís hablar directo?</span>
-            <a
+
+            {/* ✅ WhatsApp unificado a CustomButton */}
+            <CustomButton
+              as="a"
               href="https://wa.me/5491123321006"
               target="_blank"
               rel="noreferrer"
+              variant="primary"
+              size="md"
               className="contacto-home__whatsapp-btn"
+              startIcon={<i className="fa-brands fa-whatsapp" aria-hidden="true" />}
             >
               Escribir por WhatsApp
-            </a>
+            </CustomButton>
           </div>
         </div>
 
@@ -153,18 +161,27 @@ const ContactoHome = ({ onSubmit }) => {
               />
             </div>
 
-            {error && <p className="contacto-home__feedback contacto-home__feedback--error">{error}</p>}
+            {error && (
+              <p className="contacto-home__feedback contacto-home__feedback--error">
+                {error}
+              </p>
+            )}
             {success && (
-              <p className="contacto-home__feedback contacto-home__feedback--success">{success}</p>
+              <p className="contacto-home__feedback contacto-home__feedback--success">
+                {success}
+              </p>
             )}
 
-            <button
+            {/* ✅ Submit unificado a CustomButton */}
+            <CustomButton
               type="submit"
-              className="contacto-home__submit"
+              variant="primary"
+              loading={sending}
               disabled={sending}
+              className="contacto-home__submit"
             >
               {sending ? 'Enviando...' : 'Enviar mensaje'}
-            </button>
+            </CustomButton>
           </form>
         </div>
       </div>

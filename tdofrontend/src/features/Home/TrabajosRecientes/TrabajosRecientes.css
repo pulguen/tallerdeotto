@@ -1,0 +1,74 @@
+/* src/features/Home/TrabajosRecientes/TrabajosRecientes.css */
+
+.tr-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.9rem;
+}
+
+.tr-card {
+  background: var(--card-soft);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.tr-media {
+  aspect-ratio: 16 / 10;
+  background: #020617;
+}
+
+.tr-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.tr-body {
+  padding: 12px;
+  display: grid;
+  gap: 6px;
+}
+
+.tr-card-title {
+  margin: 0;
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 1.05rem;
+  line-height: 1.2;
+}
+
+.tr-card-desc {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.4;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+.tr-footer {
+  margin-top: 1.1rem;
+  display: flex;
+}
+
+.tr-btn {
+  width: 100%;
+}
+
+@media (min-width: 700px) {
+  .tr-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+  .tr-footer { justify-content: flex-start; }
+  .tr-btn { width: auto; }
+}
+
+@media (min-width: 1000px) {
+  .tr-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem; }
+}

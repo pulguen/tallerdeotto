@@ -1,5 +1,6 @@
 // src/features/Home/Header/HeaderHome.jsx
 import './HeaderHome.css';
+import CustomButton from "../../../common/Components/Button/CustomButton";
 
 const HeaderHome = () => {
   const whatsappNumber = '5491123321006';
@@ -48,20 +49,21 @@ const HeaderHome = () => {
 
           <p className="hero-subtitle">
             Combinamos diseño, tecnología y producción gráfica para ofrecer resultados integrales:
-            desde tu identidad visual hasta plataformas web personalizadas.
+            desde tu identidad visual hasta plataformas web y aplicaciones personalizadas.
           </p>
 
           <div className="hero-ctas" role="group" aria-label="Acciones principales">
-            <a
+            <CustomButton
+              as="a"
               href={whatsappLink}
-              className="btn btn-primary highlight ff-brokenscript"
-              aria-label="Abrir conversación de WhatsApp con Taller de Otto para comenzar un proyecto"
               target="_blank"
               rel="noopener noreferrer"
+              variant="primary"
+              className="ff-brokenscript"
+              startIcon={<i className="fa-brands fa-whatsapp" aria-hidden="true" />}
             >
-              <i className="fa-brands fa-whatsapp" style={{ marginRight: '0.5rem' }} aria-hidden="true" />
               Trabajemos juntos
-            </a>
+            </CustomButton>
           </div>
 
           <ul className="hero-features" aria-label="Beneficios">

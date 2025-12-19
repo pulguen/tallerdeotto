@@ -1,0 +1,147 @@
+/* src/features/Home/ServiciosDestacados/ServicePage.css */
+
+/* Layout base */
+.service-page {
+  max-width: 1140px;
+}
+
+/* Modificadores de ancho */
+.service-page--narrow {
+  max-width: 960px;
+}
+
+/* Texto/jerarquía */
+.service-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+  color: #6c757d;
+  margin-bottom: 0.5rem;
+}
+
+.service-title {
+  font-size: clamp(1.9rem, 3vw, 2.4rem);
+  font-weight: 700;
+}
+
+.service-subtitle {
+  font-size: 0.95rem;
+  color: #495057;
+}
+
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+/* Bloques */
+.service-hero-card {
+  border-radius: 1rem;
+  padding: 1.5rem;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.service-list {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.95rem;
+}
+
+.service-card {
+  border-radius: 1rem;
+  padding: 1.25rem;
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+}
+
+.service-card-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.service-card-text {
+  font-size: 0.95rem;
+  color: #495057;
+}
+
+/* Steps */
+.step-card {
+  position: relative;
+  border-radius: 1rem;
+  padding: 1.25rem 1rem 1rem 1.1rem;
+  background: #f8f9fa;
+  height: 100%;
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  background: #0d6efd;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.step-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.step-text {
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+/* CTA */
+.service-footer-cta {
+  padding: 3rem 0 1rem;
+}
+
+.service-cta {
+  font-weight: 600;
+}
+
+/* Planes (solo Social Media lo usa, pero conviene que sea común) */
+.plan-card {
+  border-radius: 1rem;
+  padding: 1.5rem;
+  background: #ffffff;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.plan-card-featured {
+  border: 1px solid #0d6efd;
+}
+
+.plan-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #0d6efd;
+  margin-bottom: 0.4rem;
+}
+
+.plan-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+
+.plan-list {
+  margin: 0 0 0.8rem 0;
+  padding-left: 1.2rem;
+  font-size: 0.93rem;
+  color: #495057;
+}
+
+.plan-note {
+  font-size: 0.85rem;
+  color: #6c757d;
+}

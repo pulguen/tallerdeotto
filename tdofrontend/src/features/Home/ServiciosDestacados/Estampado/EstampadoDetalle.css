@@ -1,0 +1,27 @@
+/* EstampadoDetalle.css */
+.service-page {
+  max-width: 960px;
+}
+
+.service-kicker {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6c757d;
+  margin-bottom: 0.5rem;
+}
+
+.service-title {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
+}
+
+.service-subtitle {
+  color: #495057;
+  font-size: 0.95rem;
+}
+
+.service-list {
+  padding-left: 1.2rem;
+  font-size: 0.95rem;
+}

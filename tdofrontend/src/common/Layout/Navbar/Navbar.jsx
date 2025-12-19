@@ -28,7 +28,7 @@ const CustomNavbar = () => {
 
         {/* Carrito siempre a la derecha */}
         <Nav.Link href="#" className="order-lg-last">
-          <div className='contenedor-carrito'>🛒</div>
+          <div className='contenedor-carrito'>🛍️</div>
         </Nav.Link>
 
         {/* Contenido central con logotipo */}
@@ -38,7 +38,7 @@ const CustomNavbar = () => {
             <Nav.Link href="/" className="text-white">Home</Nav.Link>
             <Nav.Link href="/about" className="text-white">Tienda</Nav.Link>
             <Nav.Link href="/services" className="text-white">Servicios</Nav.Link>
-            <Nav.Link href="/services" className="text-white">El taller</Nav.Link>
+            <Nav.Link href="/services" className="text-white">Portafolio</Nav.Link>
             <Nav.Link href="/services" className="text-white">Contacto</Nav.Link>
 
             {/* Menú desplegable */}
@@ -47,6 +47,7 @@ const CustomNavbar = () => {
               <NavDropdown.Item href="#action/3.2">Buzos</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Camperas</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Gorras</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">Pilusos</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Rockys</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">Otra categoría</NavDropdown.Item>
@@ -59,4 +60,3 @@ const CustomNavbar = () => {
 };
 
 export default CustomNavbar;
-
