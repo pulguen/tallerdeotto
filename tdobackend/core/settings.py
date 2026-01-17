@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'apps.users.apps.UsersConfig',
     'apps.ingresos',
     'apps.gastos',
+    'apps.trabajos',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -116,6 +117,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# Media files (uploads)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 

@@ -1,0 +1,232 @@
+/* src/styles/AdminGlobal.css */
+
+/* --- Layout Skeleton --- */
+.admin-container {
+    padding: 2rem;
+    max-width: 1440px;
+    /* Wider for dashboard view */
+    margin: 0 auto;
+    min-height: 100vh;
+    color: var(--ink);
+    background-color: var(--bg);
+    /* Solid color, no gradient */
+}
+
+@media (max-width: 768px) {
+    .admin-container {
+        padding: 1rem;
+    }
+}
+
+/* --- Professional Cards --- */
+/* Clean, solid, with clear borders. No blur. */
+.minimal-card {
+    background-color: var(--card);
+    /* Solid Slate 800 */
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    /* Subtle shadow for depth */
+    box-shadow: var(--shadow-soft);
+    color: var(--ink);
+    /* Remove backdrop-filter */
+}
+
+/* --- Section Headers --- */
+.admin-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+    /* Clean underline */
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 1rem;
+}
+
+/* Standard Heading - No Gradient */
+.admin-title-gradient {
+    font-size: 1.5rem;
+    /* Slightly smaller, more refined */
+    font-weight: 600;
+    color: var(--ink);
+    /* Solid white/slate-50 */
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+/* --- Filters & Controls --- */
+.admin-filters-bar {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    background-color: var(--card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+}
+
+@media (max-width: 768px) {
+    .admin-filters-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+/* --- Navigation Tabs (Pill Style) --- */
+.admin-tabs-container {
+    background-color: var(--card-soft);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 0.35rem;
+    margin-bottom: 1.5rem;
+    display: inline-flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+.admin-tab-button {
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    padding: 0.5rem 1.25rem;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    color: var(--muted);
+    background: transparent;
+}
+
+.admin-tab-button:hover {
+    color: var(--ink);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.admin-tab-button.active {
+    background-color: var(--brand-500);
+    color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Global Forms (Clean & High Contrast) --- */
+.form-label-custom {
+    display: block;
+    font-size: 0.875rem;
+    /* 14px */
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--muted);
+    /* Slate 400 */
+}
+
+.form-input-custom,
+.form-select-custom,
+.form-textarea-custom {
+    width: 100%;
+    /* Darker input background for contrast with card */
+    background-color: #0f172a;
+    /* Slate 900 */
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 0.75rem 1rem;
+    color: var(--ink);
+    font-size: 0.95rem;
+    transition: all 0.15s ease-in-out;
+    outline: none;
+}
+
+.form-input-custom:focus,
+.form-select-custom:focus,
+.form-textarea-custom:focus {
+    border-color: var(--brand-500);
+    box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
+    /* Focus ring */
+    background-color: #0f172a;
+}
+
+.form-input-custom::placeholder {
+    color: #64748b;
+    /* Slate 500 */
+}
+
+/* Custom Checkbox (Aligned) */
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    user-select: none;
+    font-size: 0.95rem;
+    color: var(--ink);
+}
+
+.custom-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    height: 20px;
+    width: 20px;
+    background-color: #0f172a;
+    border: 2px solid var(--border-subtle);
+    border-radius: 6px;
+    position: relative;
+    transition: all 0.15s ease;
+}
+
+.custom-checkbox:hover input~.checkmark {
+    border-color: var(--brand-500);
+}
+
+.custom-checkbox input:checked~.checkmark {
+    background-color: var(--brand-500);
+    border-color: var(--brand-500);
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.custom-checkbox input:checked~.checkmark:after {
+    display: block;
+}
+
+/* --- Resumen Grid --- */
+.resumen-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Animations */
+.admin-content-fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

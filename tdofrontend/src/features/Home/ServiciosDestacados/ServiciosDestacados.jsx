@@ -1,78 +1,28 @@
 // src/features/Home/ServiciosDestacados/ServiciosDescatados.jsx
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import CustomButton from "../../../common/Components/Button/CustomButton";
-import './ServiciosDestacados.css';
 
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import '../../../styles/fonts.css'; // utilidades de fuentes
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+
+// Estilos Swiper
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+// Componentes y Estilos locales
+import CustomButton from "../../../common/Components/Button/CustomButton";
+import './ServiciosDestacados.css';
+import '../../../styles/fonts.css';
+
+// ✅ Data compartida
+import { SERVICIOS_DESTACADOS_DEFAULT } from './ServiciosDestacadosData.js';
 
 export default function ServiciosDestacados({
   slidesData,
   fetchFromApi = false,
   apiEndpoint = '/api/servicios'
 }) {
-  const defaultSlides = [
-    {
-      id: 1,
-      title: 'Diseño Gráfico',
-      description: 'Identidad visual, flyers, catálogos y piezas para redes sociales.',
-      image: '/Images/Servicios/diseno-grafico.png',
-      alt: 'Muestras de diseño gráfico',
-      cta: 'Ver servicio',
-      link: '/servicios/diseño-grafico'
-    },
-    {
-      id: 2,
-      title: 'Social Media Management',
-      description: 'Gestión integral de redes: planificación, contenido, métricas y campañas.',
-      image: '/Images/Servicios/social-media.png',
-      alt: 'Gestión profesional de redes sociales y marketing digital',
-      cta: 'Conocer más',
-      link: '/servicios/social-media'
-    },
-    {
-      id: 3,
-      title: 'Diseño web',
-      description: 'Sitios rápidos en React/Next, optimizados para SEO.',
-      image: '/Images/Servicios/diseno-web.png',
-      alt: 'Diseño de sitios web',
-      cta: 'Solicitar presupuesto',
-      link: '/servicios/diseño-web'
-    },
-
-    {
-      id: 4,
-      title: 'Desarrollo de Software',
-      description: 'Apps a medida, paneles y automatizaciones.',
-      image: '/Images/Servicios/desarrollo-software.png',
-      alt: 'Código en editor',
-      cta: 'Charlemos tu proyecto',
-      link: '/servicios/desarrollo-software'
-    },
-        {
-      id: 5,
-      title: 'Serigrafía - Vinilo - DTF',
-      description: 'Estampado de indumentaria, textiles y más.',
-      image: '/Images/Servicios/serigrafia.png',
-      alt: 'Estampado sobre remeras',
-      cta: 'Ver opciones',
-      link: '/servicios/estampado'
-    },
-    {
-      id: 6,
-      title: 'Impresiones profesionales',
-      description: 'Digital y offset de alta calidad en folletos, tarjetas y gran formato.',
-      image: '/Images/Servicios/impresiones.png',
-      alt: 'Ejemplos de impresiones',
-      cta: 'Solicitar presupuesto',
-      link: '/servicios/impresiones-profesionales'
-    }
-  ];
-
   const normalizeSlides = (raw = []) => {
     if (!Array.isArray(raw)) return [];
     return raw.map((item, idx) => ({
@@ -86,15 +36,23 @@ export default function ServiciosDestacados({
     }));
   };
 
-  const [localSlides, setLocalSlides] = useState(() =>
-    Array.isArray(slidesData) && slidesData.length ? normalizeSlides(slidesData) : defaultSlides
-  );
+  // Estado local inicializado con la data por defecto o la prop
+  const [localSlides, setLocalSlides] = useState(() => {
+    if (Array.isArray(slidesData) && slidesData.length) {
+      return normalizeSlides(slidesData);
+    }
+    // Fallback seguro por si el import falla (aunque no debería)
+    return Array.isArray(SERVICIOS_DESTACADOS_DEFAULT) ? SERVICIOS_DESTACADOS_DEFAULT : [];
+  });
 
   useEffect(() => {
+    // Si la prop slidesData cambia y tiene datos, actualizamos
     if (Array.isArray(slidesData) && slidesData.length) {
       setLocalSlides(normalizeSlides(slidesData));
       return;
     }
+
+    // Si se activa fetchFromApi, buscamos los datos (opcional)
     if (fetchFromApi) {
       let cancelled = false;
       fetch(apiEndpoint)
@@ -107,7 +65,8 @@ export default function ServiciosDestacados({
           const normalized = normalizeSlides(data);
           if (normalized.length) setLocalSlides(normalized);
         })
-        .catch(() => {});
+        .catch((err) => console.warn('Error fetching slides:', err));
+
       return () => { cancelled = true; };
     }
   }, [slidesData, fetchFromApi, apiEndpoint]);
@@ -115,25 +74,28 @@ export default function ServiciosDestacados({
   return (
     <>
       <h2 className="titulo-servicios-destacados">Servicios Destacados</h2>
+
       <Swiper
+        modules={[Autoplay, Navigation, Pagination]}
         centeredSlides={false}
         slidesPerView={1}
         spaceBetween={12}
-        autoplay={{ delay: 5500, disableOnInteraction: false }}
-        pagination={{ dynamicBullets: true, clickable: true }}
         navigation
+        pagination={{ clickable: true, dynamicBullets: true }}
+        loop={true}
+        autoplay={{ delay: 5500, disableOnInteraction: false }}
         breakpoints={{
           640: { slidesPerView: 1.2, spaceBetween: 14, centeredSlides: true },
           768: { slidesPerView: 2, spaceBetween: 16 },
           1024: { slidesPerView: 3, spaceBetween: 20 }
         }}
-        modules={[Autoplay, Pagination, Navigation]}
         className="servicios-swiper"
         aria-label="Carrusel de servicios destacados"
       >
         {localSlides.map((s) => {
           const hasTitle = Boolean(s.title && s.title.trim());
           const titleId = hasTitle ? `slide-title-${s.id}` : undefined;
+
           return (
             <SwiperSlide key={s.id} className="swiper-slide-destacados">
               <article
@@ -150,6 +112,7 @@ export default function ServiciosDestacados({
                       </h3>
                     </div>
                   )}
+
                   <img
                     src={s.image}
                     alt={s.alt || s.title || 'Servicio'}
@@ -164,23 +127,32 @@ export default function ServiciosDestacados({
                       {s.title || 'Servicio'}
                     </h3>
                   )}
+
                   <p className="slide-desc">{s.description}</p>
-                    <CustomButton
-                      as="a"
-                      href={s.link || '#'}
-                      target={s.link && s.link.startsWith('http') ? '_blank' : undefined}
-                      rel={s.link && s.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      variant="primary"
-                      className="slide-cta-btn"
-                    >
-                      {s.cta}
-                    </CustomButton>
+
+                  <CustomButton
+                    as="a"
+                    href={s.link || '#'}
+                    target={s.link && s.link.startsWith('http') ? '_blank' : undefined}
+                    rel={s.link && s.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    variant="primary"
+                    className="slide-cta-btn"
+                  >
+                    {s.cta}
+                  </CustomButton>
                 </div>
               </article>
             </SwiperSlide>
           );
         })}
       </Swiper>
+
+      <div className="servicios-footer-text">
+        <p>
+          Combinamos diseño, tecnología y producción gráfica para ofrecer resultados integrales:
+          desde tu identidad visual hasta plataformas web y aplicaciones personalizadas para marcas, empresa e instituciones.
+        </p>
+      </div>
     </>
   );
 }

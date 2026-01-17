@@ -1,0 +1,280 @@
+/* tdofrontend/src/features/Control/Trabajos/TrabajosAdmin.css */
+
+/* --- Grid Layout --- */
+.trabajos-admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+/* --- Card Component --- */
+.trabajo-admin-card {
+  background-color: var(--card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+.trabajo-admin-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-strong);
+  border-color: var(--brand-500);
+}
+
+/* Media Section */
+.trabajo-admin-media {
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  background-color: var(--bg-soft);
+}
+
+.trabajo-admin-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.trabajo-admin-card:hover .trabajo-admin-media img {
+  transform: scale(1.08);
+}
+
+/* Badges */
+.trabajo-admin-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: rgba(15, 23, 42, 0.85);
+  /* Slate 900 with opacity */
+  backdrop-filter: blur(4px);
+  color: var(--brand-400);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.trabajo-admin-badge.destacado {
+  right: auto;
+  left: 12px;
+  background: var(--brand-500);
+  color: #fff;
+  border: none;
+  box-shadow: 0 2px 8px rgba(6, 182, 212, 0.4);
+  /* Cyan glow */
+}
+
+/* Card Body */
+.trabajo-admin-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.trabajo-admin-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.trabajo-admin-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+.trabajo-admin-info span {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Card Actions */
+.trabajo-admin-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* --- Empty State --- */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: var(--card-soft);
+  border-radius: var(--radius-lg);
+  border: 2px dashed var(--border-subtle);
+  grid-column: 1 / -1;
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Form Layout (TrabajoForm) --- */
+.trabajo-form-wrapper {
+  animation: slideInUp 0.4s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.trabajo-form-header {
+  margin-bottom: 2rem;
+}
+
+.trabajo-form-header h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.25rem;
+}
+
+.trabajo-admin-form {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 2rem;
+  align-items: start;
+}
+
+.form-main-content {
+  background-color: var(--card);
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+}
+
+.form-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: sticky;
+  top: 1.5rem;
+}
+
+.form-section-title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--brand-400);
+  margin-bottom: 1rem;
+  font-weight: 700;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 0.5rem;
+}
+
+/* Form Grid System */
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+/* Custom Checkbox */
+.custom-checkbox-wrapper {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: var(--bg-soft);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.custom-checkbox input {
+  width: 1.25rem;
+  height: 1.25rem;
+  accent-color: var(--brand-500);
+  cursor: pointer;
+}
+
+/* Image Preview Area */
+.image-preview-container {
+  aspect-ratio: 16/9;
+  background: var(--bg);
+  border-radius: var(--radius-lg);
+  border: 2px dashed var(--border-subtle);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s;
+}
+
+.image-preview-container:hover {
+  border-color: var(--brand-500);
+}
+
+.image-preview-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.no-image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .trabajo-admin-form {
+    grid-template-columns: 1fr;
+  }
+
+  .form-sidebar {
+    position: static;
+    flex-direction: column-reverse;
+    /* Put actions at bottom on mobile */
+  }
+
+  .form-actions-sidebar {
+    display: flex;
+    /* Sticky bottom actions on mobile could be nice, but keep simple for now */
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .form-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}

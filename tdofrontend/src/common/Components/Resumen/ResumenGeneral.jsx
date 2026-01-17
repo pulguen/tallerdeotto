@@ -3,13 +3,15 @@ import TotalBox from './TotalBox';
 
 export default function ResumenGeneral({ items = [] }) {
   return (
-    <div className="d-flex flex-wrap gap-3 mb-4">
+    <div className="resumen-grid">
       {items.map((item, idx) => (
         <TotalBox
           key={idx}
           label={item.label}
           value={item.value}
           currency={item.currency !== false}
+          icon={item.icon}
+          colorClass={item.colorClass}
         />
       ))}
     </div>

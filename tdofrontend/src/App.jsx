@@ -8,10 +8,12 @@ import ProtectedLayout from './common/Layout/ProtectedLayout/ProtectedLayout';
 import Login from './features/Users/Login';
 import Register from './features/Users/Register';
 import Home from './features/Home/Home';
+import Portafolio from './features/Portafolio/Portafolio';
 
 import Admin from './features/Control/ControlHome/Admin';
 import Ingresos from './features/Control/Ingresos/Ingresos';
 import GastosHome from './features/Control/Gastos/GastosHome';
+import TrabajosAdmin from './features/Control/Trabajos/TrabajosAdmin';
 
 // Servicios Destacados
 import DisenoGrafico from './features/Home/ServiciosDestacados/DiseñoGrafico/DiseñoGrafico';
@@ -56,7 +58,10 @@ export default function App() {
       <Route path="/servicios/estampado/vinilo" element={<Vinilo />} />
       <Route path="/servicios/estampado/dtf  " element={<DTF />} />
       <Route path="/servicios/impresiones-profesionales" element={<Impresiones />} />
-      
+
+      {/* Portafolio público */}
+      <Route path="/portafolio" element={<Portafolio />} />
+
 
       {/* Admin / Control */}
       <Route
@@ -85,6 +90,16 @@ export default function App() {
           <PrivateRoute>
             <ProtectedLayout>
               <GastosHome />
+            </ProtectedLayout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/trabajos"
+        element={
+          <PrivateRoute>
+            <ProtectedLayout>
+              <TrabajosAdmin />
             </ProtectedLayout>
           </PrivateRoute>
         }

@@ -65,8 +65,8 @@ export default function GastoForm({
       Swal.fire(
         "Error",
         error.response?.data?.detail ||
-          JSON.stringify(error.response?.data) ||
-          "Algo salió mal",
+        JSON.stringify(error.response?.data) ||
+        "Algo salió mal",
         "error"
       );
     } finally {
@@ -79,9 +79,9 @@ export default function GastoForm({
       {/* Solo muestra los selects si no están fijos */}
       {!initialCategoriaId && (
         <div>
-          <label className="block text-sm">Categoría</label>
+          <label className="form-label-custom">Categoría</label>
           <select
-            className="w-full border rounded px-2 py-1"
+            className="form-input-custom"
             value={categoriaId}
             onChange={(e) => {
               setCategoriaId(e.target.value);
@@ -100,9 +100,9 @@ export default function GastoForm({
       )}
       {initialCategoriaId && (
         <div>
-          <label className="block text-sm">Categoría</label>
+          <label className="form-label-custom">Categoría</label>
           <input
-            className="w-full border rounded px-2 py-1 bg-gray-100"
+            className="form-input-custom bg-white/5 opacity-70"
             value={
               categorias.find((cat) => String(cat.id) === String(categoriaId))?.nombre || ""
             }
@@ -115,9 +115,9 @@ export default function GastoForm({
       {initialCategoriaId && (
         initialSubcategoriaId ? (
           <div>
-            <label className="block text-sm">Subcategoría</label>
+            <label className="form-label-custom">Subcategoría</label>
             <input
-              className="w-full border rounded px-2 py-1 bg-gray-100"
+              className="form-input-custom bg-white/5 opacity-70"
               value={
                 subcategorias.find((s) => String(s.id) === String(subcategoriaId))?.nombre || ""
               }
@@ -127,9 +127,9 @@ export default function GastoForm({
           </div>
         ) : (
           <div>
-            <label className="block text-sm">Subcategoría <span className="text-xs">(opcional)</span></label>
+            <label className="form-label-custom">Subcategoría <span className="text-xs text-[var(--muted)]">(opcional)</span></label>
             <select
-              className="w-full border rounded px-2 py-1"
+              className="form-input-custom"
               value={subcategoriaId}
               onChange={e => setSubcategoriaId(e.target.value)}
             >
@@ -145,18 +145,18 @@ export default function GastoForm({
       )}
       {/* Otros campos */}
       <div>
-        <label className="block text-sm">Descripción</label>
+        <label className="form-label-custom">Descripción</label>
         <input
-          className="w-full border rounded px-2 py-1"
+          className="form-input-custom"
           value={descripcion}
           onChange={e => setDescripcion(e.target.value)}
           required
         />
       </div>
       <div>
-        <label className="block text-sm">Monto</label>
+        <label className="form-label-custom">Monto</label>
         <input
-          className="w-full border rounded px-2 py-1"
+          className="form-input-custom"
           type="number"
           value={monto}
           onChange={e => setMonto(e.target.value)}
@@ -166,9 +166,9 @@ export default function GastoForm({
         />
       </div>
       <div>
-        <label className="block text-sm">Fecha</label>
+        <label className="form-label-custom">Fecha</label>
         <input
-          className="w-full border rounded px-2 py-1"
+          className="form-input-custom"
           type="date"
           value={fecha}
           onChange={e => setFecha(e.target.value)}

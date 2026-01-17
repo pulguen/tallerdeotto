@@ -47,8 +47,8 @@ export default function SubcategoriaForm({ categorias, editData, onSuccess, defa
   return (
     <form onSubmit={handleSubmit} className="p-4">
       <div>
-        <label>Categoría</label>
-        <select className="w-full border rounded px-2 py-1" value={categoriaId} onChange={e => setCategoriaId(e.target.value)} required>
+        <label className="form-label-custom">Categoría</label>
+        <select className="form-input-custom" value={categoriaId} onChange={e => setCategoriaId(e.target.value)} required>
           <option value="">Seleccionar</option>
           {categorias.map(cat => (
             <option key={cat.id} value={cat.id}>{cat.nombre}</option>
@@ -56,12 +56,12 @@ export default function SubcategoriaForm({ categorias, editData, onSuccess, defa
         </select>
       </div>
       <div>
-        <label>Nombre</label>
-        <input className="w-full border rounded px-2 py-1" value={nombre} onChange={e => setNombre(e.target.value)} required />
+        <label className="form-label-custom">Nombre</label>
+        <input className="form-input-custom" value={nombre} onChange={e => setNombre(e.target.value)} required />
       </div>
       <div>
-        <label>Descripción (opcional)</label>
-        <textarea className="w-full border rounded px-2 py-1" rows={2} value={descripcion} onChange={e => setDescripcion(e.target.value)} />
+        <label className="form-label-custom">Descripción (opcional)</label>
+        <textarea className="form-input-custom" rows={2} value={descripcion} onChange={e => setDescripcion(e.target.value)} />
       </div>
       <div style={{ marginTop: 16 }}>
         <CustomButton type="submit" loading={loading} disabled={loading}>

@@ -1,0 +1,58 @@
+// src/features/Home/ServiciosDestacados/serviciosDestacadosData.js
+
+export const SERVICIOS_DESTACADOS_DEFAULT = [
+  {
+    id: 1,
+    title: 'Diseño Gráfico',
+    description: 'Identidad visual, flyers, catálogos y piezas para redes sociales.',
+    image: '/Images/Servicios/diseno-grafico.png',
+    alt: 'Muestras de diseño gráfico',
+    cta: 'Ver servicio',
+    link: '/servicios/diseño-grafico',
+  },
+  {
+    id: 2,
+    title: 'Social Media Management',
+    description: 'Gestión integral de redes: planificación, contenido, métricas y campañas.',
+    image: '/Images/Servicios/social-media.png',
+    alt: 'Gestión profesional de redes sociales y marketing digital',
+    cta: 'Conocer más',
+    link: '/servicios/social-media',
+  },
+  {
+    id: 3,
+    title: 'Diseño web',
+    description: 'Sitios rápidos en React/Next, optimizados para SEO.',
+    image: '/Images/Servicios/diseno-web.png',
+    alt: 'Diseño de sitios web',
+    cta: 'Solicitar presupuesto',
+    link: '/servicios/diseño-web',
+  },
+  {
+    id: 4,
+    title: 'Desarrollo de Software',
+    description: 'Apps a medida, paneles y automatizaciones.',
+    image: '/Images/Servicios/desarrollo-software.png',
+    alt: 'Código en editor',
+    cta: 'Charlemos tu proyecto',
+    link: '/servicios/desarrollo-software',
+  },
+  {
+    id: 5,
+    title: 'Serigrafía - Vinilo - DTF',
+    description: 'Estampado de indumentaria, textiles y más.',
+    image: '/Images/Servicios/serigrafia.png',
+    alt: 'Estampado sobre remeras',
+    cta: 'Ver opciones',
+    link: '/servicios/estampado',
+  },
+  {
+    id: 6,
+    title: 'Impresiones profesionales',
+    description: 'Digital y offset de alta calidad en folletos, tarjetas y gran formato.',
+    image: '/Images/Servicios/impresiones.png',
+    alt: 'Ejemplos de impresiones',
+    cta: 'Solicitar presupuesto',
+    link: '/servicios/impresiones-profesionales',
+  },
+];

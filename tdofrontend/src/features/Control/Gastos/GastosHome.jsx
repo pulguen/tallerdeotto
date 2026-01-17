@@ -6,9 +6,32 @@ import SubcategoriaForm from './SubcategoriaForm';
 import CustomButton from '../../../common/Components/Button/CustomButton';
 import Swal from 'sweetalert2';
 import GastoForm from './GastoForm';
+import CommonModal from '../../../common/Components/Modal/CommonModal';
+import LoadingSpinner from '../../../common/Components/Feedback/LoadingSpinner';
+import EmptyState from '../../../common/Components/Feedback/EmptyState';
 
 export default function GastosHome() {
   const [categorias, setCategorias] = useState([]);
+
+  // Logica de Exportacion Manual
+  const handleExport = () => {
+    if (!gastos || !gastos.length) return;
+    const headers = "ID,Descripcion,Monto,Fecha,Categoria,Subcategoria";
+    const rows = gastos.map(g => {
+      const catName = categorias.find(c => c.id === g.categoria)?.nombre || '';
+      const subName = subcategorias.find(s => s.id === g.subcategoria)?.nombre || '';
+      const desc = `"${g.descripcion.replace(/"/g, '""')}"`;
+      return `${g.id},${desc},${g.monto},${g.fecha},"${catName}","${subName}"`;
+    }).join('\n');
+
+    const csvContent = "data:text/csv;charset=utf-8," + encodeURIComponent(headers + '\n' + rows);
+    const link = document.createElement("a");
+    link.setAttribute("href", csvContent);
+    link.setAttribute("download", "gastos.csv");
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  };
   const [subcategorias, setSubcategorias] = useState([]);
   const [gastos, setGastos] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -83,15 +106,35 @@ export default function GastosHome() {
     }
   };
 
+  const getModalTitle = () => {
+    if (modalType === 'categoria') return editData ? 'Editar Categoría' : 'Nueva Categoría';
+    if (modalType === 'subcategoria') return editData ? 'Editar Subcategoría' : 'Nueva Subcategoría';
+    if (modalType === 'gasto') return editData ? 'Editar Gasto' : 'Nuevo Gasto';
+    return '';
+  };
+
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-5">Gastos</h2>
-      <div className="flex gap-3 mb-4">
-        <CustomButton onClick={() => openModal('categoria')}>Nueva Categoría</CustomButton>
+    <div className="admin-container">
+      <div className="admin-section-header">
+        <h2 className="admin-title-gradient">Gastos</h2>
+        <div className="flex gap-2">
+          <CustomButton onClick={handleExport} variant="outline-primary" size="sm" disabled={loading || !gastos.length}>
+            <i className="fas fa-file-csv mr-1"></i> Exportar CSV
+          </CustomButton>
+          <CustomButton onClick={() => openModal('categoria')} variant="primary">+ Nueva Categoría</CustomButton>
+        </div>
       </div>
-      {loading && <div className="text-center text-gray-400 p-8">Cargando...</div>}
+
+      {loading && <LoadingSpinner text="Cargando gastos..." />}
+
       {!loading && categorias.length === 0 && (
-        <div className="text-center text-gray-400 p-8">No hay categorías cargadas.</div>
+        <EmptyState
+          icon="fas fa-coins"
+          title="Sin Categorías"
+          description="No hay categorías de gastos cargadas."
+          actionLabel="+ Nueva Categoría"
+          onAction={() => openModal('categoria')}
+        />
       )}
       {!loading && categorias.map(cat =>
         cat && typeof cat.nombre === "string" ? (
@@ -114,42 +157,34 @@ export default function GastosHome() {
       )}
 
       {/* Modal */}
-      {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white rounded-xl shadow-lg p-6 min-w-[350px] max-w-md">
-            <div className="flex justify-between items-center mb-3">
-              <h2 className="text-lg font-semibold">
-                {modalType === 'categoria' && (editData ? 'Editar Categoría' : 'Nueva Categoría')}
-                {modalType === 'subcategoria' && (editData ? 'Editar Subcategoría' : 'Nueva Subcategoría')}
-                {modalType === 'gasto' && (editData ? 'Editar Gasto' : 'Nuevo Gasto')}
-              </h2>
-              <button onClick={closeModal} className="text-xl font-bold hover:text-red-600">×</button>
-            </div>
-            {modalType === 'categoria' &&
-              <CategoriaForm editData={editData} onSuccess={() => { closeModal(); fetchAll(); }} />
-            }
-            {modalType === 'subcategoria' &&
-              <SubcategoriaForm
-                categorias={categorias}
-                editData={editData}
-                onSuccess={() => { closeModal(); fetchAll(); }}
-                defaultCategoria={parentCategoria}
-              />
-            }
-            {modalType === 'gasto' &&
-              <GastoForm
-                categorias={categorias}
-                subcategorias={subcategorias}
-                editData={editData}
-                onSuccess={() => { closeModal(); fetchAll(); }}
-                onClose={closeModal}
-                categoriaId={parentCategoria}
-                subcategoriaId={parentSubcategoria}
-              />
-            }
-          </div>
-        </div>
-      )}
+      <CommonModal
+        isOpen={showModal}
+        onClose={closeModal}
+        title={getModalTitle()}
+      >
+        {modalType === 'categoria' &&
+          <CategoriaForm editData={editData} onSuccess={() => { closeModal(); fetchAll(); }} />
+        }
+        {modalType === 'subcategoria' &&
+          <SubcategoriaForm
+            categorias={categorias}
+            editData={editData}
+            onSuccess={() => { closeModal(); fetchAll(); }}
+            defaultCategoria={parentCategoria}
+          />
+        }
+        {modalType === 'gasto' &&
+          <GastoForm
+            categorias={categorias}
+            subcategorias={subcategorias}
+            editData={editData}
+            onSuccess={() => { closeModal(); fetchAll(); }}
+            onClose={closeModal}
+            categoriaId={parentCategoria}
+            subcategoriaId={parentSubcategoria}
+          />
+        }
+      </CommonModal>
     </div>
   );
 }

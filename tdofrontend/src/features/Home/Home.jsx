@@ -2,7 +2,7 @@
 
 import './Home.css';
 
-import ServiciosDestacados from './ServiciosDestacados/ServiciosDescatados';
+import ServiciosDestacados from './ServiciosDestacados/ServiciosDestacados';
 import TrabajosRecientes from './TrabajosRecientes/TrabajosRecientes';
 import Productos from './Productos/Productos';
 import HeaderHome from './Header/HeaderHome';
@@ -13,29 +13,28 @@ const Home = () => {
   return (
     <div className="contenedor-home home-page">
       {/* Hero: full-width */}
-      <section className="home-section home-section--flush">
+      <section className="home-section home-section--flush" id="inicio">
         <HeaderHome />
       </section>
 
       {/* Servicios destacados */}
-      <section className="home-section">
+      <section className="home-section" id="servicios">
         <div className="page-container">
           <ServiciosDestacados />
         </div>
       </section>
 
       {/* Ultimos Trabajos */}
-      <section className="home-section">
+      <section className="home-section" id="trabajos">
         <div className="page-container">
           <TrabajosRecientes />
         </div>
       </section>
 
       {/* Carrusel de productos */}
-      <section className="home-section">
+      <section className="home-section" id="productos">
         <div className="page-container">
-          <Productos /
-            >
+          <Productos />
         </div>
       </section>
 
@@ -48,7 +47,7 @@ const Home = () => {
       </section>
 
       {/* Contacto */}
-      <section className="home-section home-section--flush">
+      <section className="home-section home-section--flush" id="contacto">
         <ContactHome />
       </section>
     </div>

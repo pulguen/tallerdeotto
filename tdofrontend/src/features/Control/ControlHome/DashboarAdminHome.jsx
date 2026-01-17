@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "../../../context/customAxios";
 import ResumenGeneral from "../../../common/Components/Resumen/ResumenGeneral";
 import EvolucionMensualChart from "./EvolucionMensualChart";
+import CustomButton from "../../../common/Components/Button/CustomButton";
+import LoadingSpinner from "../../../common/Components/Feedback/LoadingSpinner";
 
 // Helpers para primer y último día del mes actual
 function getPrimerDiaMesActual() {
@@ -17,7 +19,7 @@ function getUltimoDiaMesActual() {
 // Título dinámico según rango seleccionado
 function getTituloPorRango(desde, hasta) {
   if (!desde && !hasta) return "Todos los meses";
-  if (desde && hasta && desde.slice(0,7) === hasta.slice(0,7)) {
+  if (desde && hasta && desde.slice(0, 7) === hasta.slice(0, 7)) {
     // Un solo mes
     const [anio, mes] = desde.split("-");
     const meses = [
@@ -130,61 +132,72 @@ export default function DashboardHome() {
   }, [desde, hasta, allEvolucion, allGastosTotal, allIngresosTotal]);
 
   const resumenItems = [
-    { label: "Total Gastos", value: stats.totalGastos, currency: true },
-    { label: "Total Ingresos", value: stats.totalIngresos, currency: true },
-    { label: "Saldo Neto", value: stats.totalIngresos - stats.totalGastos, currency: true }
+    { label: "Total Gastos", value: stats.totalGastos, currency: true, icon: 'fas fa-arrow-down', colorClass: 'text-red-500' },
+    { label: "Total Ingresos", value: stats.totalIngresos, currency: true, icon: 'fas fa-arrow-up', colorClass: 'text-green-500' },
+    { label: "Saldo Neto", value: stats.totalIngresos - stats.totalGastos, currency: true, icon: 'fas fa-wallet', colorClass: 'text-cyan-400' }
   ];
 
   return (
-    <div style={{ padding: 24 }}>
-      <h2 className="mb-4">{getTituloPorRango(desde, hasta)}</h2>
+    <div className="admin-container">
+      <div className="admin-section-header">
+        <h2 className="admin-title-gradient">{getTituloPorRango(desde, hasta)}</h2>
+      </div>
 
-      {/* Filtro por fecha */}
-      <div style={{
-        display: 'flex',
-        gap: 16,
-        alignItems: 'center',
-        marginBottom: 24
-      }}>
-        <label>
-          Desde:
+      {/* Filtro por fecha - Minimalista */}
+      <div className="admin-filters-bar mb-5">
+        <label className="form-label-custom mb-0 text-sm">
+          Desde
           <input
             type="date"
+            className="form-input-custom"
             value={desde}
             onChange={e => setDesde(e.target.value)}
-            style={{ marginLeft: 4 }}
           />
         </label>
-        <label>
-          Hasta:
+        <label className="form-label-custom mb-0 text-sm">
+          Hasta
           <input
             type="date"
+            className="form-input-custom"
             value={hasta}
             onChange={e => setHasta(e.target.value)}
-            style={{ marginLeft: 4 }}
           />
         </label>
-        {(desde || hasta) && (
-          <button onClick={() => {
-            setDesde(getPrimerDiaMesActual());
-            setHasta(getUltimoDiaMesActual());
-          }}>
-            Mes actual
-          </button>
-        )}
-        {(desde !== "" || hasta !== "") && (
-          <button style={{ marginLeft: 8 }} onClick={() => { setDesde(""); setHasta(""); }}>
-            Ver todo
-          </button>
-        )}
+
+        <div className="flex gap-2 flex-grow justify-end items-end mt-2 md:mt-0">
+          {(desde || hasta) && (
+            <CustomButton
+              variant="action"
+              size="sm"
+              onClick={() => {
+                setDesde(getPrimerDiaMesActual());
+                setHasta(getUltimoDiaMesActual());
+              }}
+            >
+              Mes actual
+            </CustomButton>
+          )}
+          {(desde !== "" || hasta !== "") && (
+            <CustomButton
+              variant="outline-primary"
+              size="sm"
+              onClick={() => { setDesde(""); setHasta(""); }}
+            >
+              Ver todo
+            </CustomButton>
+          )}
+        </div>
       </div>
 
       {loading ? (
-        <div className="text-muted text-center p-5">Cargando...</div>
+        <LoadingSpinner text="Cargando datos maestros..." />
       ) : (
         <>
           <ResumenGeneral items={resumenItems} />
-          <EvolucionMensualChart data={evolucion} />
+          <div className="minimal-card p-4 mt-4">
+            <h4 className="mb-4 fw-bold fs-5" style={{ color: 'var(--ink)' }}>Evolución Mensual</h4>
+            <EvolucionMensualChart data={evolucion} />
+          </div>
         </>
       )}
     </div>

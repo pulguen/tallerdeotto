@@ -1,48 +1,44 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import Ingresos from '../Ingresos/Ingresos';
 import GastosHome from '../Gastos/GastosHome';
+import TrabajosAdmin from '../Trabajos/TrabajosAdmin';
 import DashboardHome from './DashboarAdminHome';
+import CustomButton from "../../../common/Components/Button/CustomButton";
+import AdminHeader from "./AdminHeader";
 
 const MODULES = [
-  { key: 'dashboard', label: 'Dashboard', component: <DashboardHome /> },
-  { key: 'ingresos', label: 'Ingresos', component: <Ingresos /> },
-  { key: 'gastos', label: 'Gastos', component: <GastosHome /> },
-  // Agregá más módulos aquí
+  { key: 'dashboard', label: 'Dashboard', component: DashboardHome },
+  { key: 'ingresos', label: 'Ingresos', component: Ingresos },
+  { key: 'gastos', label: 'Gastos', component: GastosHome },
+  { key: 'trabajos', label: 'Trabajos', component: TrabajosAdmin },
 ];
 
 const ControlHome = () => {
-  // Ahora el default es 'dashboard'
   const [selected, setSelected] = useState('dashboard');
 
   const renderModule = () => {
     const mod = MODULES.find(m => m.key === selected);
-    return mod ? mod.component : <div>Seleccione un módulo.</div>;
+    const Component = mod ? mod.component : null;
+    return Component ? <Component /> : <div>Seleccione un módulo.</div>;
   };
 
   return (
-    <div className="panel-control-home">
-      <nav>
-        <ul style={{ display: 'flex', gap: 16, listStyle: 'none', padding: 0 }}>
-          {MODULES.map(mod => (
-            <li key={mod.key}>
-              <button
-                className={`panel-nav-btn${selected === mod.key ? ' active' : ''}`}
-                onClick={() => setSelected(mod.key)}
-                style={{
-                  fontWeight: selected === mod.key ? 'bold' : 'normal',
-                  border: 'none',
-                  background: 'none',
-                  cursor: 'pointer'
-                }}
-              >
-                {mod.label}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <div style={{ marginTop: 24 }}>
+    <div className="admin-container">
+      <AdminHeader />
+
+      <div className="admin-tabs-container no-scrollbar">
+        {MODULES.map(mod => (
+          <button
+            key={mod.key}
+            className={`admin-tab-button ${selected === mod.key ? 'active' : ''}`}
+            onClick={() => setSelected(mod.key)}
+          >
+            {mod.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="admin-content-fade-in">
         {renderModule()}
       </div>
     </div>

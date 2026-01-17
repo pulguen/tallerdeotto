@@ -44,13 +44,10 @@ const HeaderHome = () => {
 
           <h1 className="hero-title">
             Soluciones <span className="highlight ff-brokenscript"> creativas</span> y{' '}
-            <span className="highlight ff-brokenscript"> tecnológicas</span> para marcas, empresas e instituciones
+            <span className="highlight ff-brokenscript"> tecnológicas</span> para tu próximo proyecto.
           </h1>
 
-          <p className="hero-subtitle">
-            Combinamos diseño, tecnología y producción gráfica para ofrecer resultados integrales:
-            desde tu identidad visual hasta plataformas web y aplicaciones personalizadas.
-          </p>
+
 
           <div className="hero-ctas" role="group" aria-label="Acciones principales">
             <CustomButton

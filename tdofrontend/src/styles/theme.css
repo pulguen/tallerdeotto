@@ -1,33 +1,38 @@
 /* src/styles/theme.css */
 /* ==== Tokens globales Taller de Otto ==== */
 :root {
-  /* Marca (alineado con login) */
-  --brand-400: #38d5f0;
-  --brand-500: #22d3ee;  /* = login-accent */
-  --brand-600: #06b6d4;  /* = login-accent-600 */
-  --brand-700: #0e7490;
+  /* Brand - Cyan (Professional Accent) */
+  --brand-400: #22d3ee;
+  --brand-500: #06b6d4;
+  --brand-600: #0891b2;
 
-  /* Fondo general dark */
+  /* Backgrounds - Solid Slate (No Transparencies) */
   --bg: #020617;
-  --bg-soft: #020617;
+  /* Slate 950 (Main App Background) */
+  --bg-soft: #0f172a;
+  /* Slate 900 (Secondary Background) */
 
-  /* Texto */
-  --ink: #e5edf3;
-  --muted: #9ca3af;
+  /* Surfaces & Cards */
+  --card: #1e293b;
+  /* Slate 800 (Card Background) */
+  --card-soft: #1e293b;
+  /* Same as card for consistency */
 
-  /* Cards glass */
-  --card: rgba(15, 23, 42, 0.92);
-  --card-soft: rgba(15, 23, 42, 0.78);
-  --border-subtle: rgba(148, 163, 184, 0.32);
+  /* Text & Content */
+  --ink: #f8fafc;
+  /* Slate 50 (High Contrast Text) */
+  --muted: #94a3b8;
+  /* Slate 400 (Secondary Text) */
 
-  /* Bordes, sombras, radios */
-  --ring: rgba(34, 211, 238, 0.6);
-  --radius-lg: 16px;
-  --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.8);
-  --shadow-strong: 0 18px 45px rgba(0, 0, 0, 0.9);
+  /* Borders & Dividers */
+  --border-subtle: #334155;
+  /* Slate 700 (Subtle Borders) */
 
-  /* Superficie oscura para secciones como contacto */
-  --surface-950: #020617;
+  /* UI Tokens */
+  --radius-lg: 12px;
+  /* Slightly smaller, more refined radius */
+  --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-strong: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 /* ===== Layout Home público (fondo general) ===== */
@@ -38,7 +43,7 @@
 }
 
 /* Títulos directos dentro del home (fallback genérico) */
-.contenedor-home > h2 {
+.contenedor-home>h2 {
   margin: 2.25rem 1.5rem 0.75rem;
   font-size: clamp(1.4rem, 2.2vw, 1.7rem);
   color: var(--ink);

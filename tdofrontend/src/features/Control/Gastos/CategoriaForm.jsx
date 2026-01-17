@@ -41,18 +41,18 @@ export default function CategoriaForm({ editData, onSuccess }) {
   return (
     <form onSubmit={handleSubmit} className="p-4">
       <div>
-        <label>Nombre</label>
+        <label className="form-label-custom">Nombre</label>
         <input
-          className="w-full border rounded px-2 py-1"
+          className="form-input-custom"
           value={nombre}
           onChange={e => setNombre(e.target.value)}
           required
         />
       </div>
       <div>
-        <label>Descripción (opcional)</label>
+        <label className="form-label-custom">Descripción (opcional)</label>
         <textarea
-          className="w-full border rounded px-2 py-1"
+          className="form-input-custom"
           rows={2}
           value={descripcion}
           onChange={e => setDescripcion(e.target.value)}

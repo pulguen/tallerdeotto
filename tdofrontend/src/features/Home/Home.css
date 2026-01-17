@@ -5,11 +5,15 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: var(--bg);
+  color: var(--ink);
 }
 
 /* Sección genérica del home */
+/* Sección genérica del home */
 .home-section {
-  padding-block: 1.8rem;
+  padding-block: 1rem;
+  /* Reduced from 1.8rem */
 }
 
 /* Para secciones que ya traen su propio padding/fondo (hero / contacto) */
@@ -19,7 +23,8 @@
 
 /* Título reutilizable dentro de secciones del home */
 .home-section__title {
-  margin: 0 0 1rem;
+  margin: 0 0 0.75rem;
+  /* Reduced from 1rem */
   font-size: clamp(1.3rem, 2.1vw, 1.6rem);
   color: var(--ink);
   font-weight: 700;
@@ -27,7 +32,8 @@
 
 /* Subtítulo reutilizable debajo de h2 en secciones */
 .home-section__subtitle {
-  margin: 0 0 1rem;
+  margin: 0 0 0.75rem;
+  /* Reduced from 1rem */
   color: var(--muted);
   font-size: clamp(0.95rem, 2.1vw, 1.05rem);
   line-height: 1.5;
@@ -35,6 +41,7 @@
 
 @media (min-width: 900px) {
   .home-section {
-    padding-block: 2.2rem;
+    padding-block: 1.5rem;
+    /* Reduced from 2.2rem */
   }
 }

@@ -3,6 +3,8 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.http import HttpResponse
+from django.conf import settings
+from django.conf.urls.static import static
 
 def health_check(request):
     return HttpResponse("OK")
@@ -23,4 +25,12 @@ urlpatterns = [
     # Endpoints de gastos
     path('api/gastos/', include('apps.gastos.urls')),
 
+    # Endpoints de trabajos/portfolio
+    path('api/trabajos/', include('apps.trabajos.urls')),
+
 ]
+
+# Servir archivos media en desarrollo
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

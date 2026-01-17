@@ -6,6 +6,8 @@ import CommonModal from '../../../common/Components/Modal/CommonModal';
 import CustomButton from '../../../common/Components/Button/CustomButton';
 import TotalBox from '../../../common/Components/Resumen/TotalBox';
 import { formatDate } from '../../../utils/formatDate';
+import LoadingSpinner from '../../../common/Components/Feedback/LoadingSpinner';
+import EmptyState from '../../../common/Components/Feedback/EmptyState';
 
 
 export default function Ingresos() {
@@ -139,16 +141,28 @@ export default function Ingresos() {
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <div className="flex justify-between items-center mb-3">
-        <h2 className="text-2xl font-bold">Ingresos</h2>
+    <div className="admin-container">
+      <div className="admin-section-header">
+        <h2 className="admin-title-gradient">Ingresos</h2>
+        {canEdit && (
+          <CustomButton onClick={() => setShowModal(true)} disabled={loading} variant="primary">
+            + Nuevo Ingreso
+          </CustomButton>
+        )}
       </div>
 
-      {error && <div className="mb-4 text-red-600">{error}</div>}
-      {loading && <div className="mb-4">Cargando...</div>}
+      {error && <div className="mb-4 text-red-500 bg-red-900/20 p-3 rounded-lg border border-red-500/30">{error}</div>}
+
+      {loading && <LoadingSpinner text="Cargando ingresos..." />}
 
       {!loading && ingresos.length === 0 && !error && (
-        <div className="text-gray-600">No hay ingresos registrados.</div>
+        <EmptyState
+          icon="fas fa-hand-holding-usd"
+          title="Sin Ingresos"
+          description="No hay ingresos registrados todavía."
+          actionLabel={canEdit ? "+ Nuevo Ingreso" : null}
+          onAction={canEdit ? () => setShowModal(true) : null}
+        />
       )}
 
       {canEdit && (
@@ -228,6 +242,8 @@ export default function Ingresos() {
             },
           ]}
           data={ingresos}
+          exportable={true}
+          exportName="ingresos.csv"
           actions={(row) =>
             editingId === row.id ? (
               <div className="flex gap-2">
@@ -273,13 +289,7 @@ export default function Ingresos() {
           }
         />
       )}
-      <div className="flex justify-between items-center mt-2 mb-4">
-        {canEdit && (
-          <CustomButton onClick={() => setShowModal(true)} disabled={loading}>
-            Nuevo Ingreso
-          </CustomButton>
-        )}
-      </div>
+      <div className="flex justify-between items-center mt-4"></div>
       {/* Modal para nuevo ingreso */}
       <CommonModal
         isOpen={showModal}
