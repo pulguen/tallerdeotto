@@ -7,6 +7,7 @@ import TrabajosRecientes from './TrabajosRecientes/TrabajosRecientes';
 import Productos from './Productos/Productos';
 import HeaderHome from './Header/HeaderHome';
 import BasicoStoreBanner from './BasicoStore/BasicoStoreBanner';
+import InfoSection from './InfoSection/InfoSection';
 import ContactHome from './ContactHome/ContactHome';
 
 const Home = () => {
@@ -23,6 +24,9 @@ const Home = () => {
           <ServiciosDestacados />
         </div>
       </section>
+
+      {/* Info Section (Nuevo separador) */}
+      <InfoSection />
 
       {/* Ultimos Trabajos */}
       <section className="home-section" id="trabajos">

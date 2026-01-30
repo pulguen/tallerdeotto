@@ -1,38 +1,38 @@
 /* src/styles/theme.css */
 /* ==== Tokens globales Taller de Otto ==== */
 :root {
-  /* Brand - Cyan (Professional Accent) */
-  --brand-400: #22d3ee;
-  --brand-500: #06b6d4;
-  --brand-600: #0891b2;
+  /* Brand - Orange/Rust Palette */
+  --brand-400: #eeb075;
+  /* Ligher Orange (derivative) */
+  --brand-500: #cf7925;
+  /* Main Orange */
+  --brand-600: #924b16;
+  /* Rust / Darker Orange */
 
-  /* Backgrounds - Solid Slate (No Transparencies) */
-  --bg: #020617;
-  /* Slate 950 (Main App Background) */
-  --bg-soft: #0f172a;
-  /* Slate 900 (Secondary Background) */
+  /* Backgrounds - Pure Black & Deep tones */
+  --bg: #000000;
+  --bg-soft: #0d0603;
+  /* Very dark warm black */
 
   /* Surfaces & Cards */
-  --card: #1e293b;
-  /* Slate 800 (Card Background) */
-  --card-soft: #1e293b;
-  /* Same as card for consistency */
+  --card: #120804;
+  /* Dark coffee/black */
+  --card-soft: #1a0c06;
 
   /* Text & Content */
-  --ink: #f8fafc;
-  /* Slate 50 (High Contrast Text) */
-  --muted: #94a3b8;
-  /* Slate 400 (Secondary Text) */
+  --ink: #f7dcb2;
+  /* Beige - High Contrast Text */
+  --muted: #a67c52;
+  /* Muted Brown/Beige */
 
   /* Borders & Dividers */
-  --border-subtle: #334155;
-  /* Slate 700 (Subtle Borders) */
+  --border-subtle: #45220e;
+  /* Subtle Rust Border */
 
   /* UI Tokens */
   --radius-lg: 12px;
-  /* Slightly smaller, more refined radius */
-  --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-strong: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+  --shadow-strong: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
 /* ===== Layout Home público (fondo general) ===== */

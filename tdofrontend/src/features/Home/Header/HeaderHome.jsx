@@ -29,25 +29,25 @@ const HeaderHome = () => {
       </div>
 
       <div className="hero-inner">
-        {/* Columna texto */}
-        <div className="hero-content">
+        {/* Columna Izquierda: Logo Grande */}
+        <div className="hero-brand-col">
           <img
             src="/logoHome.png"
             alt="Logo Taller de Otto"
-            className="hero-logo"
-            width="180"
-            height="64"
+            className="hero-logo-big"
+            width="400"
+            height="142"
             decoding="async"
           />
+        </div>
 
-          <p className="eyebrow">DISEÑO GRÁFICO - UX/UI - DESARROLLO DE SOFTWARE</p>
+        {/* Columna Derecha: Información */}
+        <div className="hero-content">
 
           <h1 className="hero-title">
-            Soluciones <span className="highlight ff-brokenscript"> creativas</span> y{' '}
-            <span className="highlight ff-brokenscript"> tecnológicas</span> para tu próximo proyecto.
+            Soluciones <span className="highlight ff-brokenscript">creativas</span> y{' '}
+            <span className="highlight ff-brokenscript">tecnológicas</span> para tu próximo proyecto.
           </h1>
-
-
 
           <div className="hero-ctas" role="group" aria-label="Acciones principales">
             <CustomButton
@@ -61,15 +61,18 @@ const HeaderHome = () => {
             >
               Trabajemos juntos
             </CustomButton>
+
+            <CustomButton
+              as="a"
+              href="#contacto"
+              variant="outline-primary"
+              startIcon={<i className="fa-regular fa-envelope" aria-hidden="true" />}
+            >
+              Enviar mensaje
+            </CustomButton>
           </div>
 
-          <ul className="hero-features" aria-label="Beneficios">
-            <li>⚡ Entregas ágiles</li>
-            <li>🎯 Enfoque a resultados</li>
-            <li>🌱 Comunicación efectiva para todos tus canales</li>
-          </ul>
-
-          <div className="hero-stats" aria-label="Indicadores">
+          <div className="hero-stats mt-5" aria-label="Indicadores">
             <div className="stat">
               <span className="stat-number">+10</span>
               <span className="stat-label">Años de trayectoria</span>
@@ -83,14 +86,6 @@ const HeaderHome = () => {
               <span className="stat-label">Proyectos realizados</span>
             </div>
           </div>
-        </div>
-
-        {/* Columna visual */}
-        <div className="hero-visual" aria-hidden="true">
-          <picture>
-            <source srcSet="/images/hero/hero-home-1280.webp" type="image/webp" />
-            <img src="/images/hero/hero-home-1280.jpg" alt="" loading="eager" />
-          </picture>
         </div>
       </div>
 

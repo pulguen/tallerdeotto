@@ -1,30 +1,63 @@
 /* tdofrontend/src/features/Control/Trabajos/TrabajosAdmin.css */
 
-/* --- Grid Layout --- */
+/* --- Mobile-First Grid Layout --- */
 .trabajos-admin-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: 1fr;
+  /* Mobile: 1 columna */
+  gap: 1.25rem;
   padding-bottom: 2rem;
 }
 
-/* --- Card Component --- */
+/* Tablet: 2 columnas (640px+) */
+@media (min-width: 640px) {
+  .trabajos-admin-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* Desktop: 3 columnas (1024px+) */
+@media (min-width: 1024px) {
+  .trabajos-admin-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+  }
+}
+
+
+/* --- Card Component (Minimalist Style) --- */
 .trabajo-admin-card {
   background-color: var(--card);
   border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid var(--border-subtle);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s ease;
   display: flex;
   flex-direction: column;
   height: 100%;
   position: relative;
+  /* Touch feedback */
+  -webkit-tap-highlight-color: rgba(207, 121, 37, 0.1);
 }
 
-.trabajo-admin-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-strong);
-  border-color: var(--brand-500);
+/* Hover only on devices that support it */
+@media (hover: hover) and (pointer: fine) {
+  .trabajo-admin-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-strong);
+    border-color: var(--brand-500);
+  }
+
+  .trabajo-admin-card:hover .trabajo-admin-media img {
+    transform: scale(1.08);
+  }
+}
+
+/* Active state for touch */
+.trabajo-admin-card:active {
+  transform: scale(0.98);
+  border-color: var(--brand-400);
 }
 
 /* Media Section */
@@ -70,8 +103,8 @@
   background: var(--brand-500);
   color: #fff;
   border: none;
-  box-shadow: 0 2px 8px rgba(6, 182, 212, 0.4);
-  /* Cyan glow */
+  box-shadow: 0 2px 8px rgba(207, 121, 37, 0.4);
+  /* Orange glow */
 }
 
 /* Card Body */
@@ -105,28 +138,28 @@
   gap: 0.4rem;
 }
 
-/* Card Actions */
+
+/* Card Actions - Mobile First */
 .trabajo-admin-actions {
   display: flex;
+  flex-direction: column;
+  /* Stack vertically on mobile */
   gap: 0.75rem;
   margin-top: auto;
   padding-top: 1rem;
   border-top: 1px solid var(--border-subtle);
 }
 
-/* --- Empty State --- */
-.empty-state {
-  text-align: center;
-  padding: 4rem 2rem;
-  background-color: var(--card-soft);
-  border-radius: var(--radius-lg);
-  border: 2px dashed var(--border-subtle);
-  grid-column: 1 / -1;
-  color: var(--muted);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.trabajo-admin-actions button {
+  min-height: 44px;
+  /* Touch-friendly */
+}
+
+/* Horizontal layout on tablet+ */
+@media (min-width: 640px) {
+  .trabajo-admin-actions {
+    flex-direction: row;
+  }
 }
 
 /* --- Form Layout (TrabajoForm) --- */
@@ -159,9 +192,18 @@
 
 .trabajo-admin-form {
   display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 2rem;
+  grid-template-columns: 1fr;
+  /* Mobile: stacked */
+  gap: 1.5rem;
   align-items: start;
+}
+
+/* Desktop: Two column layout (sidebar) */
+@media (min-width: 992px) {
+  .trabajo-admin-form {
+    grid-template-columns: 1fr 320px;
+    gap: 2rem;
+  }
 }
 
 .form-main-content {
@@ -190,11 +232,20 @@
   padding-bottom: 0.5rem;
 }
 
-/* Form Grid System */
+
+/* Form Grid System - Mobile First */
 .form-grid-2 {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
+  /* Mobile: 1 columna */
   gap: 1.25rem;
+}
+
+/* Tablet+: 2 columnas */
+@media (min-width: 640px) {
+  .form-grid-2 {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* Custom Checkbox */

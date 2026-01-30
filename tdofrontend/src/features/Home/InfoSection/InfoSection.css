@@ -1,0 +1,183 @@
+/* src/features/Home/InfoSection/InfoSection.css */
+
+.info-section {
+    background-color: var(--bg);
+    /* Pure Black */
+    padding: 5rem 1.5rem;
+    color: var(--ink);
+    /* Beige */
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Fondo decorativo sutil (Mesh oscuro azulado) */
+.info-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.08), transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.08), transparent 40%);
+    pointer-events: none;
+}
+
+.info-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    /* Mobile: single column */
+    gap: 2.5rem;
+    align-items: start;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    padding: 0 1rem;
+}
+
+.info-container.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Desktop: Two columns */
+@media (min-width: 900px) {
+    .info-container {
+        grid-template-columns: 1.2fr 1fr;
+        /* Left slightly wider */
+        gap: 4rem;
+        align-items: center;
+        text-align: left;
+    }
+}
+
+.info-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: relative;
+}
+
+/* Decorative accent line - Cyan/Blue Gradient */
+.info-left::before {
+    content: '';
+    position: absolute;
+    left: -1.5rem;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(to bottom, #38bdf8, #818cf8);
+    border-radius: 2px;
+    opacity: 0.6;
+}
+
+@media (max-width: 899px) {
+    .info-left::before {
+        display: none;
+    }
+}
+
+.info-right {
+    background: var(--card);
+    /* Dark coffee/black */
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: 12px;
+    padding: 2rem;
+    /* Removed backdrop-filter to match admin minimal-card style */
+    box-shadow: var(--shadow-soft);
+}
+
+@media (max-width: 899px) {
+    .info-right {
+        padding: 1.5rem;
+    }
+}
+
+.info-title {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 0;
+}
+
+.info-title .highlight {
+    color: #0ea5e9;
+    /* Sky 500 */
+    display: inline-block;
+    animation: shimmerText 4s ease-in-out infinite;
+}
+
+@keyframes shimmerText {
+
+    0%,
+    100% {
+        color: #0ea5e9;
+        /* Sky 500 */
+        text-shadow:
+            0 0 10px rgba(14, 165, 233, 0.3),
+            0 0 20px rgba(14, 165, 233, 0.2);
+    }
+
+    25% {
+        color: #38bdf8;
+        /* Sky 400 */
+        text-shadow:
+            0 0 20px rgba(56, 189, 248, 0.5),
+            0 0 30px rgba(56, 189, 248, 0.3);
+    }
+
+    50% {
+        color: #7dd3fc;
+        /* Sky 300 */
+        text-shadow:
+            0 0 15px rgba(125, 211, 252, 0.5),
+            0 0 25px rgba(125, 211, 252, 0.3);
+    }
+
+    75% {
+        color: #38bdf8;
+        text-shadow:
+            0 0 20px rgba(56, 189, 248, 0.5),
+            0 0 30px rgba(56, 189, 248, 0.3);
+    }
+}
+
+.info-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.info-features li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Feature icons (implicit in li text content but useful if updated) */
+.info-features li::marker {
+    color: var(--brand-500);
+}
+
+.info-desc {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: rgba(247, 220, 178, 0.9);
+    /* Beige with slight opacity */
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .info-section {
+        padding: 3.5rem 1rem;
+    }
+}

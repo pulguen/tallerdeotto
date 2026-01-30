@@ -25,14 +25,13 @@ export default function TrabajosRecientes() {
   useEffect(() => {
     const fetchTrabajos = async () => {
       try {
-        // TEMPORAL: Comentado para testing - descomentar para producción
-        // const response = await axios.get("trabajos/?destacado=true");
-        // if (Array.isArray(response.data)) {
-        //   setTrabajos(response.data);
-        // } else {
-        //   console.warn('La API de trabajos no devolvió un array:', response.data);
-        // }
-        console.log('📌 MODO TESTING: Usando datos de prueba en lugar de API');
+        // En producción usamos ruta relativa. El proxy o backend debe manejar /api/
+        const response = await axios.get("trabajos/?destacado=true");
+        if (Array.isArray(response.data)) {
+          setTrabajos(response.data);
+        } else {
+          console.warn('La API de trabajos no devolvió un array:', response.data);
+        }
       } catch (error) {
         console.error("Error fetching trabajos destacados:", error);
       } finally {
@@ -42,7 +41,20 @@ export default function TrabajosRecientes() {
     fetchTrabajos();
   }, []);
 
-  const items = trabajos.length > 0 ? trabajos : (loading ? [] : defaultTrabajos);
+  // MODO HÍBRIDO: Muestra trabajos reales, y rellena con mocks si faltan para completar la grilla
+  // Esto cumple con "quiero que la ui sea la de la prueba" (grilla llena) incluso con pocos datos reales.
+  const items = useMemo(() => {
+    if (loading && trabajos.length === 0) return [];
+
+    // Si hay trabajos reales, los ponemos primero.
+    // Luego completamos con los mocks hasta llegar a 9 para mantener la estética.
+    // Filtramos mocks para no duplicar si por casualidad los IDs coincidieran (aunque es improbable 'm1' vs int).
+    const combined = [...trabajos, ...defaultTrabajos].filter((item, index, self) =>
+      index === self.findIndex((t) => (t.id || t.pk) === (item.id || item.pk))
+    );
+
+    return combined;
+  }, [trabajos, loading, defaultTrabajos]);
 
   const STEP = 3;
   const MAX_VISIBLE = 9; // Límite máximo antes de mostrar "Ver portafolio"
@@ -77,9 +89,28 @@ export default function TrabajosRecientes() {
                   e.target.src = "/Images/placeholder-work.jpg";
                 }}
               />
+              {/* Photo Count Indicator (only if > 1 real images) */}
+              {t.imagenes && t.imagenes.length > 1 && (
+                <div className="tr-badge-photos">
+                  <i className="fas fa-images"></i> {t.imagenes.length}
+                </div>
+              )}
             </div>
 
             <div className="tr-body">
+              <div className="tr-tags">
+                {t.tags && t.tags.length > 0 ? (
+                  t.tags.slice(0, 3).map(tag => (
+                    <span key={tag.id} className="tr-tag-pill" style={{ backgroundColor: tag.color || 'var(--border-subtle)' }}>
+                      {tag.nombre}
+                    </span>
+                  ))
+                ) : t.categoria_display ? (
+                  // Fallback para legacy o mocks
+                  <span className="tr-tag-pill">{t.categoria_display}</span>
+                ) : null}
+              </div>
+
               <h3 className="tr-card-title">{t.title}</h3>
               <p className="tr-card-desc">{t.description}</p>
             </div>

@@ -5,6 +5,8 @@
   font-weight: 600;
   letter-spacing: 0.01em;
   padding: 0.75rem 1.25rem;
+  min-height: 44px;
+  /* Touch-friendly (WCAG 2.1 AAA - Target Size) */
   transition: all 0.2s ease;
   text-decoration: none;
   display: inline-flex;
@@ -17,50 +19,55 @@
 }
 
 .tdo-btn:focus-visible {
-  box-shadow: 0 0 0 2px var(--brand-500);
+  box-shadow: 0 0 0 2px #38bdf8;
   outline: none;
 }
 
-/* Primary: Brand Color */
+/* Primary: Tech Cyan Gradient */
 .tdo-btn.btn-primary {
-  background-color: var(--brand-500);
-  /* Cyan 500 */
-  color: #0f172a;
-  /* Slate 900 (Dark text on bright bg) - High Contrast */
-  border: 1px solid var(--brand-500);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  /* Sky 500 -> Sky 600 */
+  color: #ffffff;
+  /* White text for better legibility on blue */
+  border: 1px solid #0284c7;
+  box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.3), 0 2px 4px -1px rgba(14, 165, 233, 0.15);
   font-weight: 700;
-  /* Bolder for readability */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .tdo-btn.btn-primary:hover {
-  background-color: var(--brand-400);
-  /* Lighter on hover */
-  border-color: var(--brand-400);
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+  /* Lighter gradient */
+  border-color: #38bdf8;
   transform: translateY(-1px);
-  color: #0f172a;
+  box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.4), 0 4px 6px -2px rgba(14, 165, 233, 0.2);
+  color: #ffffff;
 }
 
 .tdo-btn.btn-primary:active {
-  background-color: var(--brand-600);
+  background: #0284c7;
   transform: translateY(0);
+  box-shadow: none;
 }
 
-/* Outline: Brand Border, Transparent BG */
+/* Outline: Cyan Text & Border */
 .tdo-btn.btn-outline,
 .tdo-btn.btn-outline-primary {
   background-color: transparent;
-  color: var(--brand-400);
-  /* Lighter cyan for text on dark bg */
-  border: 1px solid var(--brand-600);
+  color: #38bdf8;
+  /* Sky 400 */
+  border: 1px solid #0ea5e9;
+  /* Sky 500 */
+  box-shadow: 0 0 10px rgba(14, 165, 233, 0.1);
 }
 
 .tdo-btn.btn-outline:hover,
 .tdo-btn.btn-outline-primary:hover {
-  background-color: rgba(6, 182, 212, 0.1);
-  /* brand-500 with opacity */
-  border-color: var(--brand-400);
-  color: var(--brand-300);
+  background-color: rgba(14, 165, 233, 0.1);
+  border-color: #38bdf8;
+  color: #7dd3fc;
+  /* Sky 300 */
+  box-shadow: 0 0 15px rgba(14, 165, 233, 0.25);
 }
 
 /* Action/Secondary: Card-like button */

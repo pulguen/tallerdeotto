@@ -51,8 +51,8 @@ const CustomNavbar = ({ cartCount = 0 }) => {
               ))}
             </NavDropdown>
 
-            <Nav.Link href="/services" className="text-white">Portafolio</Nav.Link>
-            <Nav.Link href="/services" className="text-white">Contacto</Nav.Link>
+            <Nav.Link href="/portafolio" className="text-white">Portafolio</Nav.Link>
+            <Nav.Link href="#contacto" className="text-white">Contacto</Nav.Link>
 
             {/* Productos desplegable */}
             <NavDropdown title="Productos" id="basic-nav-dropdown" className="text-white">

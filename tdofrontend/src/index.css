@@ -9,7 +9,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   font-synthesis-weight: none;
-  /* evita ‘simulaciones’ raras cuando falta un peso */
+  background-color: var(--bg);
+  /* Fix white margins */
+  color: var(--ink);
 }
 
 code {
@@ -29,7 +31,7 @@ html {
 /* Mejora focus rings en navegadores que no soportan outline offset */
 :focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px rgb(34 211 238 / 0.6);
+  box-shadow: 0 0 0 2px rgb(207 121 37 / 0.6);
   border-radius: 12px;
 }
 
@@ -37,8 +39,8 @@ html {
 :root {
   --login-bg: rgba(255, 255, 255, 0.04);
   --login-card-bg: rgba(255, 255, 255, 0.03);
-  --login-accent: #22d3ee;
-  --login-accent-600: #06b6d4;
+  --login-accent: #cf7925;
+  --login-accent-600: #924b16;
   --login-text: #e6eef3;
   --login-muted: #a8b3ba;
   --login-radius: 12px;

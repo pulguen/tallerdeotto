@@ -1,36 +1,77 @@
 /* src/features/Home/TrabajosRecientes/TrabajosRecientes.css */
 
+/* Mobile-First Grid System */
 .tr-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template-columns: 1fr;
+    /* Mobile: 1 columna */
+    gap: 1.5rem;
     padding: 1rem 0 2rem;
 }
 
-/* Card - SOLID THEME */
+/* Tablet: 2 columnas (480px+) */
+@media (min-width: 480px) {
+    .tr-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.75rem;
+    }
+}
+
+/* Desktop: 3 columnas (768px+) */
+@media (min-width: 768px) {
+    .tr-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
+}
+
+
+/* Card - Touch-Optimized */
 .tr-card {
     background-color: var(--card);
-    /* Solid Slate 800 */
     border-radius: var(--radius-lg);
     overflow: hidden;
     border: 1px solid var(--border-subtle);
     display: flex;
     flex-direction: column;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     height: 100%;
+    /* Touch feedback */
+    -webkit-tap-highlight-color: rgba(6, 182, 212, 0.1);
 }
 
-.tr-card:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-strong);
-    border-color: var(--brand-500);
+/* Hover for desktop */
+@media (hover: hover) and (pointer: fine) {
+    .tr-card:hover {
+        transform: translateY(-6px);
+        box-shadow: var(--shadow-strong);
+        border-color: var(--brand-500);
+    }
+
+    .tr-card:hover .tr-media img {
+        transform: scale(1.08);
+    }
+}
+
+/* Active state for touch devices */
+.tr-card:active {
+    transform: scale(0.98);
+    border-color: var(--brand-400);
 }
 
 .tr-media {
-    height: 220px;
+    height: 200px;
+    /* Slightly smaller on mobile */
     overflow: hidden;
     position: relative;
     background-color: var(--bg-soft);
+}
+
+/* Taller images on larger screens */
+@media (min-width: 768px) {
+    .tr-media {
+        height: 220px;
+    }
 }
 
 .tr-media img {
@@ -40,8 +81,42 @@
     transition: transform 0.6s ease;
 }
 
-.tr-card:hover .tr-media img {
-    transform: scale(1.08);
+/* Tags container */
+.tr-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+/* Tag Pill */
+.tr-tag-pill {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--ink);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Photo Count Badge */
+.tr-badge-photos {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .tr-body {

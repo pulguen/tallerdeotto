@@ -4,11 +4,25 @@ from django.utils import timezone
 from simple_history.models import HistoricalRecords
 
 
+
+class Tag(models.Model):
+    nombre = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(unique=True)
+    color = models.CharField(max_length=7, default='#06b6d4')  # Hex color
+    
+    class Meta:
+        ordering = ['nombre']
+
+    def __str__(self):
+        return self.nombre
+
+
 class Trabajo(models.Model):
     """
     Modelo para representar trabajos/proyectos del portfolio.
     """
     
+    # DEPRECADOS: Mantener temporalmente para migración
     CATEGORIA_CHOICES = [
         ('diseno_grafico', 'Diseño Gráfico'),
         ('social_media', 'Social Media'),
@@ -34,19 +48,26 @@ class Trabajo(models.Model):
         help_text='Descripción detallada del trabajo realizado'
     )
     
+    # Deprecado -> se usará TrabajoImagen
     image = models.ImageField(
         upload_to='trabajos/%Y/%m/',
-        verbose_name='Imagen',
-        help_text='Imagen principal del trabajo'
+        verbose_name='Imagen (Legacy)',
+        help_text='Imagen principal del trabajo (Legacy)',
+        blank=True,
+        null=True
     )
     
+    # Deprecado -> se usarán tags
     categoria = models.CharField(
         max_length=50,
         choices=CATEGORIA_CHOICES,
         default='otro',
-        verbose_name='Categoría',
-        help_text='Categoría del trabajo'
+        verbose_name='Categoría (Legacy)',
+        help_text='Categoría del trabajo (Legacy)',
+        blank=True
     )
+
+    tags = models.ManyToManyField(Tag, related_name='trabajos', blank=True)
     
     fecha_realizacion = models.DateField(
         default=timezone.now,
@@ -89,4 +110,26 @@ class Trabajo(models.Model):
         ordering = ['orden', '-fecha_realizacion', '-creado_en']
     
     def __str__(self):
-        return f"{self.title} ({self.get_categoria_display()})"
+        return f"{self.title}"
+
+    @property
+    def imagen_principal(self):
+        """Retorna la imagen marcada como principal o la primera"""
+        principal = self.imagenes.filter(es_principal=True).first()
+        if principal:
+            return principal.image
+        first_img = self.imagenes.first()
+        if first_img:
+            return first_img.image
+        return self.image  # Fallback a imagen legacy
+
+
+class TrabajoImagen(models.Model):
+    trabajo = models.ForeignKey(Trabajo, related_name='imagenes', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='trabajos/%Y/%m/')
+    es_principal = models.BooleanField(default=False)
+    orden = models.IntegerField(default=0)
+    descripcion = models.CharField(max_length=255, blank=True)
+    
+    class Meta:
+        ordering = ['orden', '-id']

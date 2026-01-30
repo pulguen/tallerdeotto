@@ -53,8 +53,8 @@ const TrabajosAdmin = () => {
             cancelButtonColor: '#3085d6',
             confirmButtonText: 'Sí, eliminar',
             cancelButtonText: 'Cancelar',
-            background: '#1e293b',
-            color: '#fff'
+            background: '#120804',
+            color: '#f7dcb2'
         });
 
         if (result.isConfirmed) {
@@ -64,8 +64,8 @@ const TrabajosAdmin = () => {
                     title: 'Eliminado',
                     text: 'El trabajo ha sido eliminado.',
                     icon: 'success',
-                    background: '#1e293b',
-                    color: '#fff'
+                    background: '#120804',
+                    color: '#f7dcb2'
                 });
                 fetchTrabajos();
             } catch (error) {
@@ -74,8 +74,8 @@ const TrabajosAdmin = () => {
                     title: 'Error',
                     text: 'No se pudo eliminar el trabajo',
                     icon: 'error',
-                    background: '#1e293b',
-                    color: '#fff'
+                    background: '#120804',
+                    color: '#f7dcb2'
                 });
             }
         }
@@ -132,11 +132,33 @@ const TrabajosAdmin = () => {
                             <div className="trabajo-admin-media">
                                 <img src={t.image_url || t.image} alt={t.title} />
                                 {t.destacado && <span className="trabajo-admin-badge destacado">Destacado</span>}
-                                <span className="trabajo-admin-badge">{t.categoria_display}</span>
+                                {t.imagenes && t.imagenes.length > 1 && (
+                                    <span className="trabajo-admin-badge photo-count" style={{ left: 'auto', right: '12px', top: 'auto', bottom: '12px', background: 'rgba(0,0,0,0.7)' }}>
+                                        <i className="fas fa-images me-1"></i> {t.imagenes.length}
+                                    </span>
+                                )}
                             </div>
                             <div className="trabajo-admin-body">
                                 <h3 className="trabajo-admin-title">{t.title}</h3>
-                                <div className="trabajo-admin-info">
+
+                                {/* Tags */}
+                                <div className="trabajo-tags-list mb-2" style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
+                                    {t.tags && t.tags.length > 0 ? (
+                                        t.tags.map(tag => (
+                                            <span key={tag.id} className="badge-tag" style={{
+                                                fontSize: '0.7rem', padding: '2px 8px', borderRadius: '12px',
+                                                background: 'rgba(255,255,255,0.1)', color: 'var(--muted)',
+                                                border: '1px solid var(--border-subtle)'
+                                            }}>
+                                                {tag.nombre}
+                                            </span>
+                                        ))
+                                    ) : (
+                                        <span className="text-xs text-muted">Sin etiquetas</span>
+                                    )}
+                                </div>
+
+                                <div className="trabajo-admin-info mt-2">
                                     <span><i className="far fa-calendar-alt me-1"></i> {t.fecha_realizacion}</span>
                                     {t.cliente && <span className="ms-3"><i className="far fa-user me-1"></i> {t.cliente}</span>}
                                 </div>

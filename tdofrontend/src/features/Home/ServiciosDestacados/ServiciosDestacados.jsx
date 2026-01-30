@@ -147,12 +147,6 @@ export default function ServiciosDestacados({
         })}
       </Swiper>
 
-      <div className="servicios-footer-text">
-        <p>
-          Combinamos diseño, tecnología y producción gráfica para ofrecer resultados integrales:
-          desde tu identidad visual hasta plataformas web y aplicaciones personalizadas para marcas, empresa e instituciones.
-        </p>
-      </div>
     </>
   );
 }
