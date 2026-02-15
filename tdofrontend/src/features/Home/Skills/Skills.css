@@ -1,0 +1,137 @@
+/* src/features/Home/Skills/Skills.css */
+.skills-section {
+  padding: 1.5rem 0;
+  /* background-color removed to use bg-dark class from Bootstrap/Footer */
+  width: 100%;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.skills-container {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; removed to allow text-alignment control via classes */
+}
+
+.skills-title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.skills-marquee {
+  display: flex;
+  /* Flex container for tracks */
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  /* Allow manual scroll */
+  -webkit-overflow-scrolling: touch;
+  /* Smooth scroll on iOS */
+  scrollbar-width: none;
+  /* Hide scrollbar Firefox */
+  user-select: none;
+  gap: 3rem;
+  /* Space between the two tracks */
+  width: 100%;
+  white-space: nowrap;
+  /* subtle mask to fade edges */
+  mask-image: linear-gradient(to right,
+      transparent,
+      black 5%,
+      black 95%,
+      transparent);
+}
+
+.skills-marquee::-webkit-scrollbar {
+  display: none;
+  /* Hide scrollbar Chrome/Safari */
+}
+
+.skills-track {
+  display: flex;
+  flex-shrink: 0;
+  gap: 3rem;
+  /* min-width: 100%; */
+  /* Not strictly needed if content flows */
+}
+
+/* No CSS animation here, handled by JS */
+
+.skill-card {
+  /* Minimalist card style */
+  background: transparent;
+  border: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  /* Fully visible by default */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  cursor: grab;
+  /* Indicate draggable/scrollable */
+}
+
+.skill-card:active {
+  cursor: grabbing;
+}
+
+.skill-card:hover {
+  /* opacity: 1; -> Already 1 */
+  transform: translateY(-2px);
+}
+
+.skill-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+
+  /* Original colors requested! */
+  filter: none;
+
+  /* Optional background if icons are dark on dark bg */
+  background: rgba(255, 255, 255, 0.05);
+  padding: 6px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.skill-card:hover .skill-icon {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.skill-name {
+  font-size: 0.7rem;
+  color: var(--text-secondary, #666);
+  opacity: 1;
+  /* Fully visible */
+  transition: opacity 0.3s ease;
+}
+
+.skill-card:hover .skill-name {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .skills-marquee {
+    gap: 2rem;
+  }
+
+  .skills-track {
+    gap: 2rem;
+  }
+
+  .skill-icon {
+    width: 32px;
+    height: 32px;
+  }
+}

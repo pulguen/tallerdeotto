@@ -22,10 +22,13 @@
   /* Text & Content */
   --ink: #f7dcb2;
   /* Beige - High Contrast Text */
+  --ink-secondary: rgba(247, 220, 178, 0.7);
+  /* Muted Beige */
   --muted: #a67c52;
   /* Muted Brown/Beige */
 
   /* Borders & Dividers */
+  --bg-card: #120804;
   --border-subtle: #45220e;
   /* Subtle Rust Border */
 

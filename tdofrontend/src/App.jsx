@@ -14,6 +14,7 @@ import Admin from './features/Control/ControlHome/Admin';
 import Ingresos from './features/Control/Ingresos/Ingresos';
 import GastosHome from './features/Control/Gastos/GastosHome';
 import TrabajosAdmin from './features/Control/Trabajos/TrabajosAdmin';
+import MensajesAdmin from './features/Control/Mensajes/MensajesAdmin';
 
 // Servicios Destacados
 import DisenoGrafico from './features/Home/ServiciosDestacados/DiseñoGrafico/DiseñoGrafico';
@@ -26,7 +27,7 @@ import Impresiones from './features/Home/ServiciosDestacados/Impresiones/Impresi
 import Estampado from './features/Home/ServiciosDestacados/Estampado/Estampado';
 import Serigrafia from './features/Home/ServiciosDestacados/Estampado/Serigrafia';
 import Vinilo from './features/Home/ServiciosDestacados/Estampado/Vinilo';
-import DTF from './features/Home/ServiciosDestacados/Estampado/DTF/';
+import DTF from './features/Home/ServiciosDestacados/Estampado/DTF';
 function PrivateRoute({ children }) {
   const { user, loading } = useAuth();
 
@@ -56,7 +57,7 @@ export default function App() {
       <Route path="/servicios/estampado" element={<Estampado />} />
       <Route path="/servicios/estampado/serigrafia" element={<Serigrafia />} />
       <Route path="/servicios/estampado/vinilo" element={<Vinilo />} />
-      <Route path="/servicios/estampado/dtf  " element={<DTF />} />
+      <Route path="/servicios/estampado/dtf" element={<DTF />} />
       <Route path="/servicios/impresiones-profesionales" element={<Impresiones />} />
 
       {/* Portafolio público */}
@@ -100,6 +101,17 @@ export default function App() {
           <PrivateRoute>
             <ProtectedLayout>
               <TrabajosAdmin />
+            </ProtectedLayout>
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/mensajes"
+        element={
+          <PrivateRoute>
+            <ProtectedLayout>
+              <MensajesAdmin />
             </ProtectedLayout>
           </PrivateRoute>
         }

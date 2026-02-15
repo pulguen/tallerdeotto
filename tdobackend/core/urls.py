@@ -27,6 +27,9 @@ urlpatterns = [
 
     # Endpoints de trabajos/portfolio
     path('api/trabajos/', include('apps.trabajos.urls')),
+    
+    # Endpoints de contacto
+    path('api/contacto/', include('apps.contacto.urls')),
 
 ]
 

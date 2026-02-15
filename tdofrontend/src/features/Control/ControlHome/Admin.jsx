@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import Ingresos from '../Ingresos/Ingresos';
 import GastosHome from '../Gastos/GastosHome';
 import TrabajosAdmin from '../Trabajos/TrabajosAdmin';
-import DashboardHome from './DashboarAdminHome';
+import DashboarHome from './DashboarAdminHome';
 import CustomButton from "../../../common/Components/Button/CustomButton";
-import AdminHeader from "./AdminHeader";
+import MensajesAdmin from '../Mensajes/MensajesAdmin';
 
 const MODULES = [
-  { key: 'dashboard', label: 'Dashboard', component: DashboardHome },
+  { key: 'dashboard', label: 'Dashboard', component: DashboarHome },
   { key: 'ingresos', label: 'Ingresos', component: Ingresos },
   { key: 'gastos', label: 'Gastos', component: GastosHome },
   { key: 'trabajos', label: 'Trabajos', component: TrabajosAdmin },
+  { key: 'mensajes', label: 'Mensajes', component: MensajesAdmin },
 ];
 
 const ControlHome = () => {
@@ -24,8 +25,6 @@ const ControlHome = () => {
 
   return (
     <div className="admin-container">
-      <AdminHeader />
-
       <div className="admin-tabs-container no-scrollbar">
         {MODULES.map(mod => (
           <button

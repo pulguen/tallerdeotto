@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-mj-qh&%k#0+m^$o8t(uf@j+prdl&$@s0pzbn@*wwvupd@x6fe('
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.1.37']
 
 # Application definition
 INSTALLED_APPS = [
@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'apps.ingresos',
     'apps.gastos',
     'apps.trabajos',
+    'apps.contacto',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -128,6 +129,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CORS
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',   # Vite
+    'http://192.168.1.37:5173', # Mobile/LAN
     'https://127.0.0.1:8000',  # servidor Django HTTPS
     'https://tallerdeotto.com',
 ]
@@ -169,6 +171,7 @@ SIMPLE_JWT = {
 # CSRF
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:5173',
+    'http://192.168.1.37:5173',
     'https://tallerdeotto.com',
 ]
 CSRF_COOKIE_SECURE = not DEBUG

@@ -1,6 +1,6 @@
-// src/features/Home/ContactHome/ContactHome.jsx
 import React, { useState } from 'react';
 import CustomButton from "../../../common/Components/Button/CustomButton";
+import axios from '../../../context/customAxios';
 import './ContactHome.css';
 
 const ContactoHome = ({ onSubmit }) => {
@@ -36,11 +36,17 @@ const ContactoHome = ({ onSubmit }) => {
 
     setSending(true);
     try {
-      if (onSubmit) {
-        await onSubmit(formData);
-      } else {
-        console.log('Datos de contacto enviados:', formData);
-      }
+      // Mapear campos para el backend (snake_case)
+      const dataToSend = {
+        nombre: formData.nombre,
+        email: formData.email,
+        telefono: formData.telefono,
+        tipo_consulta: formData.tipoConsulta,
+        mensaje: formData.mensaje,
+      };
+
+      await axios.post('contacto/mensajes/', dataToSend);
+
       setSuccess('¡Mensaje enviado! Te vamos a responder a la brevedad.');
       setFormData({
         nombre: '',
@@ -49,6 +55,10 @@ const ContactoHome = ({ onSubmit }) => {
         tipoConsulta: 'presupuesto',
         mensaje: '',
       });
+
+      if (onSubmit) {
+        await onSubmit(formData);
+      }
     } catch (err) {
       console.error('Error enviando contacto:', err);
       setError('No pudimos enviar el mensaje. Probá de nuevo en unos segundos.');

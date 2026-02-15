@@ -2,10 +2,17 @@ import React from 'react';
 
 export default function Footer() {
   return (
-    <footer className="bg-dark text-center text-lg-start text-white">
-      <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-        <div className="me-5 d-none d-lg-block">
-          <span>Conéctate con nosotros en las redes sociales:</span>
+    <footer className="bg-dark text-start text-white">
+      <section className="d-flex justify-content-between p-4 border-bottom">
+        <div className="me-5">
+          <span style={{
+            fontSize: '0.85rem',
+            textTransform: 'uppercase',
+            letterSpacing: '2px',
+            color: 'rgba(255, 255, 255, 0.4)',
+            fontWeight: '600',
+            display: 'block' // Ensure it behaves like a block element if needed, though span is inline usually. Divider context might need flex adjustment.
+          }}>Nuestras redes sociales</span>
         </div>
         <div>
           <a href="/" className="me-4 text-reset">
@@ -24,7 +31,7 @@ export default function Footer() {
       </section>
 
       <section>
-        <div className="container text-center text-md-start mt-5">
+        <div className="container text-start mt-5">
           <div className="row mt-3">
             <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
               <h6 className="text-uppercase fw-bold mb-4">

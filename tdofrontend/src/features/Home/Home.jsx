@@ -8,6 +8,7 @@ import Productos from './Productos/Productos';
 import HeaderHome from './Header/HeaderHome';
 import BasicoStoreBanner from './BasicoStore/BasicoStoreBanner';
 import InfoSection from './InfoSection/InfoSection';
+import Skills from './Skills/Skills';
 import ContactHome from './ContactHome/ContactHome';
 
 const Home = () => {
@@ -27,6 +28,7 @@ const Home = () => {
 
       {/* Info Section (Nuevo separador) */}
       <InfoSection />
+
 
       {/* Ultimos Trabajos */}
       <section className="home-section" id="trabajos">
@@ -54,6 +56,9 @@ const Home = () => {
       <section className="home-section home-section--flush" id="contacto">
         <ContactHome />
       </section>
+
+      {/* Skills / Tech Stack (Footer-like) */}
+      <Skills />
     </div>
   );
 };
