@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import CustomButton from "../../../common/Components/Button/CustomButton";
-import axios from "../../../context/customAxios";
-import Swal from "sweetalert2";
+import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
+import CustomButton from '../../../common/Components/Button/CustomButton';
+import axios from '../../../context/customAxios';
 
 export default function GastoForm({
   categorias = [],
@@ -12,38 +12,37 @@ export default function GastoForm({
   onSuccess,
   onClose,
 }) {
-  const [categoriaId, setCategoriaId] = useState(initialCategoriaId || "");
-  const [subcategoriaId, setSubcategoriaId] = useState(initialSubcategoriaId || "");
-  const [descripcion, setDescripcion] = useState("");
-  const [monto, setMonto] = useState("");
-  const [fecha, setFecha] = useState("");
+  const [categoriaId, setCategoriaId] = useState(initialCategoriaId || '');
+  const [subcategoriaId, setSubcategoriaId] = useState(initialSubcategoriaId || '');
+  const [descripcion, setDescripcion] = useState('');
+  const [monto, setMonto] = useState('');
+  const [fecha, setFecha] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (editData) {
-      setDescripcion(editData.descripcion || "");
-      setMonto(editData.monto || "");
-      setFecha(editData.fecha || "");
-      setCategoriaId(editData.categoria || "");
-      setSubcategoriaId(editData.subcategoria || "");
+      setDescripcion(editData.descripcion || '');
+      setMonto(editData.monto || '');
+      setFecha(editData.fecha || '');
+      setCategoriaId(editData.categoria || '');
+      setSubcategoriaId(editData.subcategoria || '');
     } else {
-      setDescripcion("");
-      setMonto("");
-      setFecha("");
-      setCategoriaId(initialCategoriaId || "");
-      setSubcategoriaId(initialSubcategoriaId || "");
+      setDescripcion('');
+      setMonto('');
+      setFecha('');
+      setCategoriaId(initialCategoriaId || '');
+      setSubcategoriaId(initialSubcategoriaId || '');
     }
-    // eslint-disable-next-line
   }, [editData, initialCategoriaId, initialSubcategoriaId]);
 
-  // Filtra subcategorías según categoría
   const subcatsFiltradas = categoriaId
-    ? subcategorias.filter((sc) => String(sc.categoria) === String(categoriaId))
+    ? subcategorias.filter(sc => String(sc.categoria) === String(categoriaId))
     : subcategorias;
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     setLoading(true);
+
     const data = {
       descripcion,
       monto: parseFloat(monto),
@@ -51,46 +50,40 @@ export default function GastoForm({
       categoria: categoriaId,
       subcategoria: subcategoriaId || null,
     };
+
     try {
       if (editData && editData.id) {
         await axios.put(`gastos/gastos/${editData.id}/`, data);
-        Swal.fire("Gasto actualizado", "", "success");
+        Swal.fire('Gasto actualizado', '', 'success');
       } else {
-        await axios.post("gastos/gastos/", data);
-        Swal.fire("Gasto creado", "", "success");
+        await axios.post('gastos/gastos/', data);
+        Swal.fire('Gasto creado', '', 'success');
       }
       onSuccess?.();
       onClose?.();
     } catch (error) {
-      Swal.fire(
-        "Error",
-        error.response?.data?.detail ||
-        JSON.stringify(error.response?.data) ||
-        "Algo salió mal",
-        "error"
-      );
+      Swal.fire('Error', error.response?.data?.detail || JSON.stringify(error.response?.data) || 'Algo salió mal.', 'error');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 space-y-3">
-      {/* Solo muestra los selects si no están fijos */}
+    <form onSubmit={handleSubmit} className="admin-form-shell admin-stack-sm">
       {!initialCategoriaId && (
         <div>
           <label className="form-label-custom">Categoría</label>
           <select
             className="form-input-custom"
             value={categoriaId}
-            onChange={(e) => {
+            onChange={e => {
               setCategoriaId(e.target.value);
-              setSubcategoriaId(""); // reset
+              setSubcategoriaId('');
             }}
             required
           >
             <option value="">Seleccionar</option>
-            {categorias.map((cat) => (
+            {categorias.map(cat => (
               <option key={cat.id} value={cat.id}>
                 {cat.nombre}
               </option>
@@ -98,61 +91,51 @@ export default function GastoForm({
           </select>
         </div>
       )}
+
       {initialCategoriaId && (
         <div>
           <label className="form-label-custom">Categoría</label>
           <input
-            className="form-input-custom bg-white/5 opacity-70"
-            value={
-              categorias.find((cat) => String(cat.id) === String(categoriaId))?.nombre || ""
-            }
+            className="form-input-custom"
+            value={categorias.find(cat => String(cat.id) === String(categoriaId))?.nombre || ''}
             disabled
             readOnly
           />
         </div>
       )}
-      {/* Subcategoria */}
-      {initialCategoriaId && (
-        initialSubcategoriaId ? (
+
+      {initialCategoriaId &&
+        (initialSubcategoriaId ? (
           <div>
             <label className="form-label-custom">Subcategoría</label>
             <input
-              className="form-input-custom bg-white/5 opacity-70"
-              value={
-                subcategorias.find((s) => String(s.id) === String(subcategoriaId))?.nombre || ""
-              }
+              className="form-input-custom"
+              value={subcategorias.find(s => String(s.id) === String(subcategoriaId))?.nombre || ''}
               disabled
               readOnly
             />
           </div>
         ) : (
           <div>
-            <label className="form-label-custom">Subcategoría <span className="text-xs text-[var(--muted)]">(opcional)</span></label>
-            <select
-              className="form-input-custom"
-              value={subcategoriaId}
-              onChange={e => setSubcategoriaId(e.target.value)}
-            >
+            <label className="form-label-custom">
+              Subcategoría <span style={{ color: 'var(--muted)', fontSize: '0.85rem' }}>(opcional)</span>
+            </label>
+            <select className="form-input-custom" value={subcategoriaId} onChange={e => setSubcategoriaId(e.target.value)}>
               <option value="">Sin subcategoría</option>
-              {subcatsFiltradas.map((subcat) => (
+              {subcatsFiltradas.map(subcat => (
                 <option key={subcat.id} value={subcat.id}>
                   {subcat.nombre}
                 </option>
               ))}
             </select>
           </div>
-        )
-      )}
-      {/* Otros campos */}
+        ))}
+
       <div>
         <label className="form-label-custom">Descripción</label>
-        <input
-          className="form-input-custom"
-          value={descripcion}
-          onChange={e => setDescripcion(e.target.value)}
-          required
-        />
+        <input className="form-input-custom" value={descripcion} onChange={e => setDescripcion(e.target.value)} required />
       </div>
+
       <div>
         <label className="form-label-custom">Monto</label>
         <input
@@ -165,24 +148,15 @@ export default function GastoForm({
           required
         />
       </div>
+
       <div>
         <label className="form-label-custom">Fecha</label>
-        <input
-          className="form-input-custom"
-          type="date"
-          value={fecha}
-          onChange={e => setFecha(e.target.value)}
-          required
-        />
+        <input className="form-input-custom" type="date" value={fecha} onChange={e => setFecha(e.target.value)} required />
       </div>
-      <div className="flex gap-2 mt-4 justify-end">
+
+      <div className="admin-form-actions">
         {onClose && (
-          <CustomButton
-            type="button"
-            onClick={onClose}
-            variant="secondary"
-            disabled={loading}
-          >
+          <CustomButton type="button" onClick={onClose} variant="secondary" disabled={loading}>
             Cancelar
           </CustomButton>
         )}

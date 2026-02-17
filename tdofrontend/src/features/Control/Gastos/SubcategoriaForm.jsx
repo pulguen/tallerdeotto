@@ -27,43 +27,52 @@ export default function SubcategoriaForm({ categorias, editData, onSuccess, defa
     try {
       if (editData) {
         await axios.put(`gastos/subcategorias-gasto/${editData.id}/`, {
-          nombre, descripcion, categoria: categoriaId
+          nombre,
+          descripcion,
+          categoria: categoriaId,
         });
         Swal.fire('Subcategoría actualizada', '', 'success');
       } else {
         await axios.post('gastos/subcategorias-gasto/', {
-          nombre, descripcion, categoria: categoriaId
+          nombre,
+          descripcion,
+          categoria: categoriaId,
         });
         Swal.fire('Subcategoría creada', '', 'success');
       }
       onSuccess?.();
     } catch (error) {
-      Swal.fire('Error', error.response?.data?.detail || 'Algo salió mal', 'error');
+      Swal.fire('Error', error.response?.data?.detail || 'Algo salió mal.', 'error');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4">
+    <form onSubmit={handleSubmit} className="admin-form-shell admin-stack-sm">
       <div>
         <label className="form-label-custom">Categoría</label>
         <select className="form-input-custom" value={categoriaId} onChange={e => setCategoriaId(e.target.value)} required>
           <option value="">Seleccionar</option>
           {categorias.map(cat => (
-            <option key={cat.id} value={cat.id}>{cat.nombre}</option>
+            <option key={cat.id} value={cat.id}>
+              {cat.nombre}
+            </option>
           ))}
         </select>
       </div>
+
       <div>
         <label className="form-label-custom">Nombre</label>
         <input className="form-input-custom" value={nombre} onChange={e => setNombre(e.target.value)} required />
       </div>
+
       <div>
         <label className="form-label-custom">Descripción (opcional)</label>
         <textarea className="form-input-custom" rows={2} value={descripcion} onChange={e => setDescripcion(e.target.value)} />
       </div>
-      <div style={{ marginTop: 16 }}>
+
+      <div className="admin-form-actions">
         <CustomButton type="submit" loading={loading} disabled={loading}>
           Guardar
         </CustomButton>

@@ -1,4 +1,11 @@
-export default function CommonTable({ columns, data, actions, exportable = false, exportName = 'export.csv' }) {
+export default function CommonTable({
+  columns,
+  data,
+  actions,
+  exportable = false,
+  exportName = 'export.csv',
+  className = '',
+}) {
   const handleExport = () => {
     if (!data || !data.length) return;
 
@@ -26,34 +33,34 @@ export default function CommonTable({ columns, data, actions, exportable = false
   };
 
   return (
-    <div className="overflow-x-auto rounded-xl border border-[var(--border-subtle)]">
+    <div className={`admin-table-shell ${className}`.trim()}>
       {exportable && data.length > 0 && (
-        <div className="bg-[var(--card)] p-2 border-b border-[var(--border-subtle)] flex justify-end">
+        <div className="admin-table-toolbar">
           <button
             onClick={handleExport}
-            className="text-xs font-medium text-[var(--brand-400)] hover:text-[var(--brand-300)] flex items-center gap-1 transition-colors"
+            className="admin-table-export"
           >
             <i className="fas fa-file-csv"></i> Descargar CSV
           </button>
         </div>
       )}
-      <table className="min-w-full border-collapse">
+      <table className="admin-table">
         <thead>
-          <tr className="bg-[var(--card)]">
+          <tr className="admin-table-head-row">
             {columns.map(col => (
-              <th key={col.key} className="px-4 py-3 text-left text-sm font-semibold" style={{ color: 'var(--muted)', borderBottom: '1px solid var(--border-subtle)' }}>
+              <th key={col.key} className="admin-table-head-cell">
                 {col.header}
               </th>
             ))}
-            {actions && <th className="px-4 py-3 text-left text-sm font-semibold" style={{ color: 'var(--muted)', borderBottom: '1px solid var(--border-subtle)' }}>Acciones</th>}
+            {actions && <th className="admin-table-head-cell">Acciones</th>}
           </tr>
         </thead>
-        <tbody className="divide-y divide-[var(--border-subtle)] bg-[var(--card)]">
+        <tbody className="admin-table-body">
           {data.map((row, idx) => (
-            <tr key={row.id || idx} className="hover:bg-white/5 transition-colors">
+            <tr key={row.id || idx} className="admin-table-row">
               {columns.map((col, cIdx) => {
                 return (
-                  <td key={col.key} className="px-4 py-3 text-sm" style={{ color: 'var(--ink)' }}>
+                  <td key={`${col.key}-${cIdx}`} className="admin-table-cell">
                     {typeof col.render === 'function'
                       ? col.render(row[col.key], row)
                       : row[col.key]}
@@ -61,7 +68,7 @@ export default function CommonTable({ columns, data, actions, exportable = false
                 );
               })}
               {actions && (
-                <td className="px-4 py-3 text-sm whitespace-nowrap">
+                <td className="admin-table-cell admin-table-actions-cell">
                   {actions(row)}
                 </td>
               )}

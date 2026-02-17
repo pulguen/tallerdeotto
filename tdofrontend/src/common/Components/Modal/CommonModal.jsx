@@ -4,16 +4,18 @@ export default function CommonModal({ isOpen, onClose, title, children }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80">
-      <div className="minimal-card w-full max-w-lg p-6 relative">
+    <div className="admin-modal-backdrop" role="dialog" aria-modal="true" aria-label={title}>
+      <div className="minimal-card admin-modal-card">
         <button
+          type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors"
+          className="admin-modal-close"
+          aria-label="Cerrar modal"
         >
           <i className="fas fa-times"></i>
         </button>
-        <h2 className="text-xl font-semibold mb-6 admin-title-gradient">{title}</h2>
-        {children}
+        <h2 className="admin-title-gradient admin-modal-title">{title}</h2>
+        <div className="admin-modal-content">{children}</div>
       </div>
     </div>
   );

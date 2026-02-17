@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import Swal from 'sweetalert2';
 import axios from '../../../context/customAxios';
 import { useAuth } from '../../../context/useAuth';
 import CommonTable from '../../../common/Components/Tabla/CommonTable';
@@ -9,12 +10,12 @@ import { formatDate } from '../../../utils/formatDate';
 import LoadingSpinner from '../../../common/Components/Feedback/LoadingSpinner';
 import EmptyState from '../../../common/Components/Feedback/EmptyState';
 
-
 export default function Ingresos() {
   const { user } = useAuth();
   const isAdmin = user?.groups?.includes('Admin');
   const isStaff = user?.groups?.includes('Staff');
   const canEdit = isAdmin || isStaff;
+
   const [ingresos, setIngresos] = useState([]);
   const [newDescripcion, setNewDescripcion] = useState('');
   const [newCliente, setNewCliente] = useState('');
@@ -60,9 +61,10 @@ export default function Ingresos() {
   const handleAdd = async () => {
     if (!canEdit) return;
     setError('');
+
     const montoNum = parseFloat(newMonto);
     if (!newDescripcion.trim() || !newFecha || isNaN(montoNum)) {
-      setError('Completa todos los campos con valores válidos');
+      setError('Completa todos los campos con valores válidos.');
       return;
     }
 
@@ -88,13 +90,25 @@ export default function Ingresos() {
     }
   };
 
-  const handleDelete = async id => {
+  const handleDelete = async ingreso => {
     if (!canEdit) return;
+
+    const confirmation = await Swal.fire({
+      title: '¿Borrar ingreso?',
+      text: `Se eliminará "${ingreso.descripcion}" de forma permanente.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, borrar',
+      cancelButtonText: 'Cancelar',
+    });
+
+    if (!confirmation.isConfirmed) return;
+
     setError('');
     setLoading(true);
     try {
-      await axios.delete(`ingresos/${id}/`);
-      setIngresos(prev => prev.filter(i => i.id !== id));
+      await axios.delete(`ingresos/${ingreso.id}/`);
+      setIngresos(prev => prev.filter(i => i.id !== ingreso.id));
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.detail || err.message);
@@ -115,10 +129,11 @@ export default function Ingresos() {
 
   const handleUpdate = async id => {
     if (!canEdit) return;
+
     setError('');
     const montoNum = parseFloat(editMonto);
     if (!editDescripcion.trim() || !editFecha || isNaN(montoNum)) {
-      setError('Completa todos los campos con valores válidos');
+      setError('Completa todos los campos con valores válidos.');
       return;
     }
 
@@ -130,7 +145,7 @@ export default function Ingresos() {
         monto: montoNum,
         cliente: editCliente,
       });
-      setIngresos(prev => prev.map(i => i.id === id ? updated : i));
+      setIngresos(prev => prev.map(i => (i.id === id ? updated : i)));
       setEditingId(null);
     } catch (err) {
       console.error(err);
@@ -146,31 +161,30 @@ export default function Ingresos() {
         <h2 className="admin-title-gradient">Ingresos</h2>
         {canEdit && (
           <CustomButton onClick={() => setShowModal(true)} disabled={loading} variant="primary">
-            + Nuevo Ingreso
+            + Nuevo ingreso
           </CustomButton>
         )}
       </div>
 
-      {error && <div className="mb-4 text-red-500 bg-red-900/20 p-3 rounded-lg border border-red-500/30">{error}</div>}
+      {error && <div className="admin-alert-error">{error}</div>}
 
       {loading && <LoadingSpinner text="Cargando ingresos..." />}
 
       {!loading && ingresos.length === 0 && !error && (
         <EmptyState
           icon="fas fa-hand-holding-usd"
-          title="Sin Ingresos"
+          title="Sin ingresos"
           description="No hay ingresos registrados todavía."
-          actionLabel={canEdit ? "+ Nuevo Ingreso" : null}
+          actionLabel={canEdit ? '+ Nuevo ingreso' : null}
           onAction={canEdit ? () => setShowModal(true) : null}
         />
       )}
 
       {canEdit && (
-        <div className="mb-3">
-          <TotalBox label="Total de Ingresos" value={totalIngresos} />
+        <div style={{ marginBottom: '0.85rem' }}>
+          <TotalBox label="Total de ingresos" value={totalIngresos} />
         </div>
       )}
-
 
       {!loading && ingresos.length > 0 && (
         <CommonTable
@@ -181,14 +195,14 @@ export default function Ingresos() {
               render: (_, row) =>
                 editingId === row.id ? (
                   <input
-                    className="border p-1 w-full"
+                    className="admin-inline-input"
                     type="text"
                     value={editCliente}
                     onChange={e => setEditCliente(e.target.value)}
                     disabled={loading}
                   />
                 ) : (
-                  row.cliente || ''
+                  row.cliente || '-'
                 ),
             },
             {
@@ -197,7 +211,7 @@ export default function Ingresos() {
               render: (_, row) =>
                 editingId === row.id ? (
                   <input
-                    className="border p-1 w-full"
+                    className="admin-inline-input"
                     type="text"
                     value={editDescripcion}
                     onChange={e => setEditDescripcion(e.target.value)}
@@ -207,14 +221,13 @@ export default function Ingresos() {
                   row.descripcion
                 ),
             },
-
             {
               key: 'fecha',
               header: 'Fecha',
               render: (_, row) =>
                 editingId === row.id ? (
                   <input
-                    className="border p-1"
+                    className="admin-inline-input"
                     type="date"
                     value={editFecha}
                     onChange={e => setEditFecha(e.target.value)}
@@ -230,7 +243,7 @@ export default function Ingresos() {
               render: (_, row) =>
                 editingId === row.id ? (
                   <input
-                    className="border p-1 w-24"
+                    className="admin-inline-input"
                     type="number"
                     value={editMonto}
                     onChange={e => setEditMonto(e.target.value)}
@@ -242,46 +255,26 @@ export default function Ingresos() {
             },
           ]}
           data={ingresos}
-          exportable={true}
+          exportable
           exportName="ingresos.csv"
-          actions={(row) =>
+          actions={row =>
             editingId === row.id ? (
-              <div className="flex gap-2">
-                <CustomButton
-                  variant="success"
-                  size="sm"
-                  onClick={() => handleUpdate(row.id)}
-                  disabled={loading}
-                >
+              <div className="admin-actions-row">
+                <CustomButton variant="success" size="sm" onClick={() => handleUpdate(row.id)} disabled={loading}>
                   Guardar
                 </CustomButton>
-                <CustomButton
-                  variant="secondary"
-                  size="sm"
-                  onClick={() => setEditingId(null)}
-                  disabled={loading}
-                >
+                <CustomButton variant="secondary" size="sm" onClick={() => setEditingId(null)} disabled={loading}>
                   Cancelar
                 </CustomButton>
               </div>
             ) : (
               canEdit && (
-                <div className="flex gap-2">
-                  <CustomButton
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleEdit(row)}
-                    disabled={loading}
-                  >
+                <div className="admin-actions-row">
+                  <CustomButton variant="ghost" size="sm" onClick={() => handleEdit(row)} disabled={loading}>
                     Editar
                   </CustomButton>
-                  <CustomButton
-                    variant="danger"
-                    size="sm"
-                    onClick={() => handleDelete(row.id)}
-                    disabled={loading}
-                  >
-                    x
+                  <CustomButton variant="danger" size="sm" onClick={() => handleDelete(row)} disabled={loading}>
+                    Borrar
                   </CustomButton>
                 </div>
               )
@@ -289,16 +282,11 @@ export default function Ingresos() {
           }
         />
       )}
-      <div className="flex justify-between items-center mt-4"></div>
-      {/* Modal para nuevo ingreso */}
-      <CommonModal
-        isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        title="Nuevo Ingreso"
-      >
-        <div className="flex flex-col gap-2">
+
+      <CommonModal isOpen={showModal} onClose={() => setShowModal(false)} title="Nuevo ingreso">
+        <div className="admin-form-shell admin-stack-sm">
           <input
-            className="border p-2"
+            className="form-input-custom"
             type="text"
             placeholder="Descripción"
             value={newDescripcion}
@@ -306,7 +294,7 @@ export default function Ingresos() {
             disabled={loading}
           />
           <input
-            className="border p-2"
+            className="form-input-custom"
             type="text"
             placeholder="Cliente"
             value={newCliente}
@@ -314,34 +302,26 @@ export default function Ingresos() {
             disabled={loading}
           />
           <input
-            className="border p-2"
+            className="form-input-custom"
             type="date"
             value={newFecha}
             onChange={e => setNewFecha(e.target.value)}
             disabled={loading}
           />
           <input
-            className="border p-2"
+            className="form-input-custom"
             type="number"
             placeholder="Monto"
             value={newMonto}
             onChange={e => setNewMonto(e.target.value)}
             disabled={loading}
           />
-          <div className="flex justify-end gap-2 mt-4">
-            <CustomButton
-              variant="secondary"
-              onClick={() => setShowModal(false)}
-              disabled={loading}
-            >
+
+          <div className="admin-form-actions">
+            <CustomButton variant="secondary" onClick={() => setShowModal(false)} disabled={loading}>
               Cancelar
             </CustomButton>
-            <CustomButton
-              variant="success"
-              onClick={handleAdd}
-              disabled={loading}
-              loading={loading}
-            >
+            <CustomButton variant="success" onClick={handleAdd} disabled={loading} loading={loading}>
               Guardar
             </CustomButton>
           </div>
