@@ -1,9 +1,13 @@
+import logging
 from django.core.mail import send_mail
 from django.conf import settings
 from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
+from apps.common.permissions import IsStaffOrAdmin
 from .models import Contacto, ConfiguracionContacto
 from .serializers import ContactoSerializer, ContactoAdminSerializer, ConfiguracionContactoSerializer
+
+logger = logging.getLogger(__name__)
 
 class ContactoViewSet(viewsets.ModelViewSet):
     queryset = Contacto.objects.all()
@@ -16,7 +20,7 @@ class ContactoViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action == 'create':
             return [permissions.AllowAny()]
-        return [permissions.IsAdminUser()]
+        return [IsStaffOrAdmin()]
 
     def perform_create(self, serializer):
         instance = serializer.save()
@@ -27,31 +31,33 @@ class ContactoViewSet(viewsets.ModelViewSet):
     def send_notification_email(self, instance):
         try:
             config = ConfiguracionContacto.objects.first()
-            if config and config.email_destino:
-                subject = f"Nuevo contacto: {instance.nombre} - {instance.get_tipo_consulta_display()}"
-                message = (
-                    f"Recibiste un nuevo mensaje desde el sitio web:\n\n"
-                    f"Nombre: {instance.nombre}\n"
-                    f"Email: {instance.email}\n"
-                    f"Teléfono: {instance.telefono}\n"
-                    f"Tipo de Consulta: {instance.get_tipo_consulta_display()}\n\n"
-                    f"Mensaje:\n{instance.mensaje}\n"
-                )
-                send_mail(
-                    subject,
-                    message,
-                    settings.DEFAULT_FROM_EMAIL,
-                    [config.email_destino],
-                    fail_silently=True,
-                )
+            if not config or not config.email_destino:
+                logger.warning("No email notification destination configured. Contact id=%s", instance.id)
+                return
+
+            subject = f"Nuevo contacto: {instance.nombre} - {instance.get_tipo_consulta_display()}"
+            message = (
+                f"Recibiste un nuevo mensaje desde el sitio web:\n\n"
+                f"Nombre: {instance.nombre}\n"
+                f"Email: {instance.email}\n"
+                f"Teléfono: {instance.telefono}\n"
+                f"Tipo de Consulta: {instance.get_tipo_consulta_display()}\n\n"
+                f"Mensaje:\n{instance.mensaje}\n"
+            )
+            send_mail(
+                subject,
+                message,
+                settings.DEFAULT_FROM_EMAIL,
+                [config.email_destino],
+                fail_silently=False,
+            )
         except Exception as e:
-            # Podríamos loguear el error aquí
-            print(f"Error enviando mail de notificación: {e}")
+            logger.exception("Error sending contact notification email: %s", e)
 
 class ConfiguracionContactoViewSet(viewsets.ModelViewSet):
     queryset = ConfiguracionContacto.objects.all()
     serializer_class = ConfiguracionContactoSerializer
-    permission_classes = [permissions.IsAdminUser()]
+    permission_classes = [IsStaffOrAdmin]
 
     def list(self, request, *args, **kwargs):
         # Asegurarnos de que siempre haya una configuración, o al menos devolver el objeto único

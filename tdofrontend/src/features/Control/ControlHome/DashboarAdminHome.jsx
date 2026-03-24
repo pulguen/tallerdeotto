@@ -66,10 +66,10 @@ export default function DashboardHome() {
           gastosResumen, ingresosResumen,
           gastosTotal, ingresosTotal
         ] = await Promise.all([
-          axios.get("/gastos/gastos/resumen_mensual/"),
-          axios.get("/ingresos/resumen_mensual/"),
-          axios.get("/gastos/gastos/total/"),
-          axios.get("/ingresos/total/")
+          axios.get("gastos/gastos/resumen_mensual/"),
+          axios.get("ingresos/resumen_mensual/"),
+          axios.get("gastos/gastos/total/"),
+          axios.get("ingresos/total/")
         ]);
 
         const mesesSet = new Set([

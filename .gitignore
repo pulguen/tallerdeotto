@@ -1,7 +1,9 @@
 # Python / Django
+.venv/
 venv/
 env/
 .env
+tdobackend/.env
 __pycache__/
 *.py[cod]
 *.pyo
@@ -10,6 +12,8 @@ __pycache__/
 db.sqlite3
 /logs/
 *.log
+tdobackend/media/
+tdobackend/cert/
 
 # Django migrations (si querés ignorarlas, opcional)
 # **/migrations/

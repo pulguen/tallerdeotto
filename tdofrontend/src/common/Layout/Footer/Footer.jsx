@@ -72,7 +72,7 @@ export default function Footer() {
       </section>
 
       <div className="text-center p-4" style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}>
-        © 2025 Todos los derechos reservados:&nbsp;
+        © 2026 Todos los derechos reservados:&nbsp;
         <a className="text-reset fw-bold" href="/">
           Taller de Otto
         </a>

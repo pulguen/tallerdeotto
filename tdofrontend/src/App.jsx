@@ -41,11 +41,32 @@ function PrivateRoute({ children }) {
   return user ? children : <Navigate to="/login" replace />;
 }
 
+function PublicOnlyRoute({ children }) {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div style={{ padding: '2rem', textAlign: 'center', color: '#e5edf3' }}>
+        Cargando...
+      </div>
+    );
+  }
+
+  return user ? <Navigate to="/" replace /> : children;
+}
+
 export default function App() {
   return (
     <Routes>
       {/* Público */}
-      <Route path="/login" element={<Login />} />
+      <Route
+        path="/login"
+        element={
+          <PublicOnlyRoute>
+            <Login />
+          </PublicOnlyRoute>
+        }
+      />
       <Route path="/register" element={<Register />} />
       <Route path="/" element={<Home />} />
 

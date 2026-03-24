@@ -1,0 +1,15 @@
+[Unit]
+Description=Taller de Otto Django via Gunicorn
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/tallerdeotto/tdobackend
+EnvironmentFile=/var/www/tallerdeotto/tdobackend/.env
+ExecStart=/var/www/tallerdeotto/tdobackend/venv/bin/gunicorn core.wsgi:application --bind 127.0.0.1:8001 --workers 3
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

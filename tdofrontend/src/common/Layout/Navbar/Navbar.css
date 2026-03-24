@@ -7,6 +7,13 @@
   margin: 5px;
 }
 
+.navbar-cart-trigger {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin-left: auto;
+}
+
 .contenedor-icon-menu {
   display: flex;
   flex-direction: column;
@@ -41,7 +48,8 @@
 /* ✅ Carrito + badge */
 .contenedor-carrito {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   justify-content: center;
   font-size: 18pt;
   position: relative;

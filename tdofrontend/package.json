@@ -4,8 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host",                    
-    "preview:lan": "vite preview --host",    
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview",
+    "preview:lan": "vite preview --host",
     "start:lan": "cross-env HOST=0.0.0.0 react-scripts start"
   },
   "dependencies": {

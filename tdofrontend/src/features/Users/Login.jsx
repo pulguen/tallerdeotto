@@ -31,22 +31,22 @@ export default function Login() {
 
   return (
     <div className="login-wrapper d-flex align-items-center justify-content-center">
-      <div className="login-card shadow p-4 rounded-4 bg-white">
+      <div className="login-card p-4">
         {/* LOGO */}
-        <div className="text-center mb-3">
+        <div className="text-center mb-4">
           <a href="/" aria-label="Ir al inicio">
             <img
               src="/logoHome.png"
               alt="Taller de Otto"
               className="brand-logo"
-              width="220"
-              height="64"
+              width="180"
+              height="52"
               decoding="async"
             />
           </a>
         </div>
 
-        <h2 className="text-center mb-2 fw-semibold text-dark">Entrá a tu cuenta</h2>
+        <h2 className="text-center mb-2 fw-bold text-white">Entrá a tu cuenta</h2>
         <p className="text-center text-muted mb-4 small">
           Seguimiento de pedidos, mensajes y presupuestos en un solo lugar.
         </p>
@@ -97,16 +97,16 @@ export default function Login() {
 
           <button
             type="submit"
-            className="btn btn-primary w-100 py-2 fw-semibold"
+            className="btn btn-primary w-100 py-3"
             disabled={loading}
-            aria-label="Entrar"
+            aria-label="Iniciar Sesión"
           >
-            {loading ? "Ingresando..." : "Entrar"}
+            {loading ? "Iniciando sesión..." : "Iniciar Sesión"}
           </button>
 
-          <p className="text-center small mt-3 mb-0">
+          <p className="text-center small mt-4 mb-0 text-muted">
             ¿No tenés cuenta?{" "}
-            <Link to="/register" className="link-primary text-decoration-none fw-semibold">
+            <Link to="/register" className="link-primary fw-bold">
               Registrate gratis
             </Link>
           </p>

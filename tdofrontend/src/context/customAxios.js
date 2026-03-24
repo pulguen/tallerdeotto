@@ -1,6 +1,8 @@
 //customAxios.js
 import axios from 'axios';
 
+const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || '/api/').replace(/\/?$/, '/');
+
 // helper para CSRF
 function getCsrfToken() {
   const m = document.cookie.match(/csrftoken=([^;]+)/);
@@ -8,7 +10,7 @@ function getCsrfToken() {
 }
 
 const instance = axios.create({
-  baseURL: '/api/',
+  baseURL: apiBaseUrl,
   withCredentials: true,
 });
 

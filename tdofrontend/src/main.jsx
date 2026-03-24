@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import AuthProvider from './context/AuthProvider';
+import { CartProvider } from './context/CartContext';
 import useAutoLogout from './hooks/useAutoLogout';
 import App from './App.jsx';
 import './index.css';
@@ -24,11 +25,13 @@ function Root() {
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-        <GlobalLayout>
-          <Root />
-        </GlobalLayout>
-      </AuthProvider>
+      <CartProvider>
+        <AuthProvider>
+          <GlobalLayout>
+            <Root />
+          </GlobalLayout>
+        </AuthProvider>
+      </CartProvider>
     </BrowserRouter>
   </StrictMode>
 );

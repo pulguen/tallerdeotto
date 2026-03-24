@@ -50,7 +50,7 @@ export default function AuthProvider({ children }) {
   // Logout
   const logout = useCallback(async () => {
     try {
-      await axios.post('users/token/blacklist/', {}, { skipAuth: true });
+      await axios.post('users/logout/', {}, { skipAuth: true });
     } catch {
       /* ignore */
     }

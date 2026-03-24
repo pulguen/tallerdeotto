@@ -5,14 +5,14 @@ import "./auth.css"; // estilos compartidos login/register
 
 export default function Register() {
   const [username, setUsername] = useState("");
-  const [email,    setEmail]    = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirm,  setConfirm]  = useState("");
-  const [accept,   setAccept]   = useState(false);
+  const [confirm, setConfirm] = useState("");
+  const [accept, setAccept] = useState(false);
 
-  const [error,  setError]  = useState("");
-  const [okMsg,  setOkMsg]  = useState("");
-  const [loading,setLoading]= useState(false);
+  const [error, setError] = useState("");
+  const [okMsg, setOkMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const {
     lengthValid,
@@ -37,9 +37,9 @@ export default function Register() {
     setError("");
     setOkMsg("");
 
-    if (!isValid)         return setError("La contraseña no cumple los requisitos.");
-    if (!passwordsMatch)  return setError("Las contraseñas no coinciden.");
-    if (!accept)          return setError("Debés aceptar los términos y condiciones.");
+    if (!isValid) return setError("La contraseña no cumple los requisitos.");
+    if (!passwordsMatch) return setError("Las contraseñas no coinciden.");
+    if (!accept) return setError("Debés aceptar los términos y condiciones.");
 
     setLoading(true);
     try {
@@ -56,22 +56,22 @@ export default function Register() {
 
   return (
     <div className="auth-wrapper d-flex align-items-center justify-content-center">
-      <div className="auth-card shadow p-4 rounded-4 bg-white">
+      <div className="auth-card p-4">
         {/* LOGO */}
-        <div className="text-center mb-3">
+        <div className="text-center mb-4">
           <a href="/" aria-label="Ir al inicio">
             <img
               src="/logoHome.png"
               alt="Taller de Otto"
               className="brand-logo"
-              width="220"
-              height="64"
+              width="180"
+              height="52"
               decoding="async"
             />
           </a>
         </div>
 
-        <h2 className="text-center mb-2 fw-semibold text-dark">Crear cuenta</h2>
+        <h2 className="text-center mb-2 fw-bold text-white">Crear cuenta</h2>
         <p className="text-center text-muted mb-4 small">
           Pedí presupuestos y seguí tus pedidos desde un solo lugar.
         </p>
@@ -198,7 +198,7 @@ export default function Register() {
           {/* CTA */}
           <button
             type="submit"
-            className="btn btn-primary w-100 py-2 fw-semibold"
+            className="btn btn-primary w-100 py-3"
             disabled={loading || !isValid || !passwordsMatch || !accept}
           >
             {loading ? (
@@ -211,11 +211,11 @@ export default function Register() {
             )}
           </button>
 
-          <p className="text-center small mt-2 mb-0">
+          <p className="text-center small mt-4 mb-0 text-muted">
             ¿Ya tenés cuenta?{" "}
-            <a href="/login" className="link-primary fw-semibold text-decoration-none">
+            <Link to="/login" className="link-primary fw-bold">
               Iniciá sesión
-            </a>
+            </Link>
           </p>
         </form>
       </div>

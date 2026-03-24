@@ -1,17 +1,23 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+const devApiTarget = process.env.VITE_DEV_API_TARGET || 'http://127.0.0.1:8001'
+
 export default defineConfig({
   plugins: [react()],
   server: {
-    // Proxy: todo lo que vaya a /api/* se reenvía a nuestro Django HTTPS
+    // Proxy de desarrollo local hacia Django.
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:8000',
-        secure: false,       // porque es un cert auto-firmado
-        changeOrigin: true,  // reescribe el Host header
-      }
+        target: devApiTarget,
+        secure: false,
+        changeOrigin: true,
+      },
+      '/media': {
+        target: devApiTarget,
+        secure: false,
+        changeOrigin: true,
+      },
     }
   }
 })
-
